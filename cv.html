@@ -1,19 +1,17 @@
-e<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nicolò Pristerà_CV.exe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Nicolò Pristerà_CV.exe</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
             --bg-dark: #0f172a;
             --bg-panel: #1e293b;
-            --accent: #38bdf8; /* Ciano Elettrico */
+            --accent: #38bdf8;
             --accent-glow: rgba(56, 189, 248, 0.3);
             --text-main: #e2e8f0;
             --text-muted: #94a3b8;
@@ -31,19 +29,20 @@ e<!DOCTYPE html>
             justify-content: center;
             min-height: 100vh;
             padding: 20px;
+            overflow-x: hidden; /* Evita scroll orizzontale indesiderato su mobile */
         }
 
-        /* --- LAYOUT PRINCIPALE --- */
+        /* --- LAYOUT PRINCIPALE (DESKTOP) --- */
         .cv-container {
             width: 100%;
             max-width: 1000px;
             display: grid;
-            grid-template-columns: 300px 1fr;
+            grid-template-columns: 300px 1fr; /* Sidebar fissa, contenuto flessibile */
             gap: 20px;
             animation: fadeIn 1s ease-in-out;
         }
 
-        /* --- SIDEBAR (Profilo) --- */
+        /* --- SIDEBAR --- */
         .sidebar {
             background: var(--bg-panel);
             border-radius: 16px;
@@ -51,8 +50,7 @@ e<!DOCTYPE html>
             text-align: center;
             border: 1px solid rgba(255,255,255,0.05);
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            position: relative;
-            overflow: hidden;
+            height: fit-content; /* Si adatta al contenuto */
         }
 
         .avatar {
@@ -72,10 +70,9 @@ e<!DOCTYPE html>
         .role { font-family: 'Fira Code', monospace; color: var(--accent); font-size: 0.9rem; margin-bottom: 20px; }
 
         .contact-info { text-align: left; margin-top: 30px; font-size: 0.9rem; }
-        .contact-item { margin-bottom: 15px; display: flex; align-items: center; gap: 10px; color: var(--text-muted); }
-        .contact-item i { color: var(--accent); width: 20px; }
+        .contact-item { margin-bottom: 15px; display: flex; align-items: center; gap: 10px; color: var(--text-muted); word-break: break-all; }
+        .contact-item i { color: var(--accent); min-width: 20px; }
 
-        /* Bottone PDF nella Sidebar */
         .btn-download {
             display: block;
             width: 100%;
@@ -93,7 +90,7 @@ e<!DOCTYPE html>
         }
         .btn-download:hover { background: var(--accent); color: var(--bg-dark); box-shadow: 0 0 15px var(--accent-glow); }
 
-        /* --- CONTENUTO PRINCIPALE --- */
+        /* --- MAIN CONTENT --- */
         .main-content {
             background: var(--bg-panel);
             border-radius: 16px;
@@ -101,9 +98,9 @@ e<!DOCTYPE html>
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            min-height: 500px;
         }
 
-        /* --- TERMINAL HEADER --- */
         .terminal-header {
             background: var(--terminal-bg);
             padding: 15px 20px;
@@ -111,6 +108,7 @@ e<!DOCTYPE html>
             font-size: 0.85rem;
             color: var(--success);
             border-bottom: 1px solid #333;
+            word-wrap: break-word;
         }
         .blink { animation: blinker 1s linear infinite; }
         @keyframes blinker { 50% { opacity: 0; } }
@@ -134,22 +132,16 @@ e<!DOCTYPE html>
             cursor: pointer;
             border-radius: 8px;
             transition: 0.3s;
+            white-space: nowrap; /* Evita che il testo vada a capo nel bottone */
         }
-
         .tab-btn:hover { color: white; background: rgba(255,255,255,0.05); }
         .tab-btn.active { background: var(--accent); color: var(--bg-dark); }
 
-        /* --- PANNELLI CONTENUTO --- */
-        .content-panel {
-            padding: 30px;
-            display: none; /* Nascosti di default */
-            animation: slideUp 0.4s ease;
-        }
+        .content-panel { padding: 30px; display: none; animation: slideUp 0.4s ease; }
         .content-panel.active { display: block; }
 
         h2 { font-size: 1.4rem; border-bottom: 2px solid var(--accent); display: inline-block; padding-bottom: 5px; margin-bottom: 25px; color: white; }
 
-        /* STILE TIMELINE (ESPERIENZA) */
         .timeline-item {
             border-left: 2px solid var(--text-muted);
             padding-left: 20px;
@@ -167,31 +159,50 @@ e<!DOCTYPE html>
         .date { font-family: 'Fira Code', monospace; font-size: 0.8rem; color: var(--accent); margin-bottom: 5px; display: block;}
         .job-title { font-weight: 700; font-size: 1.1rem; color: white; }
         .company { color: var(--text-muted); font-style: italic; margin-bottom: 10px; }
-        .description { font-size: 0.95rem; line-height: 1.6; }
 
-        /* STILE SKILLS */
         .skill-group { margin-bottom: 25px; }
         .skill-name { display: flex; justify-content: space-between; margin-bottom: 5px; font-weight: 600; }
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%;
-            background: var(--accent);
-            width: 0; /* Animato via JS */
-            transition: width 1s ease-out;
-            box-shadow: 0 0 10px var(--accent-glow);
-        }
+        .progress-bar { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--accent); width: 0; transition: width 1s ease-out; box-shadow: 0 0 10px var(--accent-glow); }
 
-        /* --- RESPONSIVE --- */
+        /* --- MEDIA QUERIES PER MOBILE (Max 768px) --- */
         @media (max-width: 768px) {
-            .cv-container { grid-template-columns: 1fr; }
-            .sidebar { text-align: center; }
-            .nav-tabs { flex-wrap: wrap; }
+            body { padding: 10px; }
+            
+            .cv-container {
+                grid-template-columns: 1fr; /* Colonna singola */
+                gap: 15px;
+            }
+
+            .sidebar {
+                padding: 20px;
+            }
+
+            /* Riorganizza i contatti in griglia su mobile per risparmiare spazio */
+            .contact-info {
+                display: grid;
+                grid-template-columns: 1fr 1fr; 
+                gap: 10px;
+                margin-top: 20px;
+            }
+            .contact-item { font-size: 0.8rem; margin-bottom: 0; }
+            /* L'ultimo contatto (github) prende tutta la larghezza se serve */
+            .contact-item:last-child { grid-column: span 2; }
+
+            .main-content { min-height: auto; }
+
+            .nav-tabs {
+                overflow-x: auto; /* Permette lo scroll orizzontale */
+                justify-content: flex-start;
+                -webkit-overflow-scrolling: touch; /* Scroll fluido su iOS */
+            }
+            .tab-btn {
+                flex: 0 0 auto; /* I bottoni non si schiacciano */
+                padding: 10px 20px;
+            }
+
+            .content-panel { padding: 20px; }
+            h2 { font-size: 1.2rem; }
         }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -234,9 +245,8 @@ e<!DOCTYPE html>
     <main class="main-content">
         
         <div class="terminal-header">
-            root@nicolo-pc:~$ ./load_cv.sh --interactive<br>
-            <span style="color: var(--text-muted)">> Loading modules... OK</span><br>
-            <span style="color: var(--text-muted)">> Initializing interface...</span> <span class="blink">_</span>
+            root@nicolo-pc:~$ ./load_cv.sh --mobile-optimized<br>
+            <span style="color: var(--text-muted)">> Display: Retina Ready</span> <span class="blink">_</span>
         </div>
 
         <nav class="nav-tabs">
@@ -321,23 +331,17 @@ e<!DOCTYPE html>
 
 <script>
     function openTab(tabName) {
-        // 1. Nascondi tutti i pannelli
         const panels = document.querySelectorAll('.content-panel');
         panels.forEach(panel => panel.classList.remove('active'));
 
-        // 2. Rimuovi stato attivo dai bottoni
         const buttons = document.querySelectorAll('.tab-btn');
         buttons.forEach(btn => btn.classList.remove('active'));
 
-        // 3. Mostra il pannello corrente
         document.getElementById(tabName).classList.add('active');
         
-        // 4. Aggiungi stato attivo al bottone cliccato
-        // (Cerchiamo il bottone che ha l'onclick corrispondente)
         const activeBtn = Array.from(buttons).find(btn => btn.getAttribute('onclick').includes(tabName));
         if(activeBtn) activeBtn.classList.add('active');
 
-        // 5. Se è il tab Skills, anima le barre
         if(tabName === 'skills') {
             setTimeout(animateSkills, 100);
         }
