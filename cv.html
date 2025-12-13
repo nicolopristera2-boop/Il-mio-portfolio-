@@ -2,359 +2,157 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Nicolò Pristerà_CV.exe</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Il Mio CV - Automation Engineering</title>
     <style>
-        :root {
-            --bg-dark: #0f172a;
-            --bg-panel: #1e293b;
-            --accent: #38bdf8;
-            --accent-glow: rgba(56, 189, 248, 0.3);
-            --text-main: #e2e8f0;
-            --text-muted: #94a3b8;
-            --success: #22c55e;
-            --terminal-bg: #000000;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
+        /* --- STILI DI BASE --- */
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: 'Poppins', sans-serif;
-            display: flex;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 20px;
-            overflow-x: hidden; /* Evita scroll orizzontale indesiderato su mobile */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
         }
 
-        /* --- LAYOUT PRINCIPALE (DESKTOP) --- */
-        .cv-container {
-            width: 100%;
-            max-width: 1000px;
-            display: grid;
-            grid-template-columns: 300px 1fr; /* Sidebar fissa, contenuto flessibile */
-            gap: 20px;
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        /* --- SIDEBAR --- */
-        .sidebar {
-            background: var(--bg-panel);
-            border-radius: 16px;
-            padding: 30px;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.05);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            height: fit-content; /* Si adatta al contenuto */
-        }
-
-        .avatar {
-            width: 120px;
-            height: 120px;
-            background: linear-gradient(45deg, #333, #666);
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            border: 3px solid var(--accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-        }
-
-        .name { font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 5px; }
-        .role { font-family: 'Fira Code', monospace; color: var(--accent); font-size: 0.9rem; margin-bottom: 20px; }
-
-        .contact-info { text-align: left; margin-top: 30px; font-size: 0.9rem; }
-        .contact-item { margin-bottom: 15px; display: flex; align-items: center; gap: 10px; color: var(--text-muted); word-break: break-all; }
-        .contact-item i { color: var(--accent); min-width: 20px; }
-
-        .btn-download {
-            display: block;
-            width: 100%;
-            margin-top: 30px;
-            padding: 12px;
-            background: transparent;
-            border: 2px solid var(--accent);
-            color: var(--accent);
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             border-radius: 8px;
-            font-family: 'Fira Code', monospace;
-            font-weight: bold;
-            cursor: pointer;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-        .btn-download:hover { background: var(--accent); color: var(--bg-dark); box-shadow: 0 0 15px var(--accent-glow); }
-
-        /* --- MAIN CONTENT --- */
-        .main-content {
-            background: var(--bg-panel);
-            border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.05);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            min-height: 500px;
-        }
-
-        .terminal-header {
-            background: var(--terminal-bg);
-            padding: 15px 20px;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.85rem;
-            color: var(--success);
-            border-bottom: 1px solid #333;
-            word-wrap: break-word;
-        }
-        .blink { animation: blinker 1s linear infinite; }
-        @keyframes blinker { 50% { opacity: 0; } }
-
-        /* --- NAVIGAZIONE TABS --- */
-        .nav-tabs {
-            display: flex;
-            background: rgba(0,0,0,0.2);
-            padding: 10px;
-            gap: 10px;
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 12px;
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: 0.3s;
-            white-space: nowrap; /* Evita che il testo vada a capo nel bottone */
-        }
-        .tab-btn:hover { color: white; background: rgba(255,255,255,0.05); }
-        .tab-btn.active { background: var(--accent); color: var(--bg-dark); }
-
-        .content-panel { padding: 30px; display: none; animation: slideUp 0.4s ease; }
-        .content-panel.active { display: block; }
-
-        h2 { font-size: 1.4rem; border-bottom: 2px solid var(--accent); display: inline-block; padding-bottom: 5px; margin-bottom: 25px; color: white; }
-
-        .timeline-item {
-            border-left: 2px solid var(--text-muted);
-            padding-left: 20px;
-            margin-bottom: 30px;
             position: relative;
         }
-        .timeline-item::before {
-            content: '';
-            width: 12px; height: 12px;
-            background: var(--bg-dark);
-            border: 2px solid var(--accent);
-            border-radius: 50%;
-            position: absolute; left: -7px; top: 0;
-        }
-        .date { font-family: 'Fira Code', monospace; font-size: 0.8rem; color: var(--accent); margin-bottom: 5px; display: block;}
-        .job-title { font-weight: 700; font-size: 1.1rem; color: white; }
-        .company { color: var(--text-muted); font-style: italic; margin-bottom: 10px; }
 
-        .skill-group { margin-bottom: 25px; }
-        .skill-name { display: flex; justify-content: space-between; margin-bottom: 5px; font-weight: 600; }
-        .progress-bar { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--accent); width: 0; transition: width 1s ease-out; box-shadow: 0 0 10px var(--accent-glow); }
-
-        /* --- MEDIA QUERIES PER MOBILE (Max 768px) --- */
-        @media (max-width: 768px) {
-            body { padding: 10px; }
-            
-            .cv-container {
-                grid-template-columns: 1fr; /* Colonna singola */
-                gap: 15px;
-            }
-
-            .sidebar {
-                padding: 20px;
-            }
-
-            /* Riorganizza i contatti in griglia su mobile per risparmiare spazio */
-            .contact-info {
-                display: grid;
-                grid-template-columns: 1fr 1fr; 
-                gap: 10px;
-                margin-top: 20px;
-            }
-            .contact-item { font-size: 0.8rem; margin-bottom: 0; }
-            /* L'ultimo contatto (github) prende tutta la larghezza se serve */
-            .contact-item:last-child { grid-column: span 2; }
-
-            .main-content { min-height: auto; }
-
-            .nav-tabs {
-                overflow-x: auto; /* Permette lo scroll orizzontale */
-                justify-content: flex-start;
-                -webkit-overflow-scrolling: touch; /* Scroll fluido su iOS */
-            }
-            .tab-btn {
-                flex: 0 0 auto; /* I bottoni non si schiacciano */
-                padding: 10px 20px;
-            }
-
-            .content-panel { padding: 20px; }
-            h2 { font-size: 1.2rem; }
+        /* --- TASTO CAMBIO LINGUA --- */
+        .lang-switch {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background 0.3s;
         }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .lang-switch:hover {
+            background-color: #0056b3;
+        }
+
+        /* --- SEZIONI --- */
+        header {
+            text-align: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        h1 { margin: 0; color: #2c3e50; }
+        h2 { color: #007bff; margin-top: 30px; border-bottom: 1px solid #ddd; padding-bottom: 5px; }
+        
+        .entry { margin-bottom: 15px; }
+        .entry-title { font-weight: bold; font-size: 1.1em; }
+        .entry-date { color: #666; font-style: italic; font-size: 0.9em; margin-bottom: 5px; }
+        .entry-desc { margin-top: 5px; }
+
+        ul { margin-top: 5px; padding-left: 20px; }
+
+        /* --- GESTIONE LINGUA (CSS) --- */
+        /* Nascondiamo di default l'inglese */
+        [data-lang="en"] { display: none; }
+        
+        /* Quando il body ha la classe 'english-mode', nascondiamo ita e mostriamo eng */
+        body.english-mode [data-lang="it"] { display: none; }
+        body.english-mode [data-lang="en"] { display: block; }
+        
+        /* Per elementi inline che devono scambiarsi (come span) */
+        span[data-lang="en"] { display: none; }
+        body.english-mode span[data-lang="it"] { display: none; }
+        body.english-mode span[data-lang="en"] { display: inline; }
+
     </style>
 </head>
 <body>
 
-<div class="cv-container">
-    
-    <aside class="sidebar">
-        <div class="avatar">👨‍💻</div>
-        <h1 class="name">Nicolò Pristerà</h1>
-        <div class="role">&lt;Engineering Student /&gt;</div>
-        
-        <p style="color: var(--text-muted); font-size: 0.9rem;">
-            Appassionato di sistemi embedded, ottimizzazione del codice e tutto ciò che vive tra hardware e software.
-        </p>
+    <div class="container">
+        <button class="lang-switch" onclick="toggleLanguage()">
+            <span data-lang="it">🇬🇧 English Version</span>
+            <span data-lang="en">🇮🇹 Versione Italiana</span>
+        </button>
 
-        <div class="contact-info">
-            <div class="contact-item">
-                <i class="fa-solid fa-envelope"></i>
-                <span>nicolopristera2@gmail.com</span>
+        <header>
+            <h1 data-lang="it">Mario Rossi</h1>
+            <h1 data-lang="en">Mario Rossi</h1>
+            <p>
+                <span data-lang="it">Studente di Ingegneria dell'Automazione</span>
+                <span data-lang="en">Automation Engineering Student</span>
+            </p>
+        </header>
+
+        <h2 data-lang="it">Formazione</h2>
+        <h2 data-lang="en">Education</h2>
+
+        <div class="entry">
+            <div class="entry-title">
+                <span data-lang="it">Politecnico di Milano</span>
+                <span data-lang="en">Politecnico di Milano</span>
             </div>
-            <div class="contact-item">
-                <i class="fa-solid fa-location-dot"></i>
-                <span>Italia</span>
+            <div class="entry-date">
+                <span data-lang="it">Milano, Italia | 2024 – Presente</span>
+                <span data-lang="en">Milan, Italy | 2024 – Present</span>
             </div>
-            <div class="contact-item">
-                <i class="fa-brands fa-github"></i>
-                <span>github.com/nicolopristera2</span>
-            </div>
-        </div>
-
-        <a href="cv.pdf" target="_blank" class="btn-download">
-            <i class="fa-solid fa-file-pdf"></i> SCARICA PDF
-        </a>
-    </aside>
-
-    <main class="main-content">
-        
-        <div class="terminal-header">
-            root@nicolo-pc:~$ ./load_cv.sh --mobile-optimized<br>
-            <span style="color: var(--text-muted)">> Display: Retina Ready</span> <span class="blink">_</span>
-        </div>
-
-        <nav class="nav-tabs">
-            <button class="tab-btn active" onclick="openTab('experience')">Esperienza</button>
-            <button class="tab-btn" onclick="openTab('skills')">Skills</button>
-            <button class="tab-btn" onclick="openTab('education')">Formazione</button>
-        </nav>
-
-        <div id="experience" class="content-panel active">
-            <h2>Esperienza Lavorativa</h2>
-            
-            <div class="timeline-item">
-                <span class="date">2025 - Presente</span>
-                <div class="job-title">Junior Firmware Developer</div>
-                <div class="company">Tech Solutions S.r.l.</div>
-                <p class="description">
-                    Sviluppo e manutenzione di firmware per microcontrollori STM32. 
-                    Implementazione di protocolli di comunicazione (UART, I2C, SPI) e debugging hardware/software.
-                </p>
-            </div>
-
-            <div class="timeline-item">
-                <span class="date">2025 - Presente</span>
-                <div class="job-title">Freelance Web & Embedded Dev</div>
-                <div class="company">Autonomo</div>
-                <p class="description">
-                    Realizzazione di progetti IoT basati su ESP32 e Arduino. 
-                    Sviluppo di interfacce web responsive per il controllo remoto di dispositivi.
-                </p>
+            <div class="entry-desc">
+                <span data-lang="it">Laurea Triennale in Ingegneria dell'Automazione.</span>
+                <span data-lang="en">B.Sc. in Automation Engineering.</span>
+                <ul>
+                    <li data-lang="it">Percorso focalizzato su robotica, controlli automatici e sistemi industriali.</li>
+                    <li data-lang="en">Focus on robotics, automatic controls, and industrial systems.</li>
+                </ul>
             </div>
         </div>
 
-        <div id="skills" class="content-panel">
-            <h2>Competenze Tecniche</h2>
-
-            <div class="skill-group">
-                <div class="skill-name"><span>C / C++ (Embedded)</span> <span>90%</span></div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 0%" data-width="90%"></div></div>
+        <div class="entry">
+            <div class="entry-title">
+                <span data-lang="it">Liceo Scientifico "Galileo Galilei"</span>
+                <span data-lang="en">Scientific High School "Galileo Galilei"</span>
             </div>
-
-            <div class="skill-group">
-                <div class="skill-name"><span>Arduino / ESP32</span> <span>85%</span></div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 0%" data-width="85%"></div></div>
+            <div class="entry-date">
+                <span data-lang="it">Roma, Italia | 2019 – 2024</span>
+                <span data-lang="en">Rome, Italy | 2019 – 2024</span>
             </div>
-
-            <div class="skill-group">
-                <div class="skill-name"><span>HTML / CSS / JS</span> <span>75%</span></div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 0%" data-width="75%"></div></div>
-            </div>
-
-            <div class="skill-group">
-                <div class="skill-name"><span>Git / Version Control</span> <span>80%</span></div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 0%" data-width="80%"></div></div>
-            </div>
-
-            <div class="skill-group">
-                <div class="skill-name"><span>PCB Design (KiCad)</span> <span>60%</span></div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 0%" data-width="60%"></div></div>
+            <div class="entry-desc">
+                <span data-lang="it">Diploma di Maturità Scientifica. Votazione: 100/100.</span>
+                <span data-lang="en">High School Diploma. Grade: 100/100.</span>
             </div>
         </div>
 
-        <div id="education" class="content-panel">
-            <h2>Formazione</h2>
-            
-            <div class="timeline-item">
-                <span class="date">2022</span>
-                <div class="job-title">Corso Specialistico Embedded Systems</div>
-                <div class="company">Online Academy</div>
-                <p class="description">Focus su architetture ARM Cortex-M e Real-Time Operating Systems (FreeRTOS).</p>
-            </div>
+        <h2 data-lang="it">Competenze</h2>
+        <h2 data-lang="en">Skills</h2>
+        <ul>
+            <li>
+                <span data-lang="it">Linguaggi: C, Python, MATLAB</span>
+                <span data-lang="en">Languages: C, Python, MATLAB</span>
+            </li>
+            <li>
+                <span data-lang="it">Soft Skills: Problem solving, lavoro di squadra</span>
+                <span data-lang="en">Soft Skills: Problem solving, teamwork</span>
+            </li>
+        </ul>
 
-            <div class="timeline-item">
-                <span class="date">2019 - 2024</span>
-                <div class="job-title">Diploma Perito Tecnico Aeronautico</div>
-                <div class="company">IIS J.C. Maxwell</div>
-                <p class="description">Specializzazione in Logistica e Conduzione del mezzo aereo.</p>
-            </div>
-        </div>
+    </div>
 
-    </main>
-</div>
-
-<script>
-    function openTab(tabName) {
-        const panels = document.querySelectorAll('.content-panel');
-        panels.forEach(panel => panel.classList.remove('active'));
-
-        const buttons = document.querySelectorAll('.tab-btn');
-        buttons.forEach(btn => btn.classList.remove('active'));
-
-        document.getElementById(tabName).classList.add('active');
-        
-        const activeBtn = Array.from(buttons).find(btn => btn.getAttribute('onclick').includes(tabName));
-        if(activeBtn) activeBtn.classList.add('active');
-
-        if(tabName === 'skills') {
-            setTimeout(animateSkills, 100);
+    <script>
+        function toggleLanguage() {
+            // Aggiunge o toglie la classe 'english-mode' al body
+            document.body.classList.toggle('english-mode');
         }
-    }
-
-    function animateSkills() {
-        const bars = document.querySelectorAll('.progress-fill');
-        bars.forEach(bar => {
-            const target = bar.getAttribute('data-width');
-            bar.style.width = target;
-        });
-    }
-</script>
+    </script>
 
 </body>
 </html>
