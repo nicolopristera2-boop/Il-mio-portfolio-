@@ -2,7 +2,8 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Nicolò Pristerà_CV.exe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Nicolò Pristerà_CV.exe</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -29,15 +30,30 @@
             justify-content: center;
             min-height: 100vh;
             padding: 20px;
-            overflow-x: hidden; /* Evita scroll orizzontale indesiderato su mobile */
+            overflow-x: hidden;
         }
 
-        /* --- LAYOUT PRINCIPALE (DESKTOP) --- */
+        /* --- SISTEMA LINGUA --- */
+        /* Di default nascondiamo l'inglese */
+        .lang-en { display: none; }
+        
+        /* Quando il body ha la classe 'english-mode', invertiamo la visibilità */
+        body.english-mode .lang-it { display: none; }
+        body.english-mode .lang-en { display: inline; }
+        
+        /* Gestione display block per elementi che non sono inline */
+        body.english-mode div.lang-en, 
+        body.english-mode p.lang-en,
+        body.english-mode h1.lang-en,
+        body.english-mode h2.lang-en,
+        body.english-mode li.lang-en { display: block; }
+
+        /* --- LAYOUT PRINCIPALE --- */
         .cv-container {
             width: 100%;
             max-width: 1000px;
             display: grid;
-            grid-template-columns: 300px 1fr; /* Sidebar fissa, contenuto flessibile */
+            grid-template-columns: 300px 1fr;
             gap: 20px;
             animation: fadeIn 1s ease-in-out;
         }
@@ -50,7 +66,7 @@
             text-align: center;
             border: 1px solid rgba(255,255,255,0.05);
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            height: fit-content; /* Si adatta al contenuto */
+            height: fit-content;
         }
 
         .avatar {
@@ -73,10 +89,14 @@
         .contact-item { margin-bottom: 15px; display: flex; align-items: center; gap: 10px; color: var(--text-muted); word-break: break-all; }
         .contact-item i { color: var(--accent); min-width: 20px; }
 
-        .btn-download {
-            display: block;
+        /* Bottoni Sidebar */
+        .btn-action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             width: 100%;
-            margin-top: 30px;
+            margin-top: 15px;
             padding: 12px;
             background: transparent;
             border: 2px solid var(--accent);
@@ -87,8 +107,19 @@
             cursor: pointer;
             text-decoration: none;
             transition: 0.3s;
+            font-size: 0.9rem;
         }
-        .btn-download:hover { background: var(--accent); color: var(--bg-dark); box-shadow: 0 0 15px var(--accent-glow); }
+        .btn-action:hover { background: var(--accent); color: var(--bg-dark); box-shadow: 0 0 15px var(--accent-glow); }
+        
+        .btn-lang {
+            border-color: var(--text-muted);
+            color: var(--text-muted);
+        }
+        .btn-lang:hover {
+            background: var(--text-muted);
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px rgba(148, 163, 184, 0.3);
+        }
 
         /* --- MAIN CONTENT --- */
         .main-content {
@@ -132,7 +163,7 @@
             cursor: pointer;
             border-radius: 8px;
             transition: 0.3s;
-            white-space: nowrap; /* Evita che il testo vada a capo nel bottone */
+            white-space: nowrap;
         }
         .tab-btn:hover { color: white; background: rgba(255,255,255,0.05); }
         .tab-btn.active { background: var(--accent); color: var(--bg-dark); }
@@ -165,42 +196,17 @@
         .progress-bar { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; }
         .progress-fill { height: 100%; background: var(--accent); width: 0; transition: width 1s ease-out; box-shadow: 0 0 10px var(--accent-glow); }
 
-        /* --- MEDIA QUERIES PER MOBILE (Max 768px) --- */
+        /* --- MEDIA QUERIES --- */
         @media (max-width: 768px) {
             body { padding: 10px; }
-            
-            .cv-container {
-                grid-template-columns: 1fr; /* Colonna singola */
-                gap: 15px;
-            }
-
-            .sidebar {
-                padding: 20px;
-            }
-
-            /* Riorganizza i contatti in griglia su mobile per risparmiare spazio */
-            .contact-info {
-                display: grid;
-                grid-template-columns: 1fr 1fr; 
-                gap: 10px;
-                margin-top: 20px;
-            }
+            .cv-container { grid-template-columns: 1fr; gap: 15px; }
+            .sidebar { padding: 20px; }
+            .contact-info { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
             .contact-item { font-size: 0.8rem; margin-bottom: 0; }
-            /* L'ultimo contatto (github) prende tutta la larghezza se serve */
             .contact-item:last-child { grid-column: span 2; }
-
             .main-content { min-height: auto; }
-
-            .nav-tabs {
-                overflow-x: auto; /* Permette lo scroll orizzontale */
-                justify-content: flex-start;
-                -webkit-overflow-scrolling: touch; /* Scroll fluido su iOS */
-            }
-            .tab-btn {
-                flex: 0 0 auto; /* I bottoni non si schiacciano */
-                padding: 10px 20px;
-            }
-
+            .nav-tabs { overflow-x: auto; justify-content: flex-start; -webkit-overflow-scrolling: touch; }
+            .tab-btn { flex: 0 0 auto; padding: 10px 20px; }
             .content-panel { padding: 20px; }
             h2 { font-size: 1.2rem; }
         }
@@ -216,10 +222,14 @@
     <aside class="sidebar">
         <div class="avatar">👨‍💻</div>
         <h1 class="name">Nicolò Pristerà</h1>
-        <div class="role">&lt;Engineering Student /&gt;</div>
+        <div class="role">
+            <span class="lang-it">&lt;Engineering Student /&gt;</span>
+            <span class="lang-en">&lt;Engineering Student /&gt;</span>
+        </div>
         
         <p style="color: var(--text-muted); font-size: 0.9rem;">
-            Appassionato di sistemi embedded, ottimizzazione del codice e tutto ciò che vive tra hardware e software.
+            <span class="lang-it">Appassionato di sistemi embedded, ottimizzazione del codice e tutto ciò che vive tra hardware e software.</span>
+            <span class="lang-en">Passionate about embedded systems, code optimization, and everything living between hardware and software.</span>
         </p>
 
         <div class="contact-info">
@@ -229,7 +239,8 @@
             </div>
             <div class="contact-item">
                 <i class="fa-solid fa-location-dot"></i>
-                <span>Italia</span>
+                <span class="lang-it">Italia</span>
+                <span class="lang-en">Italy</span>
             </div>
             <div class="contact-item">
                 <i class="fa-brands fa-github"></i>
@@ -237,8 +248,14 @@
             </div>
         </div>
 
-        <a href="cv.pdf" target="_blank" class="btn-download">
-            <i class="fa-solid fa-file-pdf"></i> SCARICA PDF
+        <button onclick="toggleLanguage()" class="btn-action btn-lang">
+            <i class="fa-solid fa-language"></i> EN / IT
+        </button>
+
+        <a href="cv.pdf" target="_blank" class="btn-action">
+            <i class="fa-solid fa-file-pdf"></i>
+            <span class="lang-it">SCARICA PDF</span>
+            <span class="lang-en">DOWNLOAD PDF</span>
         </a>
     </aside>
 
@@ -250,37 +267,54 @@
         </div>
 
         <nav class="nav-tabs">
-            <button class="tab-btn active" onclick="openTab('experience')">Esperienza</button>
+            <button class="tab-btn active" onclick="openTab('experience')">
+                <span class="lang-it">Esperienza</span>
+                <span class="lang-en">Experience</span>
+            </button>
             <button class="tab-btn" onclick="openTab('skills')">Skills</button>
-            <button class="tab-btn" onclick="openTab('education')">Formazione</button>
+            <button class="tab-btn" onclick="openTab('education')">
+                <span class="lang-it">Formazione</span>
+                <span class="lang-en">Education</span>
+            </button>
         </nav>
 
         <div id="experience" class="content-panel active">
-            <h2>Esperienza Lavorativa</h2>
+            <h2 class="lang-it">Esperienza Lavorativa</h2>
+            <h2 class="lang-en">Work Experience</h2>
             
             <div class="timeline-item">
-                <span class="date">2025 - Presente</span>
+                <span class="date">
+                    <span class="lang-it">2025 - Presente</span>
+                    <span class="lang-en">2025 - Present</span>
+                </span>
                 <div class="job-title">Junior Firmware Developer</div>
                 <div class="company">Tech Solutions S.r.l.</div>
                 <p class="description">
-                    Sviluppo e manutenzione di firmware per microcontrollori STM32. 
-                    Implementazione di protocolli di comunicazione (UART, I2C, SPI) e debugging hardware/software.
+                    <span class="lang-it">Sviluppo e manutenzione di firmware per microcontrollori STM32. Implementazione di protocolli di comunicazione (UART, I2C, SPI) e debugging hardware/software.</span>
+                    <span class="lang-en">Development and maintenance of firmware for STM32 microcontrollers. Implementation of communication protocols (UART, I2C, SPI) and hardware/software debugging.</span>
                 </p>
             </div>
 
             <div class="timeline-item">
-                <span class="date">2025 - Presente</span>
+                <span class="date">
+                    <span class="lang-it">2025 - Presente</span>
+                    <span class="lang-en">2025 - Present</span>
+                </span>
                 <div class="job-title">Freelance Web & Embedded Dev</div>
-                <div class="company">Autonomo</div>
+                <div class="company">
+                    <span class="lang-it">Autonomo</span>
+                    <span class="lang-en">Freelance</span>
+                </div>
                 <p class="description">
-                    Realizzazione di progetti IoT basati su ESP32 e Arduino. 
-                    Sviluppo di interfacce web responsive per il controllo remoto di dispositivi.
+                    <span class="lang-it">Realizzazione di progetti IoT basati su ESP32 e Arduino. Sviluppo di interfacce web responsive per il controllo remoto di dispositivi.</span>
+                    <span class="lang-en">Creation of IoT projects based on ESP32 and Arduino. Development of responsive web interfaces for remote device control.</span>
                 </p>
             </div>
         </div>
 
         <div id="skills" class="content-panel">
-            <h2>Competenze Tecniche</h2>
+            <h2 class="lang-it">Competenze Tecniche</h2>
+            <h2 class="lang-en">Technical Skills</h2>
 
             <div class="skill-group">
                 <div class="skill-name"><span>C / C++ (Embedded)</span> <span>90%</span></div>
@@ -309,20 +343,49 @@
         </div>
 
         <div id="education" class="content-panel">
-            <h2>Formazione</h2>
+            <h2 class="lang-it">Formazione</h2>
+            <h2 class="lang-en">Education</h2>
             
             <div class="timeline-item">
+                <span class="date">
+                    <span class="lang-it">2024 - Presente</span>
+                    <span class="lang-en">2024 - Present</span>
+                </span>
+                <div class="job-title">
+                    <span class="lang-it">Ingegneria dell'Automazione (Laurea Triennale)</span>
+                    <span class="lang-en">Automation Engineering (B.Sc.)</span>
+                </div>
+                <div class="company">Politecnico di Milano</div>
+                <p class="description">
+                    <span class="lang-it">Percorso di studi focalizzato su controlli automatici, robotica, elettronica e sistemi industriali.</span>
+                    <span class="lang-en">Coursework focused on automatic controls, robotics, electronics, and industrial systems.</span>
+                </p>
+            </div>
+
+            <div class="timeline-item">
                 <span class="date">2022</span>
-                <div class="job-title">Corso Specialistico Embedded Systems</div>
+                <div class="job-title">
+                    <span class="lang-it">Corso Specialistico Embedded Systems</span>
+                    <span class="lang-en">Embedded Systems Specialist Course</span>
+                </div>
                 <div class="company">Online Academy</div>
-                <p class="description">Focus su architetture ARM Cortex-M e Real-Time Operating Systems (FreeRTOS).</p>
+                <p class="description">
+                    <span class="lang-it">Focus su architetture ARM Cortex-M e Real-Time Operating Systems (FreeRTOS).</span>
+                    <span class="lang-en">Focus on ARM Cortex-M architectures and Real-Time Operating Systems (FreeRTOS).</span>
+                </p>
             </div>
 
             <div class="timeline-item">
                 <span class="date">2019 - 2024</span>
-                <div class="job-title">Diploma Perito Tecnico Aeronautico</div>
+                <div class="job-title">
+                    <span class="lang-it">Diploma Perito Tecnico Aeronautico</span>
+                    <span class="lang-en">Aeronautical Technical Diploma</span>
+                </div>
                 <div class="company">IIS J.C. Maxwell</div>
-                <p class="description">Specializzazione in Logistica e Conduzione del mezzo aereo.</p>
+                <p class="description">
+                    <span class="lang-it">Specializzazione in Logistica e Conduzione del mezzo aereo.</span>
+                    <span class="lang-en">Specialization in Logistics and Aircraft Operation.</span>
+                </p>
             </div>
         </div>
 
@@ -339,6 +402,7 @@
 
         document.getElementById(tabName).classList.add('active');
         
+        // Trova il bottone attivo (gestisce sia il testo italiano che inglese all'interno)
         const activeBtn = Array.from(buttons).find(btn => btn.getAttribute('onclick').includes(tabName));
         if(activeBtn) activeBtn.classList.add('active');
 
@@ -353,6 +417,11 @@
             const target = bar.getAttribute('data-width');
             bar.style.width = target;
         });
+    }
+
+    // Funzione per il cambio lingua
+    function toggleLanguage() {
+        document.body.classList.toggle('english-mode');
     }
 </script>
 
