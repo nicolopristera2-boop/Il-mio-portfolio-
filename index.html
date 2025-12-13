@@ -166,6 +166,29 @@
         /* Icona SVG GitHub */
         .icon { width: 20px; height: 20px; fill: white; }
 
+        /* NUOVO STILE BOTTONE CV */
+        .btn-cv {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 10px 25px;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .btn-cv:hover {
+            background-color: white;
+            color: var(--primary);
+            border-color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
         /* --- CONTATTI --- */
         .contact-box {
             background: var(--primary);
@@ -210,6 +233,10 @@
 
     <h1>Nicolò Pristerà</h1>
     <p data-i18n="roleSubtitle">Sviluppatore Firmware | C - Arduino Specialist | Web Development</p>
+    
+    <a href="cv.pdf" target="_blank" class="btn-cv" data-i18n="btnCV">
+        📄 Scarica il mio CV
+    </a>
 </header>
 
 <div class="container">
@@ -264,6 +291,7 @@
     const translations = {
         it: {
             roleSubtitle: "Sviluppatore Firmware | C - Arduino Specialist | Web Development",
+            btnCV: "📄 Scarica il mio CV",
             projectsTitle: "I Miei Progetti",
             projectsIntro: "Una selezione dei miei lavori più recenti. Il codice sorgente è disponibile su GitHub.",
             proj1Title: "🎮 Sito Videogiochi",
@@ -277,6 +305,7 @@
         },
         en: {
             roleSubtitle: "Firmware Developer | C - Arduino Specialist | Web Development",
+            btnCV: "📄 Download My Resume",
             projectsTitle: "My Projects",
             projectsIntro: "A selection of my recent works. Source code is available on GitHub.",
             proj1Title: "🎮 Video Game Website",
@@ -297,15 +326,11 @@
         elements.forEach(element => {
             const key = element.getAttribute('data-i18n');
             if (translations[lang] && translations[lang][key]) {
-                // Se c'è del contenuto HTML nel testo tradotto (es. icone), usiamo innerHTML se necessario,
-                // ma per sicurezza qui usiamo replaceChild per il nodo di testo se vuoi mantenere le icone SVG.
-                // Per semplicità di questo esempio, innerText va bene ma sovrascriverebbe l'icona nel bottone.
-                // Aggiorniamo solo il testo del bottone GitHub specificamente:
                 if(key === 'btnViewCode') {
-                   // Logica per mantenere l'SVG: prendiamo l'SVG esistente e aggiorniamo il testo dopo
+                   // Logica per mantenere l'SVG GitHub
                    const svg = element.querySelector('svg');
-                   element.innerHTML = ''; // Pulisce
-                   if(svg) element.appendChild(svg); // Rimette SVG
+                   element.innerHTML = ''; 
+                   if(svg) element.appendChild(svg); 
                    element.appendChild(document.createTextNode(" " + translations[lang][key]));
                 } else {
                     element.innerText = translations[lang][key];
