@@ -4,76 +4,208 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio - Nicolò Pristerà</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
     <style>
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #f4f4f4; color: #333; }
-        
-        header { 
-            background-color: #00979D; 
-            color: white; 
-            padding: 2rem; 
-            text-align: center; 
-            position: relative; /* Necessario per posizionare i bottoni lingua */
+        /* --- VARIABILI COLORI --- */
+        :root {
+            --primary: #00979D;
+            --primary-dark: #007a80;
+            --accent: #2d3436;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-main: #2d3436;
+            --text-light: #636e72;
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+            --radius: 16px;
         }
 
-        /* --- STILE BOTTONI LINGUA --- */
+        /* --- RESET & BASE --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-color); 
+            color: var(--text-main); 
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 { font-family: 'Poppins', sans-serif; color: var(--accent); }
+
+        /* --- HEADER --- */
+        header { 
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark)); 
+            color: white; 
+            padding: 4rem 2rem; 
+            text-align: center; 
+            position: relative; 
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%); /* Taglio obliquo moderno */
+            margin-bottom: 30px;
+        }
+
+        header h1 { font-size: 3rem; margin-bottom: 10px; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        header p { font-size: 1.1rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+
+        /* --- LINGUA --- */
         .lang-switch {
             position: absolute;
             top: 20px;
             right: 20px;
             display: flex;
-            gap: 5px;
+            gap: 10px;
+            background: rgba(255,255,255,0.1);
+            padding: 5px;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
         }
 
         .lang-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid white;
+            background: transparent;
+            border: none;
             color: white;
-            padding: 5px 10px;
+            padding: 5px 12px;
             cursor: pointer;
-            border-radius: 4px;
-            font-size: 0.9rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
             transition: 0.3s;
         }
 
-        .lang-btn:hover { background: white; color: #00979D; }
-        /* --------------------------- */
+        .lang-btn:hover, .lang-btn:focus { background: white; color: var(--primary); transform: scale(1.05); }
 
-        .container { max-width: 800px; margin: 20px auto; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h1, h2 { color: #333; }
-        h2 { border-bottom: 2px solid #00979D; padding-bottom: 5px; margin-top: 30px;}
-        
-        /* Stile per le schede dei progetti */
-        .project-card {
-            border: 1px solid #ddd;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            background-color: #fff;
-            transition: 0.3s;
+        /* --- CONTAINER --- */
+        .container { 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            padding: 20px; 
         }
-        .project-card:hover { box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        
-        .btn-github {
+
+        section { margin-bottom: 60px; }
+
+        h2 { 
+            font-size: 2rem; 
+            margin-bottom: 10px; 
+            position: relative; 
             display: inline-block;
-            background-color: #24292e; /* Colore GitHub */
-            color: white;
-            padding: 10px 15px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            margin-top: 10px;
         }
-        .btn-github:hover { background-color: #444; }
         
-        .tag { background: #e1ecf4; color: #00979D; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 5px; }
+        /* Sottolineatura stilosa */
+        h2::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+            margin-top: 5px;
+        }
+
+        p.intro-text { color: var(--text-light); margin-bottom: 30px; }
+
+        /* --- GRIGLIA PROGETTI --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsivo automatico */
+            gap: 25px;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .project-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12); 
+            border-color: var(--primary);
+        }
+
+        .project-card h3 { margin-bottom: 10px; font-size: 1.4rem; }
+        .project-card p { color: var(--text-light); margin-bottom: 20px; flex-grow: 1; }
+
+        /* --- TAGS --- */
+        .tags-container { margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 8px; }
+        .tag { 
+            background: #e0f2f1; 
+            color: var(--primary-dark); 
+            padding: 4px 10px; 
+            border-radius: 6px; 
+            font-size: 0.75rem; 
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- BOTTONI --- */
+        .btn-github {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #24292e;
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: 0.3s;
+            gap: 8px;
+        }
+
+        .btn-github:hover { background-color: #000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        
+        /* Icona SVG GitHub */
+        .icon { width: 20px; height: 20px; fill: white; }
+
+        /* --- CONTATTI --- */
+        .contact-box {
+            background: var(--primary);
+            color: white;
+            padding: 40px;
+            border-radius: var(--radius);
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        
+        .contact-box h2 { color: white; }
+        .contact-box h2::after { background: white; margin: 5px auto 0; }
+        .contact-box p { color: rgba(255,255,255,0.9); margin-bottom: 20px; }
+        
+        .btn-email {
+            background: white;
+            color: var(--primary);
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            display: inline-block;
+            transition: 0.3s;
+        }
+        .btn-email:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 600px) {
+            header h1 { font-size: 2.2rem; }
+            .lang-switch { top: 10px; right: 10px; }
+            header { padding: 3rem 1rem; clip-path: none; border-radius: 0 0 20px 20px; }
+        }
     </style>
 </head>
 <body>
 
 <header>
     <div class="lang-switch">
-        <button class="lang-btn" onclick="setLanguage('it')">IT 🇮🇹</button>
-        <button class="lang-btn" onclick="setLanguage('en')">EN 🇬🇧</button>
+        <button class="lang-btn" onclick="setLanguage('it')">IT</button>
+        <button class="lang-btn" onclick="setLanguage('en')">EN</button>
     </div>
 
     <h1>Nicolò Pristerà</h1>
@@ -84,33 +216,46 @@
     
     <section>
         <h2 data-i18n="projectsTitle">I Miei Progetti</h2>
-        <p data-i18n="projectsIntro">Qui puoi trovare il codice sorgente dei miei lavori, caricato su GitHub.</p>
+        <p class="intro-text" data-i18n="projectsIntro">Qui puoi trovare il codice sorgente dei miei lavori, caricato su GitHub.</p>
 
-        <div class="project-card">
-            <h3 data-i18n="proj1Title">Sito video giochi</h3>
-            <div>
-                <span class="tag">HTML Language</span>
-                <span class="tag">CSS</span>
-                <span class="tag">Javascript</span> 
+        <div class="projects-grid">
+            <div class="project-card">
+                <div>
+                    <h3 data-i18n="proj1Title">🎮 Sito Videogiochi</h3>
+                    <div class="tags-container">
+                        <span class="tag">HTML5</span>
+                        <span class="tag">CSS3</span>
+                        <span class="tag">Javascript</span> 
+                    </div>
+                    <p data-i18n="proj1Desc">Un sito che funge da contenitore per giochi autoprodotti. Design responsivo e interattivo.</p>
+                </div>
+                
+                <a href="https://nicolopristera2-boop.github.io/Giochini-online-/" class="btn-github" target="_blank" data-i18n="btnViewCode">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    GitHub
+                </a>
             </div>
-            <p data-i18n="proj1Desc">Un sito che funge da contenitore per giochi autoprodotti</p>
-            
-            <a href="https://nicolopristera2-boop.github.io/Giochini-online-/" class="btn-github" target="_blank" data-i18n="btnViewCode">
-                Vedi Codice su GitHub
-            </a>
-        </div>
 
-        <div class="project-card">
-            <h3 data-i18n="proj2Title">🌡️ Stazione Meteo (In arrivo)</h3>
-            <p data-i18n="proj2Desc">Prossimamente: Un sistema di lettura temperatura e umidità con log dei dati.</p>
+            <div class="project-card" style="border-left: 5px solid #ffa502;">
+                <div>
+                    <h3 data-i18n="proj2Title">🌡️ Stazione Meteo</h3>
+                    <div class="tags-container">
+                        <span class="tag">C++</span>
+                        <span class="tag">Arduino</span>
+                        <span class="tag">Sensors</span> 
+                    </div>
+                    <p data-i18n="proj2Desc">Prossimamente: Un sistema embedded di lettura temperatura e umidità con log dei dati su SD Card.</p>
+                </div>
+                <span style="font-size: 0.8rem; color: #aaa; font-style: italic;">Work in progress...</span>
+            </div>
         </div>
 
     </section>
 
-    <section>
+    <section class="contact-box">
         <h2 data-i18n="contactTitle">Contattami</h2>
-        <p data-i18n="contactIntro">Disponibile per progetti freelance.</p>
-        <a href="mailto:nicolopristera2@gmail.com" data-i18n="emailLink">Scrivimi una mail</a>
+        <p data-i18n="contactIntro">Hai un progetto in mente? Sono disponibile per collaborazioni freelance.</p>
+        <a href="mailto:nicolopristera2@gmail.com" class="btn-email" data-i18n="emailLink">Scrivimi una mail</a>
     </section>
 </div>
 
@@ -120,27 +265,27 @@
         it: {
             roleSubtitle: "Sviluppatore Firmware | C - Arduino Specialist | Web Development",
             projectsTitle: "I Miei Progetti",
-            projectsIntro: "Qui puoi trovare il codice sorgente dei miei lavori, caricato su GitHub.",
-            proj1Title: "Sito video giochi",
-            proj1Desc: "Un sito che funge da contenitore per giochi autoprodotti",
-            btnViewCode: "Vedi Codice su GitHub",
-            proj2Title: "🌡️ Stazione Meteo (In arrivo)",
-            proj2Desc: "Prossimamente: Un sistema di lettura temperatura e umidità con log dei dati.",
+            projectsIntro: "Una selezione dei miei lavori più recenti. Il codice sorgente è disponibile su GitHub.",
+            proj1Title: "🎮 Sito Videogiochi",
+            proj1Desc: "Un sito che funge da contenitore per giochi autoprodotti. Design responsivo e interattivo.",
+            btnViewCode: "GitHub",
+            proj2Title: "🌡️ Stazione Meteo",
+            proj2Desc: "Prossimamente: Un sistema embedded di lettura temperatura e umidità con log dei dati su SD Card.",
             contactTitle: "Contattami",
-            contactIntro: "Disponibile per progetti freelance.",
+            contactIntro: "Hai un progetto in mente? Sono disponibile per collaborazioni freelance.",
             emailLink: "Scrivimi una mail"
         },
         en: {
             roleSubtitle: "Firmware Developer | C - Arduino Specialist | Web Development",
             projectsTitle: "My Projects",
-            projectsIntro: "Here you can find the source code of my works, uploaded on GitHub.",
-            proj1Title: "Video Game Website",
-            proj1Desc: "A website acting as a container for self-produced games",
-            btnViewCode: "View Code on GitHub",
-            proj2Title: "🌡️ Weather Station (Coming Soon)",
-            proj2Desc: "Coming soon: A temperature and humidity reading system with data logging.",
+            projectsIntro: "A selection of my recent works. Source code is available on GitHub.",
+            proj1Title: "🎮 Video Game Website",
+            proj1Desc: "A responsive website acting as a hub for self-produced browser games.",
+            btnViewCode: "GitHub",
+            proj2Title: "🌡️ Weather Station",
+            proj2Desc: "Coming soon: An embedded system for temperature and humidity logging on SD Card.",
             contactTitle: "Contact Me",
-            contactIntro: "Available for freelance projects.",
+            contactIntro: "Do you have a project in mind? I am available for freelance collaborations.",
             emailLink: "Send me an email"
         }
     };
@@ -152,11 +297,22 @@
         elements.forEach(element => {
             const key = element.getAttribute('data-i18n');
             if (translations[lang] && translations[lang][key]) {
-                element.innerText = translations[lang][key];
+                // Se c'è del contenuto HTML nel testo tradotto (es. icone), usiamo innerHTML se necessario,
+                // ma per sicurezza qui usiamo replaceChild per il nodo di testo se vuoi mantenere le icone SVG.
+                // Per semplicità di questo esempio, innerText va bene ma sovrascriverebbe l'icona nel bottone.
+                // Aggiorniamo solo il testo del bottone GitHub specificamente:
+                if(key === 'btnViewCode') {
+                   // Logica per mantenere l'SVG: prendiamo l'SVG esistente e aggiorniamo il testo dopo
+                   const svg = element.querySelector('svg');
+                   element.innerHTML = ''; // Pulisce
+                   if(svg) element.appendChild(svg); // Rimette SVG
+                   element.appendChild(document.createTextNode(" " + translations[lang][key]));
+                } else {
+                    element.innerText = translations[lang][key];
+                }
             }
         });
 
-        // Cambia l'attributo lang del documento per accessibilità e SEO
         document.documentElement.lang = lang;
     }
 </script>
