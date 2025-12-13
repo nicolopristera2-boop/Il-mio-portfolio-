@@ -34,19 +34,18 @@
         }
 
         /* --- SISTEMA LINGUA --- */
-        /* Di default nascondiamo l'inglese */
         .lang-en { display: none; }
         
-        /* Quando il body ha la classe 'english-mode', invertiamo la visibilità */
         body.english-mode .lang-it { display: none; }
         body.english-mode .lang-en { display: inline; }
         
-        /* Gestione display block per elementi che non sono inline */
         body.english-mode div.lang-en, 
         body.english-mode p.lang-en,
         body.english-mode h1.lang-en,
         body.english-mode h2.lang-en,
-        body.english-mode li.lang-en { display: block; }
+        body.english-mode h3.lang-en,
+        body.english-mode li.lang-en,
+        body.english-mode span.lang-en.block-mode { display: block; }
 
         /* --- LAYOUT PRINCIPALE --- */
         .cv-container {
@@ -85,7 +84,55 @@
         .name { font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 5px; }
         .role { font-family: 'Fira Code', monospace; color: var(--accent); font-size: 0.9rem; margin-bottom: 20px; }
 
-        .contact-info { text-align: left; margin-top: 30px; font-size: 0.9rem; }
+        /* --- SEZIONE LINGUE (NUOVA) --- */
+        .sidebar-section {
+            margin-top: 25px;
+            text-align: left;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+        }
+        
+        .sidebar-title {
+            font-size: 0.95rem;
+            color: white;
+            margin-bottom: 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .lang-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .lang-flag {
+            font-size: 1.2rem;
+            filter: drop-shadow(0 0 2px rgba(0,0,0,0.5));
+        }
+
+        .lang-info {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .lang-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+
+        .lang-level {
+            font-size: 0.75rem;
+            color: var(--accent);
+            font-family: 'Fira Code', monospace;
+        }
+
+        /* --- CONTATTI --- */
+        .contact-info { text-align: left; margin-top: 25px; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
         .contact-item { margin-bottom: 15px; display: flex; align-items: center; gap: 10px; color: var(--text-muted); word-break: break-all; }
         .contact-item i { color: var(--accent); min-width: 20px; }
 
@@ -204,6 +251,11 @@
             .contact-info { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
             .contact-item { font-size: 0.8rem; margin-bottom: 0; }
             .contact-item:last-child { grid-column: span 2; }
+            
+            /* Su mobile le lingue le mettiamo in griglia per risparmiare spazio verticale */
+            .sidebar-section .lang-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+            .lang-item { margin-bottom: 5px; }
+            
             .main-content { min-height: auto; }
             .nav-tabs { overflow-x: auto; justify-content: flex-start; -webkit-overflow-scrolling: touch; }
             .tab-btn { flex: 0 0 auto; padding: 10px 20px; }
@@ -227,10 +279,58 @@
             <span class="lang-en">&lt;Engineering Student /&gt;</span>
         </div>
         
-        <p style="color: var(--text-muted); font-size: 0.9rem;">
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 10px;">
             <span class="lang-it">Appassionato di sistemi embedded, ottimizzazione del codice e tutto ciò che vive tra hardware e software.</span>
             <span class="lang-en">Passionate about embedded systems, code optimization, and everything living between hardware and software.</span>
         </p>
+
+        <div class="sidebar-section">
+            <h3 class="sidebar-title">
+                <span class="lang-it">Lingue</span>
+                <span class="lang-en">Languages</span>
+            </h3>
+            <div class="lang-list">
+                <div class="lang-item">
+                    <span class="lang-flag">🇮🇹</span>
+                    <div class="lang-info">
+                        <span class="lang-name">
+                            <span class="lang-it">Italiano</span>
+                            <span class="lang-en">Italian</span>
+                        </span>
+                        <span class="lang-level">
+                            <span class="lang-it">Madrelingua</span>
+                            <span class="lang-en">Native</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="lang-item">
+                    <span class="lang-flag">🇬🇧</span>
+                    <div class="lang-info">
+                        <span class="lang-name">
+                            <span class="lang-it">Inglese</span>
+                            <span class="lang-en">English</span>
+                        </span>
+                        <span class="lang-level">
+                            <span class="lang-it">Fluente (C1)</span>
+                            <span class="lang-en">Fluent (C1)</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="lang-item">
+                    <span class="lang-flag">🇪🇸</span>
+                    <div class="lang-info">
+                        <span class="lang-name">
+                            <span class="lang-it">Spagnolo</span>
+                            <span class="lang-en">Spanish</span>
+                        </span>
+                        <span class="lang-level">
+                            <span class="lang-it">Base / Intermedio</span>
+                            <span class="lang-en">Basic / Intermediate</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="contact-info">
             <div class="contact-item">
@@ -402,7 +502,6 @@
 
         document.getElementById(tabName).classList.add('active');
         
-        // Trova il bottone attivo (gestisce sia il testo italiano che inglese all'interno)
         const activeBtn = Array.from(buttons).find(btn => btn.getAttribute('onclick').includes(tabName));
         if(activeBtn) activeBtn.classList.add('active');
 
