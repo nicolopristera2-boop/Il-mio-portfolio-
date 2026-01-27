@@ -73,35 +73,42 @@
 
         /* Digital Twin Widget */
         .twin-box { background: #0f172a; border-radius: 30px; overflow: hidden; display: grid; grid-template-columns: 1.2fr 0.8fr; margin: 40px 0; box-shadow: 0 30px 60px rgba(0,0,0,0.15); border: 1px solid #334155; }
-        .visualizer { padding: 60px; display: flex; align-items: center; justify-content: center; position: relative; min-height: 480px; background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%); }
-        .controls { padding: 50px; background: #1e293b; border-left: 1px solid #334155; }
+        .visualizer { padding: 60px; display: flex; align-items: center; justify-content: center; position: relative; min-height: 450px; background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%); }
+        .controls { padding: 40px; background: #1e293b; border-left: 1px solid #334155; overflow-y: auto; }
         
-        /* Robot CSS */
-        .robot-base { width: 100px; height: 30px; background: var(--primary); border-radius: 8px; position: relative; box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
-        .arm-seg { width: 16px; height: 120px; background: #94a3b8; position: absolute; bottom: 30px; left: 42px; transform-origin: bottom center; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border-radius: 8px; }
-        .arm-seg-2 { width: 12px; height: 100px; background: var(--primary); position: absolute; top: -115px; left: 2px; transform-origin: bottom center; transition: 0.6s ease; border-radius: 6px; }
+        .robot-base { width: 100px; height: 30px; background: var(--primary); border-radius: 8px; position: relative; box-shadow: 0 10px 20px rgba(0,0,0,0.4); margin-top: 150px; }
+        .arm-seg { width: 16px; height: 100px; background: #94a3b8; position: absolute; bottom: 30px; left: 42px; transform-origin: bottom center; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border-radius: 8px; }
+        .arm-seg-2 { width: 12px; height: 80px; background: var(--primary); position: absolute; top: -75px; left: 2px; transform-origin: bottom center; transition: 0.6s ease; border-radius: 6px; }
         
-        /* Gancio a due falangi */
-        .gripper-base { position: absolute; top: -15px; left: -14px; width: 40px; height: 15px; background: #64748b; border-radius: 4px; }
-        .finger { position: absolute; width: 6px; height: 25px; background: #cbd5e1; border-radius: 2px; top: -20px; transition: 0.3s ease; }
-        .finger-l { left: 5px; transform-origin: bottom right; transform: rotate(-15deg); }
-        .finger-r { right: 5px; transform-origin: bottom left; transform: rotate(15deg); }
+        /* Polso e Pinza */
+        .wrist-seg { width: 10px; height: 30px; background: #cbd5e1; position: absolute; top: -25px; left: 1px; transform-origin: bottom center; transition: 0.4s; border-radius: 4px; }
+        .gripper-base { width: 28px; height: 8px; background: #64748b; position: absolute; top: -5px; left: -9px; border-radius: 2px; }
+        .phalange-l { width: 4px; height: 22px; background: #94a3b8; position: absolute; top: -20px; left: 2px; transform-origin: bottom; transition: 0.2s; border-radius: 2px; }
+        .phalange-r { width: 4px; height: 22px; background: #94a3b8; position: absolute; top: -20px; right: 2px; transform-origin: bottom; transition: 0.2s; border-radius: 2px; }
 
-        .control-item { margin-bottom: 25px; }
-        .control-item label { display: block; color: #94a3b8; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; }
-        .slider { width: 100%; height: 8px; background: #334155; border-radius: 10px; outline: none; -webkit-appearance: none; cursor: pointer; }
-        .slider::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; background: var(--primary); border-radius: 50%; border: 4px solid #1e293b; }
+        .control-item { margin-bottom: 20px; }
+        .control-item label { display: block; color: #94a3b8; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; }
+        .slider { width: 100%; height: 6px; background: #334155; border-radius: 10px; outline: none; -webkit-appearance: none; cursor: pointer; }
+        .slider::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: var(--primary); border-radius: 50%; border: 3px solid #1e293b; }
 
-        .code-display { background: #000; padding: 25px; border-radius: 15px; font-family: 'Fira Code', monospace; font-size: 0.85rem; color: #4ade80; margin-top: 30px; border: 1px solid #334155; }
+        /* Console Codice Arduino nel Simulatore */
+        .code-display { background: #000; padding: 20px; border-radius: 15px; font-family: 'Fira Code', monospace; font-size: 0.8rem; color: #4ade80; margin-top: 20px; border: 1px solid #334155; }
         .code-line.active { color: white; background: rgba(0, 151, 157, 0.25); border-radius: 4px; padding: 0 5px; }
+
+        /* Blocchi Codice Relazione */
+        .full-code-block { background: #1e1e1e; color: #d4d4d4; padding: 25px; border-radius: 15px; font-family: 'Fira Code', monospace; font-size: 0.9rem; overflow-x: auto; margin: 20px 0; border-left: 5px solid var(--primary); }
 
         /* Report Grid */
         .report-grid { display: grid; grid-template-columns: 1fr 340px; gap: 50px; margin: 60px 0; }
         .step { margin-bottom: 70px; }
         .step-num { font-size: 3rem; font-weight: 800; color: #e2e8f0; line-height: 1; margin-bottom: -15px; display: block; }
         .step h3 { font-size: 1.8rem; margin-bottom: 20px; }
-        .step p { color: var(--text-light); }
-        .img-box { width: 100%; height: 300px; background: #edf2f2; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #adb5bd; margin-top: 20px; border: 2px dashed #ccd6d6; }
+        .step p { color: var(--text-light); margin-bottom: 20px; }
+        .img-box { width: 100%; height: 350px; background: #edf2f2; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #adb5bd; margin-top: 20px; border: 2px dashed #ccd6d6; overflow: hidden; position: relative; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .btn-download { display: inline-flex; align-items: center; gap: 10px; background: var(--accent); color: white; padding: 10px 20px; border-radius: 10px; font-size: 0.9rem; font-weight: 600; margin-top: 15px; }
+        .btn-download:hover { background: #000; }
 
         .sidebar-card { background: white; padding: 35px; border-radius: 25px; box-shadow: var(--shadow); position: sticky; top: 40px; }
         .btn-link { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; padding: 16px; background: var(--primary); color: white; border-radius: 14px; font-weight: 700; margin-bottom: 15px; }
@@ -147,6 +154,7 @@
                     <button class="btn-action" onclick="showProject('arm')" data-i18n="btnExplore">Approfondisci Progetto</button>
                 </div>
 
+                <!-- CARD VIDEOGIOCHI -->
                 <div class="project-card">
                     <div>
                         <h3 data-i18n="proj1Title">🎮 Sito Videogiochi</h3>
@@ -156,7 +164,7 @@
                     <a href="https://nicolopristera2-boop.github.io/Giochini-online-/" class="btn-action" target="_blank" style="background:#24292e">GitHub</a>
                 </div>
 
-                <!-- CARD STAZIONE METEO (RESTORED) -->
+                <!-- CARD STAZIONE METEO -->
                 <div class="project-card" style="border-left: 5px solid #ffa502;">
                     <div>
                         <h3 data-i18n="proj2Title">🌡️ Stazione Meteo</h3>
@@ -191,17 +199,18 @@
             <p style="color:var(--text-light)" data-i18n="heroP">Dalla progettazione 3D al controllo in tempo reale.</p>
         </header>
 
-        <!-- SIMULATORE INTERATTIVO -->
+        <!-- 1. SIMULATORE INTERATTIVO (DIGITAL TWIN) -->
         <div class="twin-box">
             <div class="visualizer">
-                <div style="position:absolute; top:20px; left:20px; color:#475569; font-size:0.7rem; font-weight:800;">VIRTUAL ENGINE v1.1</div>
+                <div style="position:absolute; top:20px; left:20px; color:#475569; font-size:0.7rem; font-weight:800;">VIRTUAL ENGINE v1.2</div>
                 <div class="robot-base">
                     <div class="arm-seg" id="ui-base">
                         <div class="arm-seg-2" id="ui-elbow">
-                            <!-- Gancio a due falangi -->
-                            <div class="gripper-base">
-                                <div class="finger finger-l" id="ui-finger-l"></div>
-                                <div class="finger finger-r" id="ui-finger-r"></div>
+                            <div class="wrist-seg" id="ui-wrist">
+                                <div class="gripper-base">
+                                    <div class="phalange-l" id="ui-phal-l"></div>
+                                    <div class="phalange-r" id="ui-phal-r"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -210,50 +219,97 @@
             <div class="controls">
                 <h4 style="color:white; margin-bottom: 25px;" data-i18n="console">Pannello di Controllo</h4>
                 <div class="control-item">
-                    <label>Base Rotation: <span id="label-base" style="color:var(--primary)">90</span>°</label>
+                    <label data-i18n="labelBase">Rotazione Base: <span id="label-base" style="color:var(--primary)">90</span>°</label>
                     <input type="range" min="0" max="180" value="90" class="slider" oninput="interact('base', this.value)">
                 </div>
                 <div class="control-item">
-                    <label>Elbow Angle: <span id="label-elbow" style="color:var(--primary)">45</span>°</label>
+                    <label data-i18n="labelElbow">Angolo Gomito: <span id="label-elbow" style="color:var(--primary)">45</span>°</label>
                     <input type="range" min="0" max="180" value="45" class="slider" oninput="interact('elbow', this.value)">
                 </div>
                 <div class="control-item">
-                    <label>Gripper (Falangi): <span id="label-gripper" style="color:var(--primary)">15</span>°</label>
-                    <input type="range" min="5" max="45" value="15" class="slider" oninput="interact('gripper', this.value)">
+                    <label data-i18n="labelWrist">Inclinazione Polso: <span id="label-wrist" style="color:var(--primary)">0</span>°</label>
+                    <input type="range" min="-90" max="90" value="0" class="slider" oninput="interact('wrist', this.value)">
+                </div>
+                <div class="control-item">
+                    <label data-i18n="labelGripper">Apertura Pinza: <span id="label-gripper" style="color:var(--primary)">10</span>°</label>
+                    <input type="range" min="0" max="40" value="10" class="slider" oninput="interact('gripper', this.value)">
                 </div>
                 <div class="code-display">
-                    <div id="code-1">// Arduino Output</div>
-                    <div id="code-2">baseServo.write(90);</div>
-                    <div id="code-3">elbowServo.write(45);</div>
-                    <div id="code-4">gripperServo.write(15);</div>
+                    <div id="code-header">// Arduino Preview</div>
+                    <div id="code-base">baseServo.write(90);</div>
+                    <div id="code-elbow">elbowServo.write(45);</div>
+                    <div id="code-wrist">wristServo.write(90);</div>
+                    <div id="code-gripper">gripperServo.write(10);</div>
                 </div>
             </div>
         </div>
 
-        <!-- RELAZIONE -->
+        <!-- 2. RELAZIONE TECNICA E CODICE -->
         <div class="report-grid">
             <div class="report-content">
                 <h2 style="margin-bottom: 40px;" data-i18n="repTitle">Relazione Tecnica</h2>
+                
+                <!-- SLOT PROGETTAZIONE 3D -->
                 <div class="step">
                     <span class="step-num">01</span>
-                    <h3 data-i18n="s1H">Progettazione in 3D</h3>
-                    <p data-i18n="s1P">Realizzata con Fusion 360 studiando la distribuzione dei carichi per servi MG996R. La pinza a due falangi è stata ottimizzata per il grip di oggetti leggeri.</p>
-                    <div class="img-box"><i class="fa-solid fa-cube" style="font-size:3rem"></i><span>[Render CAD]</span></div>
+                    <h3 data-i18n="s1H">Progettazione Meccanica (CAD)</h3>
+                    <p data-i18n="s1P">In questa sezione puoi caricare i render o gli screenshot della progettazione su Fusion 360. Ho studiato la distribuzione dei pesi per massimizzare la portata.</p>
+                    <div class="img-box">
+                        <i class="fa-solid fa-cube" style="font-size:3rem"></i>
+                        <span>[Inserisci Render Braccio 3D]</span>
+                    </div>
+                    <a href="#" class="btn-download"><i class="fa-solid fa-download"></i> Scarica Modelli STL (Prossimamente)</a>
                 </div>
+
+                <!-- SLOT CODICE ARDUINO -->
                 <div class="step">
                     <span class="step-num">02</span>
-                    <h3 data-i18n="s2H">Logica Arduino (C++)</h3>
-                    <p data-i18n="s2P">Firmware con algoritmo di smoothing per movimenti fluidi e controllo coordinato dei tre servomotori principali.</p>
+                    <h3 data-i18n="s2H">Codice Arduino (Firmware)</h3>
+                    <p data-i18n="s2P">Ecco lo sketch C++ completo per il controllo dei 4 servomotori. Include la gestione dei limiti angolari e lo smoothing dei movimenti.</p>
+                    <div class="full-code-block">
+<pre><code>#include &lt;Servo.h&gt;
+
+Servo baseServo, elbowServo, wristServo, gripperServo;
+
+void setup() {
+  baseServo.attach(9);
+  elbowServo.attach(10);
+  wristServo.attach(11);
+  gripperServo.attach(12);
+}
+
+void loop() {
+  // Logica di controllo qui
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- SLOT RELAZIONE SCRITTA ESTESA -->
+                <div class="step">
+                    <span class="step-num">03</span>
+                    <h3 data-i18n="s3H">Conclusioni e Testing</h3>
+                    <p data-i18n="s3P">Descrizione dei test effettuati sul braccio fisico e dei risultati ottenuti in termini di precisione e carico massimo sollevabile.</p>
                 </div>
             </div>
+
+            <!-- SIDEBAR RISORSE (RELAZIONE PDF E PRESENTAZIONE) -->
             <aside>
                 <div class="sidebar-card">
-                    <h4 data-i18n="sideT">Risorse Download</h4>
-                    <a href="#" class="btn-link"><i class="fa-solid fa-file-pdf"></i> <span data-i18n="btnPdf">Relazione PDF</span></a>
-                    <a href="robotic_arm_presentation.html" target="_blank" class="btn-link" style="background:var(--accent)"><i class="fa-solid fa-display"></i> <span data-i18n="btnSli">Presentazione</span></a>
-                    <div style="margin-top:20px; text-align:center;">
-                        <div style="width:100px; height:100px; background:#f0f0f0; margin:0 auto; display:flex; align-items:center; justify-content:center; border-radius:10px; color:#ccc;">QR</div>
-                        <p style="font-size:0.7rem; font-weight:700; margin-top:10px;" data-i18n="qrT">SCANSIONA PER LA DEMO LIVE</p>
+                    <h4 data-i18n="sideT">Relazioni e Presentazioni</h4>
+                    <p style="font-size:0.85rem; color:var(--text-light); margin-bottom: 25px;" data-i18n="sideP">Accedi alla documentazione completa prodotta per il progetto.</p>
+                    
+                    <a href="#" class="btn-link">
+                        <i class="fa-solid fa-file-pdf"></i> <span data-i18n="btnPdf">Relazione PDF Completa</span>
+                    </a>
+                    <a href="robotic_arm_presentation.html" target="_blank" class="btn-link" style="background:var(--accent)">
+                        <i class="fa-solid fa-display"></i> <span data-i18n="btnSli">Presentazione Slide</span>
+                    </a>
+
+                    <div style="margin-top:30px; text-align:center; padding-top:20px; border-top: 1px dotted #ddd;">
+                        <div style="width:110px; height:110px; background:#f0f0f0; margin:0 auto; display:flex; align-items:center; justify-content:center; border-radius:12px; color:#ccc;">
+                            <i class="fa-solid fa-qrcode" style="font-size: 3rem;"></i>
+                        </div>
+                        <p style="font-size:0.75rem; font-weight:700; margin-top:10px;" data-i18n="qrT">SCANSIONA PER LA DEMO LIVE</p>
                     </div>
                 </div>
             </aside>
@@ -279,14 +335,21 @@
             badge: "Progetto Arduino Uno",
             heroP: "Un viaggio dalla progettazione 3D al controllo in tempo reale.",
             console: "Pannello di Controllo",
+            labelBase: "Rotazione Base: ",
+            labelElbow: "Angolo Gomito: ",
+            labelWrist: "Inclinazione Polso: ",
+            labelGripper: "Apertura Pinza: ",
             repTitle: "Relazione Tecnica",
-            s1H: "Progettazione in 3D",
-            s1P: "Realizzata con Fusion 360 studiando la distribuzione dei carichi per servi MG996R. La pinza a due falangi è ottimizzata per il grip.",
-            s2H: "Logica Arduino (C++)",
-            s2P: "Firmware con algoritmo di smoothing per movimenti fluidi.",
-            sideT: "Risorse Download",
-            btnPdf: "Scarica Relazione",
-            btnSli: "Presentazione Full",
+            s1H: "Progettazione Meccanica (CAD)",
+            s1P: "Analisi della struttura realizzata su Fusion 360 studiando la distribuzione dei carichi.",
+            s2H: "Codice Arduino (Firmware)",
+            s2P: "Lo sketch C++ completo per il controllo di 4 assi simultanei.",
+            s3H: "Conclusioni e Testing",
+            s3P: "Analisi finale dei test di carico e precisione del braccio fisico.",
+            sideT: "Relazioni e Presentazioni",
+            sideP: "Accedi alla documentazione completa prodotta per il progetto.",
+            btnPdf: "Relazione PDF Completa",
+            btnSli: "Presentazione Slide",
             qrT: "SCANSIONA PER LA DEMO LIVE",
             contactTitle: "Contattami",
             contactIntro: "Hai un progetto in mente? Scrivimi una mail."
@@ -307,14 +370,21 @@
             badge: "Arduino Uno Project",
             heroP: "A journey from 3D design to real-time control.",
             console: "Control Console",
+            labelBase: "Base Rotation: ",
+            labelElbow: "Elbow Angle: ",
+            labelWrist: "Wrist Tilt: ",
+            labelGripper: "Gripper Opening: ",
             repTitle: "Technical Report",
-            s1H: "3D Design Phase",
-            s1P: "Design crafted in Fusion 360 analyzing load distribution. Two-finger gripper optimized for grip.",
-            s2H: "Arduino Logic (C++)",
-            s2P: "Firmware featuring smoothing algorithms for fluid motion.",
-            sideT: "Download Resources",
-            btnPdf: "Download Report",
-            btnSli: "Full Presentation",
+            s1H: "Mechanical Design (CAD)",
+            s1P: "Analysis of the structure created in Fusion 360 studying the load distribution.",
+            s2H: "Arduino Code (Firmware)",
+            s2P: "The full C++ sketch for controlling 4 simultaneous axes.",
+            s3H: "Conclusion & Testing",
+            s3P: "Final analysis of load and precision tests on the physical arm.",
+            sideT: "Reports & Presentations",
+            sideP: "Access the full documentation produced for the project.",
+            btnPdf: "Full PDF Report",
+            btnSli: "Slides Presentation",
             qrT: "SCAN FOR LIVE DEMO",
             contactTitle: "Contact Me",
             contactIntro: "Have a project in mind? Email me."
@@ -326,12 +396,19 @@
         if(btn) btn.classList.add('active');
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
-            if (translations[lang] && translations[lang][key]) el.innerText = translations[lang][key];
+            if (translations[lang] && translations[lang][key]) {
+                const span = el.querySelector('span');
+                if (span) {
+                    const originalText = translations[lang][key];
+                    el.childNodes[0].textContent = originalText;
+                } else {
+                    el.innerText = translations[lang][key];
+                }
+            }
         });
         document.documentElement.lang = lang;
     }
 
-    // NAVIGAZIONE
     function showProject(id) {
         document.getElementById('home-view').classList.add('hidden');
         document.getElementById('project-arm-view').classList.remove('hidden');
@@ -343,24 +420,29 @@
         window.scrollTo(0,0);
     }
 
-    // INTERAZIONE SIMULATORE
     function interact(part, val) {
         if(part === 'base') {
             document.getElementById('label-base').innerText = val;
             document.getElementById('ui-base').style.transform = `rotate(${val - 90}deg)`;
-            document.getElementById('code-2').innerText = `baseServo.write(${val});`;
-            glow('code-2');
+            document.getElementById('code-base').innerText = `baseServo.write(${val});`;
+            glow('code-base');
         } else if(part === 'elbow') {
             document.getElementById('label-elbow').innerText = val;
             document.getElementById('ui-elbow').style.transform = `rotate(${val - 45}deg)`;
-            document.getElementById('code-3').innerText = `elbowServo.write(${val});`;
-            glow('code-3');
+            document.getElementById('code-elbow').innerText = `elbowServo.write(${val});`;
+            glow('code-elbow');
+        } else if(part === 'wrist') {
+            document.getElementById('label-wrist').innerText = val;
+            document.getElementById('ui-wrist').style.transform = `rotate(${val}deg)`;
+            const arduinoVal = parseInt(val) + 90; 
+            document.getElementById('code-wrist').innerText = `wristServo.write(${arduinoVal});`;
+            glow('code-wrist');
         } else if(part === 'gripper') {
             document.getElementById('label-gripper').innerText = val;
-            document.getElementById('ui-finger-l').style.transform = `rotate(${-val}deg)`;
-            document.getElementById('ui-finger-r').style.transform = `rotate(${val}deg)`;
-            document.getElementById('code-4').innerText = `gripperServo.write(${val});`;
-            glow('code-4');
+            document.getElementById('ui-phal-l').style.transform = `rotate(${-val}deg)`;
+            document.getElementById('ui-phal-r').style.transform = `rotate(${val}deg)`;
+            document.getElementById('code-gripper').innerText = `gripperServo.write(${val});`;
+            glow('code-gripper');
         }
     }
     function glow(id) {
