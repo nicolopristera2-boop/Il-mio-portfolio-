@@ -73,15 +73,22 @@
 
         /* Digital Twin Widget */
         .twin-box { background: #0f172a; border-radius: 30px; overflow: hidden; display: grid; grid-template-columns: 1.2fr 0.8fr; margin: 40px 0; box-shadow: 0 30px 60px rgba(0,0,0,0.15); border: 1px solid #334155; }
-        .visualizer { padding: 60px; display: flex; align-items: center; justify-content: center; position: relative; min-height: 450px; background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%); }
+        .visualizer { padding: 60px; display: flex; align-items: center; justify-content: center; position: relative; min-height: 480px; background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%); }
         .controls { padding: 50px; background: #1e293b; border-left: 1px solid #334155; }
         
+        /* Robot CSS */
         .robot-base { width: 100px; height: 30px; background: var(--primary); border-radius: 8px; position: relative; box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
         .arm-seg { width: 16px; height: 120px; background: #94a3b8; position: absolute; bottom: 30px; left: 42px; transform-origin: bottom center; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border-radius: 8px; }
-        .arm-seg-2 { width: 12px; height: 100px; background: var(--primary); position: absolute; top: -95px; left: 2px; transform-origin: bottom center; transition: 0.6s ease; border-radius: 6px; }
+        .arm-seg-2 { width: 12px; height: 100px; background: var(--primary); position: absolute; top: -115px; left: 2px; transform-origin: bottom center; transition: 0.6s ease; border-radius: 6px; }
+        
+        /* Gancio a due falangi */
+        .gripper-base { position: absolute; top: -15px; left: -14px; width: 40px; height: 15px; background: #64748b; border-radius: 4px; }
+        .finger { position: absolute; width: 6px; height: 25px; background: #cbd5e1; border-radius: 2px; top: -20px; transition: 0.3s ease; }
+        .finger-l { left: 5px; transform-origin: bottom right; transform: rotate(-15deg); }
+        .finger-r { right: 5px; transform-origin: bottom left; transform: rotate(15deg); }
 
-        .control-item { margin-bottom: 30px; }
-        .control-item label { display: block; color: #94a3b8; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 12px; }
+        .control-item { margin-bottom: 25px; }
+        .control-item label { display: block; color: #94a3b8; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; }
         .slider { width: 100%; height: 8px; background: #334155; border-radius: 10px; outline: none; -webkit-appearance: none; cursor: pointer; }
         .slider::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; background: var(--primary); border-radius: 50%; border: 4px solid #1e293b; }
 
@@ -148,6 +155,20 @@
                     </div>
                     <a href="https://nicolopristera2-boop.github.io/Giochini-online-/" class="btn-action" target="_blank" style="background:#24292e">GitHub</a>
                 </div>
+
+                <!-- CARD STAZIONE METEO (RESTORED) -->
+                <div class="project-card" style="border-left: 5px solid #ffa502;">
+                    <div>
+                        <h3 data-i18n="proj2Title">🌡️ Stazione Meteo</h3>
+                        <div class="tags-container">
+                            <span class="tag">C++</span>
+                            <span class="tag">Arduino</span>
+                            <span class="tag">Sensors</span> 
+                        </div>
+                        <p data-i18n="proj2Desc">Prossimamente: Un sistema embedded di lettura temperatura e umidità con log dei dati su SD Card.</p>
+                    </div>
+                    <span style="font-size: 0.8rem; color: #aaa; font-style: italic;">Work in progress...</span>
+                </div>
             </div>
         </section>
 
@@ -173,9 +194,17 @@
         <!-- SIMULATORE INTERATTIVO -->
         <div class="twin-box">
             <div class="visualizer">
-                <div style="position:absolute; top:20px; left:20px; color:#475569; font-size:0.7rem; font-weight:800;">VIRTUAL ENGINE v1.0</div>
+                <div style="position:absolute; top:20px; left:20px; color:#475569; font-size:0.7rem; font-weight:800;">VIRTUAL ENGINE v1.1</div>
                 <div class="robot-base">
-                    <div class="arm-seg" id="ui-base"><div class="arm-seg-2" id="ui-elbow"></div></div>
+                    <div class="arm-seg" id="ui-base">
+                        <div class="arm-seg-2" id="ui-elbow">
+                            <!-- Gancio a due falangi -->
+                            <div class="gripper-base">
+                                <div class="finger finger-l" id="ui-finger-l"></div>
+                                <div class="finger finger-r" id="ui-finger-r"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="controls">
@@ -188,10 +217,15 @@
                     <label>Elbow Angle: <span id="label-elbow" style="color:var(--primary)">45</span>°</label>
                     <input type="range" min="0" max="180" value="45" class="slider" oninput="interact('elbow', this.value)">
                 </div>
+                <div class="control-item">
+                    <label>Gripper (Falangi): <span id="label-gripper" style="color:var(--primary)">15</span>°</label>
+                    <input type="range" min="5" max="45" value="15" class="slider" oninput="interact('gripper', this.value)">
+                </div>
                 <div class="code-display">
                     <div id="code-1">// Arduino Output</div>
                     <div id="code-2">baseServo.write(90);</div>
                     <div id="code-3">elbowServo.write(45);</div>
+                    <div id="code-4">gripperServo.write(15);</div>
                 </div>
             </div>
         </div>
@@ -203,13 +237,13 @@
                 <div class="step">
                     <span class="step-num">01</span>
                     <h3 data-i18n="s1H">Progettazione in 3D</h3>
-                    <p data-i18n="s1P">Realizzata con Fusion 360 studiando la distribuzione dei carichi per servi MG996R.</p>
+                    <p data-i18n="s1P">Realizzata con Fusion 360 studiando la distribuzione dei carichi per servi MG996R. La pinza a due falangi è stata ottimizzata per il grip di oggetti leggeri.</p>
                     <div class="img-box"><i class="fa-solid fa-cube" style="font-size:3rem"></i><span>[Render CAD]</span></div>
                 </div>
                 <div class="step">
                     <span class="step-num">02</span>
                     <h3 data-i18n="s2H">Logica Arduino (C++)</h3>
-                    <p data-i18n="s2P">Firmware con algoritmo di smoothing per movimenti fluidi.</p>
+                    <p data-i18n="s2P">Firmware con algoritmo di smoothing per movimenti fluidi e controllo coordinato dei tre servomotori principali.</p>
                 </div>
             </div>
             <aside>
@@ -239,13 +273,15 @@
             btnExplore: "Approfondisci Progetto",
             proj1Title: "🎮 Sito Videogiochi",
             proj1Desc: "Un sito che funge da contenitore per giochi autoprodotti.",
+            proj2Title: "🌡️ Stazione Meteo",
+            proj2Desc: "Prossimamente: Un sistema embedded di lettura temperatura e umidità con log dei dati su SD Card.",
             btnBack: "Torna ai Progetti",
             badge: "Progetto Arduino Uno",
             heroP: "Un viaggio dalla progettazione 3D al controllo in tempo reale.",
             console: "Pannello di Controllo",
             repTitle: "Relazione Tecnica",
             s1H: "Progettazione in 3D",
-            s1P: "Realizzata con Fusion 360 studiando la distribuzione dei carichi per servi MG996R.",
+            s1P: "Realizzata con Fusion 360 studiando la distribuzione dei carichi per servi MG996R. La pinza a due falangi è ottimizzata per il grip.",
             s2H: "Logica Arduino (C++)",
             s2P: "Firmware con algoritmo di smoothing per movimenti fluidi.",
             sideT: "Risorse Download",
@@ -265,13 +301,15 @@
             btnExplore: "Explore Project",
             proj1Title: "🎮 Video Game Website",
             proj1Desc: "A responsive website acting as a hub for self-produced games.",
+            proj2Title: "🌡️ Weather Station",
+            proj2Desc: "Coming soon: An embedded system for temperature and humidity logging on SD Card.",
             btnBack: "Back to Projects",
             badge: "Arduino Uno Project",
             heroP: "A journey from 3D design to real-time control.",
             console: "Control Console",
             repTitle: "Technical Report",
             s1H: "3D Design Phase",
-            s1P: "Design crafted in Fusion 360 analyzing load distribution for MG996R servos.",
+            s1P: "Design crafted in Fusion 360 analyzing load distribution. Two-finger gripper optimized for grip.",
             s2H: "Arduino Logic (C++)",
             s2P: "Firmware featuring smoothing algorithms for fluid motion.",
             sideT: "Download Resources",
@@ -312,11 +350,17 @@
             document.getElementById('ui-base').style.transform = `rotate(${val - 90}deg)`;
             document.getElementById('code-2').innerText = `baseServo.write(${val});`;
             glow('code-2');
-        } else {
+        } else if(part === 'elbow') {
             document.getElementById('label-elbow').innerText = val;
             document.getElementById('ui-elbow').style.transform = `rotate(${val - 45}deg)`;
             document.getElementById('code-3').innerText = `elbowServo.write(${val});`;
             glow('code-3');
+        } else if(part === 'gripper') {
+            document.getElementById('label-gripper').innerText = val;
+            document.getElementById('ui-finger-l').style.transform = `rotate(${-val}deg)`;
+            document.getElementById('ui-finger-r').style.transform = `rotate(${val}deg)`;
+            document.getElementById('code-4').innerText = `gripperServo.write(${val});`;
+            glow('code-4');
         }
     }
     function glow(id) {
