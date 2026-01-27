@@ -7,7 +7,8 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
         /* --- VARIABILI COLORI --- */
@@ -15,347 +16,313 @@
             --primary: #00979D;
             --primary-dark: #007a80;
             --accent: #2d3436;
-            --bg-color: #f8f9fa;
+            --bg-color: #f8fbfb;
             --card-bg: #ffffff;
             --text-main: #2d3436;
             --text-light: #636e72;
             --shadow: 0 10px 30px rgba(0,0,0,0.08);
-            --radius: 16px;
+            --radius: 20px;
         }
 
         /* --- RESET & BASE --- */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: var(--bg-color); 
-            color: var(--text-main); 
-            line-height: 1.6;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; overflow-x: hidden; scroll-behavior: smooth; }
+        h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; color: var(--accent); }
+        .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+        .hidden { display: none !important; }
+        a { text-decoration: none; transition: 0.3s; }
 
-        h1, h2, h3 { font-family: 'Poppins', sans-serif; color: var(--accent); }
-
-        /* --- HEADER --- */
+        /* --- NAV & HEADER --- */
         header { 
             background: linear-gradient(135deg, var(--primary), var(--primary-dark)); 
-            color: white; 
-            padding: 4rem 2rem; 
-            text-align: center; 
-            position: relative; 
-            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%); /* Taglio obliquo moderno */
+            color: white; padding: 4rem 2rem; text-align: center; position: relative; 
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
             margin-bottom: 30px;
         }
-
         header h1 { font-size: 3rem; margin-bottom: 10px; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        header p { font-size: 1.1rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+        .lang-switch { position: absolute; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 100; }
+        .lang-btn { background: rgba(255,255,255,0.1); border: none; color: white; padding: 5px 12px; cursor: pointer; border-radius: 50px; font-weight: 600; backdrop-filter: blur(5px); transition: 0.3s; }
+        .lang-btn.active { background: white; color: var(--primary); }
 
-        /* --- LINGUA --- */
-        .lang-switch {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            gap: 10px;
-            background: rgba(255,255,255,0.1);
-            padding: 5px;
-            border-radius: 50px;
-            backdrop-filter: blur(5px);
+        /* --- HOME: GRIGLIA PROGETTI --- */
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 20px; }
+        .project-card { 
+            background: var(--card-bg); border-radius: var(--radius); padding: 30px; 
+            box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.05); transition: 0.3s ease; 
+            display: flex; flex-direction: column; justify-content: space-between;
         }
-
-        .lang-btn {
-            background: transparent;
-            border: none;
-            color: white;
-            padding: 5px 12px;
-            cursor: pointer;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            transition: 0.3s;
-        }
-
-        .lang-btn:hover, .lang-btn:focus { background: white; color: var(--primary); transform: scale(1.05); }
-
-        /* --- CONTAINER --- */
-        .container { 
-            max-width: 1000px; 
-            margin: 0 auto; 
-            padding: 20px; 
-        }
-
-        section { margin-bottom: 60px; }
-
-        h2 { 
-            font-size: 2rem; 
-            margin-bottom: 10px; 
-            position: relative; 
-            display: inline-block;
-        }
-        
-        /* Sottolineatura stilosa */
-        h2::after {
-            content: '';
-            display: block;
-            width: 50px;
-            height: 4px;
-            background: var(--primary);
-            border-radius: 2px;
-            margin-top: 5px;
-        }
-
-        p.intro-text { color: var(--text-light); margin-bottom: 30px; }
-
-        /* --- GRIGLIA PROGETTI --- */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsivo automatico */
-            gap: 25px;
-        }
-
-        .project-card {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            padding: 30px;
-            box-shadow: var(--shadow);
-            border: 1px solid rgba(0,0,0,0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .project-card:hover { 
-            transform: translateY(-5px); 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.12); 
-            border-color: var(--primary);
-        }
-
-        .project-card h3 { margin-bottom: 10px; font-size: 1.4rem; }
-        .project-card p { color: var(--text-light); margin-bottom: 20px; flex-grow: 1; }
-
-        /* --- TAGS --- */
+        .project-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.12); border-color: var(--primary); }
         .tags-container { margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 8px; }
-        .tag { 
-            background: #e0f2f1; 
-            color: var(--primary-dark); 
-            padding: 4px 10px; 
-            border-radius: 6px; 
-            font-size: 0.75rem; 
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+        .tag { background: #e0f2f1; color: var(--primary-dark); padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
 
         /* --- BOTTONI --- */
-        .btn-github {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #24292e;
-            color: white;
-            padding: 12px 20px;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: 0.3s;
-            gap: 8px;
+        .btn-action { 
+            display: inline-flex; align-items: center; justify-content: center; 
+            background-color: var(--primary); color: white; padding: 12px 20px; 
+            border-radius: 8px; font-weight: 600; cursor: pointer; border: none; gap: 8px; width: 100%;
         }
+        .btn-action:hover { background-color: var(--primary-dark); transform: scale(1.02); }
+        .btn-cv { display: inline-block; margin-top: 25px; padding: 10px 25px; border: 2px solid white; color: white; border-radius: 50px; font-weight: 600; backdrop-filter: blur(4px); }
 
-        .btn-github:hover { background-color: #000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        /* --- PROJECT PAGE STYLES --- */
+        .badge { background: #e0f2f1; color: var(--primary-dark); padding: 6px 16px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 20px; display: inline-block; }
+        .hero-project { text-align: center; padding: 40px 0; }
+        .hero-project h1 { font-size: 3.5rem; margin-bottom: 20px; }
+
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; color: var(--primary); font-weight: 700; margin-bottom: 30px; cursor: pointer; }
+
+        /* Digital Twin Widget */
+        .twin-box { background: #0f172a; border-radius: 30px; overflow: hidden; display: grid; grid-template-columns: 1.2fr 0.8fr; margin: 40px 0; box-shadow: 0 30px 60px rgba(0,0,0,0.15); border: 1px solid #334155; }
+        .visualizer { padding: 60px; display: flex; align-items: center; justify-content: center; position: relative; min-height: 450px; background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%); }
+        .controls { padding: 50px; background: #1e293b; border-left: 1px solid #334155; }
         
-        .icon { width: 20px; height: 20px; fill: white; }
+        .robot-base { width: 100px; height: 30px; background: var(--primary); border-radius: 8px; position: relative; box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
+        .arm-seg { width: 16px; height: 120px; background: #94a3b8; position: absolute; bottom: 30px; left: 42px; transform-origin: bottom center; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border-radius: 8px; }
+        .arm-seg-2 { width: 12px; height: 100px; background: var(--primary); position: absolute; top: -95px; left: 2px; transform-origin: bottom center; transition: 0.6s ease; border-radius: 6px; }
 
-        .btn-cv {
-            display: inline-block;
-            margin-top: 25px;
-            padding: 10px 25px;
-            border: 2px solid rgba(255, 255, 255, 0.8);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(4px);
-        }
+        .control-item { margin-bottom: 30px; }
+        .control-item label { display: block; color: #94a3b8; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 12px; }
+        .slider { width: 100%; height: 8px; background: #334155; border-radius: 10px; outline: none; -webkit-appearance: none; cursor: pointer; }
+        .slider::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; background: var(--primary); border-radius: 50%; border: 4px solid #1e293b; }
 
-        .btn-cv:hover {
-            background-color: white;
-            color: var(--primary);
-            border-color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
+        .code-display { background: #000; padding: 25px; border-radius: 15px; font-family: 'Fira Code', monospace; font-size: 0.85rem; color: #4ade80; margin-top: 30px; border: 1px solid #334155; }
+        .code-line.active { color: white; background: rgba(0, 151, 157, 0.25); border-radius: 4px; padding: 0 5px; }
 
-        /* --- CONTATTI --- */
-        .contact-box {
-            background: var(--primary);
-            color: white;
-            padding: 40px;
-            border-radius: var(--radius);
-            text-align: center;
-            box-shadow: var(--shadow);
-        }
-        
-        .contact-box h2 { color: white; }
-        .contact-box h2::after { background: white; margin: 5px auto 0; }
-        .contact-box p { color: rgba(255,255,255,0.9); margin-bottom: 20px; }
-        
-        .btn-email {
-            background: white;
-            color: var(--primary);
-            padding: 12px 30px;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            display: inline-block;
-            transition: 0.3s;
-        }
-        .btn-email:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        /* Report Grid */
+        .report-grid { display: grid; grid-template-columns: 1fr 340px; gap: 50px; margin: 60px 0; }
+        .step { margin-bottom: 70px; }
+        .step-num { font-size: 3rem; font-weight: 800; color: #e2e8f0; line-height: 1; margin-bottom: -15px; display: block; }
+        .step h3 { font-size: 1.8rem; margin-bottom: 20px; }
+        .step p { color: var(--text-light); }
+        .img-box { width: 100%; height: 300px; background: #edf2f2; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #adb5bd; margin-top: 20px; border: 2px dashed #ccd6d6; }
 
-        @media (max-width: 600px) {
+        .sidebar-card { background: white; padding: 35px; border-radius: 25px; box-shadow: var(--shadow); position: sticky; top: 40px; }
+        .btn-link { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; padding: 16px; background: var(--primary); color: white; border-radius: 14px; font-weight: 700; margin-bottom: 15px; }
+
+        @media (max-width: 950px) {
+            .twin-box, .report-grid { grid-template-columns: 1fr; }
             header h1 { font-size: 2.2rem; }
-            .lang-switch { top: 10px; right: 10px; }
-            header { padding: 3rem 1rem; clip-path: none; border-radius: 0 0 20px 20px; }
+            .sidebar-card { position: static; }
         }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="lang-switch">
-        <button class="lang-btn" onclick="setLanguage('it')">IT</button>
-        <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+<!-- HOME VIEW -->
+<div id="home-view">
+    <header>
+        <div class="lang-switch">
+            <button class="lang-btn active" onclick="setLanguage('it', this)">IT</button>
+            <button class="lang-btn" onclick="setLanguage('en', this)">EN</button>
+        </div>
+        <h1>Nicolò Pristerà</h1>
+        <p data-i18n="roleSubtitle">Sviluppatore Firmware | C - Arduino Specialist | Web Development</p>
+        <a href="cv.html" target="_blank" class="btn-cv" data-i18n="btnCV">📄 Il mio CV</a>
+    </header>
+
+    <div class="container">
+        <section>
+            <h2 data-i18n="projectsTitle">I Miei Progetti</h2>
+            <p class="intro-text" data-i18n="projectsIntro">Qui puoi trovare il codice sorgente dei miei lavori, caricato su GitHub.</p>
+
+            <div class="projects-grid">
+                <!-- CARD BRACCIO ROBOTICO -->
+                <div class="project-card" style="border-top: 5px solid var(--primary);">
+                    <div>
+                        <h3 data-i18n="projArmTitle">🦾 Braccio Robotico Digital Twin</h3>
+                        <div class="tags-container">
+                            <span class="tag">Arduino</span>
+                            <span class="tag">C++</span>
+                            <span class="tag">Digital Twin</span> 
+                        </div>
+                        <p data-i18n="projArmDesc">Un progetto che unisce meccanica fisica e simulazione web interattiva tramite Gemello Digitale.</p>
+                    </div>
+                    <button class="btn-action" onclick="showProject('arm')" data-i18n="btnExplore">Approfondisci Progetto</button>
+                </div>
+
+                <div class="project-card">
+                    <div>
+                        <h3 data-i18n="proj1Title">🎮 Sito Videogiochi</h3>
+                        <div class="tags-container"><span class="tag">JS</span><span class="tag">HTML</span></div>
+                        <p data-i18n="proj1Desc">Un contenitore per giochi autoprodotti. Design responsivo.</p>
+                    </div>
+                    <a href="https://nicolopristera2-boop.github.io/Giochini-online-/" class="btn-action" target="_blank" style="background:#24292e">GitHub</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-box" style="background:var(--primary); color:white; padding:40px; border-radius:var(--radius); text-align:center;">
+            <h2 style="color:white" data-i18n="contactTitle">Contattami</h2>
+            <p data-i18n="contactIntro">Hai un progetto in mente? Scrivimi una mail.</p>
+            <a href="mailto:nicolopristera2@gmail.com" class="btn-cv" style="background:white; color:var(--primary); border:none;">Scrivimi</a>
+        </section>
     </div>
+</div>
 
-    <h1>Nicolò Pristerà</h1>
-    <p data-i18n="roleSubtitle">Sviluppatore Firmware | C - Arduino Specialist | Web Development</p>
-    
-    <a href="cv.html" target="_blank" class="btn-cv" data-i18n="btnCV">
-        📄 Il mio CV
-    </a>
-</header>
+<!-- PROJECT DETAIL VIEW: ARM -->
+<div id="project-arm-view" class="hidden">
+    <div class="container">
+        <div class="btn-back" onclick="showHome()">← <span data-i18n="btnBack">Torna ai Progetti</span></div>
+        
+        <header class="hero-project" style="background:transparent; color:var(--accent); clip-path:none; padding:0; margin:0;">
+            <span class="badge" data-i18n="badge">Progetto Arduino Uno</span>
+            <h1 data-i18n="projArmTitle">Braccio Robotico Digital Twin</h1>
+            <p style="color:var(--text-light)" data-i18n="heroP">Dalla progettazione 3D al controllo in tempo reale.</p>
+        </header>
 
-<div class="container">
-    
-    <section>
-        <h2 data-i18n="projectsTitle">I Miei Progetti</h2>
-        <p class="intro-text" data-i18n="projectsIntro">Qui puoi trovare il codice sorgente dei miei lavori, caricato su GitHub.</p>
-
-        <div class="projects-grid">
-            <!-- PROGETTO 1: BRACCIO ROBOTICO (NUOVO) -->
-            <div class="project-card" style="border-top: 5px solid var(--primary);">
-                <div>
-                    <h3 data-i18n="projArmTitle">🦾 Braccio Robotico Digital Twin</h3>
-                    <div class="tags-container">
-                        <span class="tag">Arduino</span>
-                        <span class="tag">C++</span>
-                        <span class="tag">Web Interface</span> 
-                    </div>
-                    <p data-i18n="projArmDesc">Un progetto che unisce meccanica fisica e simulazione web interattiva tramite Gemello Digitale.</p>
+        <!-- SIMULATORE INTERATTIVO -->
+        <div class="twin-box">
+            <div class="visualizer">
+                <div style="position:absolute; top:20px; left:20px; color:#475569; font-size:0.7rem; font-weight:800;">VIRTUAL ENGINE v1.0</div>
+                <div class="robot-base">
+                    <div class="arm-seg" id="ui-base"><div class="arm-seg-2" id="ui-elbow"></div></div>
                 </div>
-                <a href="#" class="btn-github" data-i18n="btnExplore">
-                    Esplora Progetto
-                </a>
             </div>
-
-            <!-- PROGETTO 2: VIDEOGIOCHI -->
-            <div class="project-card">
-                <div>
-                    <h3 data-i18n="proj1Title">🎮 Sito Videogiochi</h3>
-                    <div class="tags-container">
-                        <span class="tag">HTML5</span>
-                        <span class="tag">CSS3</span>
-                        <span class="tag">Javascript</span> 
-                    </div>
-                    <p data-i18n="proj1Desc">Un sito che funge da contenitore per giochi autoprodotti. Design responsivo e interattivo.</p>
+            <div class="controls">
+                <h4 style="color:white; margin-bottom: 25px;" data-i18n="console">Pannello di Controllo</h4>
+                <div class="control-item">
+                    <label>Base Rotation: <span id="label-base" style="color:var(--primary)">90</span>°</label>
+                    <input type="range" min="0" max="180" value="90" class="slider" oninput="interact('base', this.value)">
                 </div>
-                
-                <a href="https://nicolopristera2-boop.github.io/Giochini-online-/" class="btn-github" target="_blank" data-i18n="btnViewCode">
-                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                    GitHub
-                </a>
-            </div>
-
-            <!-- PROGETTO 3: STAZIONE METEO -->
-            <div class="project-card" style="border-left: 5px solid #ffa502;">
-                <div>
-                    <h3 data-i18n="proj2Title">🌡️ Stazione Meteo</h3>
-                    <div class="tags-container">
-                        <span class="tag">C++</span>
-                        <span class="tag">Arduino</span>
-                        <span class="tag">Sensors</span> 
-                    </div>
-                    <p data-i18n="proj2Desc">Prossimamente: Un sistema embedded di lettura temperatura e umidità con log dei dati su SD Card.</p>
+                <div class="control-item">
+                    <label>Elbow Angle: <span id="label-elbow" style="color:var(--primary)">45</span>°</label>
+                    <input type="range" min="0" max="180" value="45" class="slider" oninput="interact('elbow', this.value)">
                 </div>
-                <span style="font-size: 0.8rem; color: #aaa; font-style: italic;">Work in progress...</span>
+                <div class="code-display">
+                    <div id="code-1">// Arduino Output</div>
+                    <div id="code-2">baseServo.write(90);</div>
+                    <div id="code-3">elbowServo.write(45);</div>
+                </div>
             </div>
         </div>
 
-    </section>
-
-    <section class="contact-box">
-        <h2 data-i18n="contactTitle">Contattami</h2>
-        <p data-i18n="contactIntro">Hai un progetto in mente? Sono disponibile per collaborazioni freelance.</p>
-        <a href="mailto:nicolopristera2@gmail.com" class="btn-email" data-i18n="emailLink">Scrivimi una mail</a>
-    </section>
+        <!-- RELAZIONE -->
+        <div class="report-grid">
+            <div class="report-content">
+                <h2 style="margin-bottom: 40px;" data-i18n="repTitle">Relazione Tecnica</h2>
+                <div class="step">
+                    <span class="step-num">01</span>
+                    <h3 data-i18n="s1H">Progettazione in 3D</h3>
+                    <p data-i18n="s1P">Realizzata con Fusion 360 studiando la distribuzione dei carichi per servi MG996R.</p>
+                    <div class="img-box"><i class="fa-solid fa-cube" style="font-size:3rem"></i><span>[Render CAD]</span></div>
+                </div>
+                <div class="step">
+                    <span class="step-num">02</span>
+                    <h3 data-i18n="s2H">Logica Arduino (C++)</h3>
+                    <p data-i18n="s2P">Firmware con algoritmo di smoothing per movimenti fluidi.</p>
+                </div>
+            </div>
+            <aside>
+                <div class="sidebar-card">
+                    <h4 data-i18n="sideT">Risorse Download</h4>
+                    <a href="#" class="btn-link"><i class="fa-solid fa-file-pdf"></i> <span data-i18n="btnPdf">Relazione PDF</span></a>
+                    <a href="robotic_arm_presentation.html" target="_blank" class="btn-link" style="background:var(--accent)"><i class="fa-solid fa-display"></i> <span data-i18n="btnSli">Presentazione</span></a>
+                    <div style="margin-top:20px; text-align:center;">
+                        <div style="width:100px; height:100px; background:#f0f0f0; margin:0 auto; display:flex; align-items:center; justify-content:center; border-radius:10px; color:#ccc;">QR</div>
+                        <p style="font-size:0.7rem; font-weight:700; margin-top:10px;" data-i18n="qrT">SCANSIONA PER LA DEMO LIVE</p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
 </div>
 
 <script>
-    // --- DIZIONARIO TRADUZIONI ---
     const translations = {
         it: {
             roleSubtitle: "Sviluppatore Firmware | C - Arduino Specialist | Web Development",
             btnCV: "📄 Il mio CV",
             projectsTitle: "I Miei Progetti",
-            projectsIntro: "Una selezione dei miei lavori più recenti. Il codice sorgente è disponibile su GitHub.",
+            projectsIntro: "Qui puoi trovare il codice sorgente dei miei lavori, caricato su GitHub.",
             projArmTitle: "🦾 Braccio Robotico Digital Twin",
             projArmDesc: "Un progetto che unisce meccanica fisica e simulazione web interattiva tramite Gemello Digitale.",
-            btnExplore: "Esplora Progetto",
+            btnExplore: "Approfondisci Progetto",
             proj1Title: "🎮 Sito Videogiochi",
-            proj1Desc: "Un sito che funge da contenitore per giochi autoprodotti. Design responsivo e interattivo.",
-            btnViewCode: "GitHub",
-            proj2Title: "🌡️ Stazione Meteo",
-            proj2Desc: "Prossimamente: Un sistema embedded di lettura temperatura e umidità con log dei dati su SD Card.",
+            proj1Desc: "Un sito che funge da contenitore per giochi autoprodotti.",
+            btnBack: "Torna ai Progetti",
+            badge: "Progetto Arduino Uno",
+            heroP: "Un viaggio dalla progettazione 3D al controllo in tempo reale.",
+            console: "Pannello di Controllo",
+            repTitle: "Relazione Tecnica",
+            s1H: "Progettazione in 3D",
+            s1P: "Realizzata con Fusion 360 studiando la distribuzione dei carichi per servi MG996R.",
+            s2H: "Logica Arduino (C++)",
+            s2P: "Firmware con algoritmo di smoothing per movimenti fluidi.",
+            sideT: "Risorse Download",
+            btnPdf: "Scarica Relazione",
+            btnSli: "Presentazione Full",
+            qrT: "SCANSIONA PER LA DEMO LIVE",
             contactTitle: "Contattami",
-            contactIntro: "Hai un progetto in mente? Sono disponibile per collaborazioni freelance.",
-            emailLink: "Scrivimi una mail"
+            contactIntro: "Hai un progetto in mente? Scrivimi una mail."
         },
         en: {
             roleSubtitle: "Firmware Developer | C - Arduino Specialist | Web Development",
             btnCV: "📄 My Resume",
             projectsTitle: "My Projects",
-            projectsIntro: "A selection of my recent works. Source code is available on GitHub.",
+            projectsIntro: "Here you can find the source code of my works, uploaded to GitHub.",
             projArmTitle: "🦾 Robotic Arm Digital Twin",
             projArmDesc: "A project merging physical mechanics with interactive web simulation via Digital Twin.",
             btnExplore: "Explore Project",
             proj1Title: "🎮 Video Game Website",
-            proj1Desc: "A responsive website acting as a hub for self-produced browser games.",
-            btnViewCode: "GitHub",
-            proj2Title: "🌡️ Weather Station",
-            proj2Desc: "Coming soon: An embedded system for temperature and humidity logging on SD Card.",
+            proj1Desc: "A responsive website acting as a hub for self-produced games.",
+            btnBack: "Back to Projects",
+            badge: "Arduino Uno Project",
+            heroP: "A journey from 3D design to real-time control.",
+            console: "Control Console",
+            repTitle: "Technical Report",
+            s1H: "3D Design Phase",
+            s1P: "Design crafted in Fusion 360 analyzing load distribution for MG996R servos.",
+            s2H: "Arduino Logic (C++)",
+            s2P: "Firmware featuring smoothing algorithms for fluid motion.",
+            sideT: "Download Resources",
+            btnPdf: "Download Report",
+            btnSli: "Full Presentation",
+            qrT: "SCAN FOR LIVE DEMO",
             contactTitle: "Contact Me",
-            contactIntro: "Do you have a project in mind? I am available for freelance collaborations.",
-            emailLink: "Send me an email"
+            contactIntro: "Have a project in mind? Email me."
         }
     };
 
-    function setLanguage(lang) {
-        const elements = document.querySelectorAll('[data-i18n]');
-        elements.forEach(element => {
-            const key = element.getAttribute('data-i18n');
-            if (translations[lang] && translations[lang][key]) {
-                if(key === 'btnViewCode') {
-                    const svg = element.querySelector('svg');
-                    element.innerHTML = ''; 
-                    if(svg) element.appendChild(svg); 
-                    element.appendChild(document.createTextNode(" " + translations[lang][key]));
-                } else {
-                    element.innerText = translations[lang][key];
-                }
-            }
+    function setLanguage(lang, btn) {
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        if(btn) btn.classList.add('active');
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations[lang] && translations[lang][key]) el.innerText = translations[lang][key];
         });
         document.documentElement.lang = lang;
+    }
+
+    // NAVIGAZIONE
+    function showProject(id) {
+        document.getElementById('home-view').classList.add('hidden');
+        document.getElementById('project-arm-view').classList.remove('hidden');
+        window.scrollTo(0,0);
+    }
+    function showHome() {
+        document.getElementById('project-arm-view').classList.add('hidden');
+        document.getElementById('home-view').classList.remove('hidden');
+        window.scrollTo(0,0);
+    }
+
+    // INTERAZIONE SIMULATORE
+    function interact(part, val) {
+        if(part === 'base') {
+            document.getElementById('label-base').innerText = val;
+            document.getElementById('ui-base').style.transform = `rotate(${val - 90}deg)`;
+            document.getElementById('code-2').innerText = `baseServo.write(${val});`;
+            glow('code-2');
+        } else {
+            document.getElementById('label-elbow').innerText = val;
+            document.getElementById('ui-elbow').style.transform = `rotate(${val - 45}deg)`;
+            document.getElementById('code-3').innerText = `elbowServo.write(${val});`;
+            glow('code-3');
+        }
+    }
+    function glow(id) {
+        const el = document.getElementById(id);
+        el.classList.add('active');
+        setTimeout(() => el.classList.remove('active'), 500);
     }
 </script>
 
