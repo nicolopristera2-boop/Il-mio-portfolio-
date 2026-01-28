@@ -65,11 +65,46 @@
         .btn-cv { display: inline-block; margin-top: 25px; padding: 10px 25px; border: 2px solid white; color: white; border-radius: 50px; font-weight: 600; backdrop-filter: blur(4px); }
 
         /* --- PROJECT PAGE STYLES --- */
-        .badge { background: #e0f2f1; color: var(--primary-dark); padding: 6px 16px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 20px; display: inline-block; }
-        .hero-project { text-align: center; padding: 40px 0; }
-        .hero-project h1 { font-size: 3.5rem; margin-bottom: 20px; }
+        .badge { 
+            background: #e0f2f1; 
+            color: var(--primary-dark); 
+            padding: 8px 20px; 
+            border-radius: 50px; 
+            font-size: 0.8rem; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            margin-bottom: 15px; 
+            display: inline-block;
+            border: 1px solid rgba(0, 151, 157, 0.2);
+        }
+        
+        .hero-project { 
+            text-align: center; 
+            padding: 20px 0 40px; 
+        }
+        
+        /* MIGLIORAMENTO TITOLO PROGETTO */
+        .hero-project h1 { 
+            font-size: 3.8rem; 
+            margin-bottom: 15px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.05));
+            letter-spacing: -1px;
+        }
+        
+        .hero-project p {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            font-weight: 500;
+            max-width: 800px;
+            margin: 0 auto;
+        }
 
-        .btn-back { display: inline-flex; align-items: center; gap: 8px; color: var(--primary); font-weight: 700; margin-bottom: 30px; cursor: pointer; }
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; color: var(--primary); font-weight: 700; margin-bottom: 30px; cursor: pointer; transition: 0.3s; }
+        .btn-back:hover { color: var(--primary-dark); transform: translateX(-5px); }
 
         /* Digital Twin Widget */
         .twin-box { background: #0f172a; border-radius: 30px; overflow: hidden; display: grid; grid-template-columns: 1.2fr 0.8fr; margin: 40px 0; box-shadow: 0 30px 60px rgba(0,0,0,0.15); border: 1px solid #334155; }
@@ -91,31 +126,23 @@
         .slider { width: 100%; height: 6px; background: #334155; border-radius: 10px; outline: none; -webkit-appearance: none; cursor: pointer; }
         .slider::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: var(--primary); border-radius: 50%; border: 3px solid #1e293b; }
 
-        /* Console Codice Arduino nel Simulatore */
         .code-display { background: #000; padding: 20px; border-radius: 15px; font-family: 'Fira Code', monospace; font-size: 0.8rem; color: #4ade80; margin-top: 20px; border: 1px solid #334155; }
         .code-line.active { color: white; background: rgba(0, 151, 157, 0.25); border-radius: 4px; padding: 0 5px; }
-
-        /* Blocchi Codice Relazione */
-        .full-code-block { background: #1e1e1e; color: #d4d4d4; padding: 25px; border-radius: 15px; font-family: 'Fira Code', monospace; font-size: 0.9rem; overflow-x: auto; margin: 20px 0; border-left: 5px solid var(--primary); }
 
         /* Report Grid */
         .report-grid { display: grid; grid-template-columns: 1fr 340px; gap: 50px; margin: 60px 0; }
         .step { margin-bottom: 70px; }
         .step-num { font-size: 3rem; font-weight: 800; color: #e2e8f0; line-height: 1; margin-bottom: -15px; display: block; }
         .step h3 { font-size: 1.8rem; margin-bottom: 20px; }
-        .step p { color: var(--text-light); margin-bottom: 20px; }
-        .img-box { width: 100%; height: 350px; background: #edf2f2; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #adb5bd; margin-top: 20px; border: 2px dashed #ccd6d6; overflow: hidden; position: relative; }
-        .img-box img { width: 100%; height: 100%; object-fit: cover; }
-
-        .btn-download { display: inline-flex; align-items: center; gap: 10px; background: var(--accent); color: white; padding: 10px 20px; border-radius: 10px; font-size: 0.9rem; font-weight: 600; margin-top: 15px; }
-        .btn-download:hover { background: #000; }
+        .step p { color: var(--text-light); }
+        .img-box { width: 100%; height: 300px; background: #edf2f2; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #adb5bd; margin-top: 20px; border: 2px dashed #ccd6d6; }
 
         .sidebar-card { background: white; padding: 35px; border-radius: 25px; box-shadow: var(--shadow); position: sticky; top: 40px; }
         .btn-link { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; padding: 16px; background: var(--primary); color: white; border-radius: 14px; font-weight: 700; margin-bottom: 15px; }
 
         @media (max-width: 950px) {
             .twin-box, .report-grid { grid-template-columns: 1fr; }
-            header h1 { font-size: 2.2rem; }
+            .hero-project h1 { font-size: 2.8rem; }
             .sidebar-card { position: static; }
         }
     </style>
@@ -193,16 +220,16 @@
     <div class="container">
         <div class="btn-back" onclick="showHome()">← <span data-i18n="btnBack">Torna ai Progetti</span></div>
         
-        <header class="hero-project" style="background:transparent; color:var(--accent); clip-path:none; padding:0; margin:0;">
+        <header class="hero-project">
             <span class="badge" data-i18n="badge">Progetto Arduino Uno</span>
             <h1 data-i18n="projArmTitle">Braccio Robotico Digital Twin</h1>
-            <p style="color:var(--text-light)" data-i18n="heroP">Dalla progettazione 3D al controllo in tempo reale.</p>
+            <p data-i18n="heroP">Dalla progettazione 3D al controllo in tempo reale.</p>
         </header>
 
-        <!-- 1. SIMULATORE INTERATTIVO (DIGITAL TWIN) -->
+        <!-- SIMULATORE INTERATTIVO -->
         <div class="twin-box">
             <div class="visualizer">
-                <div style="position:absolute; top:20px; left:20px; color:#475569; font-size:0.7rem; font-weight:800;">VIRTUAL ENGINE v1.2</div>
+                <div style="position:absolute; top:20px; left:20px; color:#475569; font-size:0.7rem; font-weight:800;">VIRTUAL ENGINE v1.1</div>
                 <div class="robot-base">
                     <div class="arm-seg" id="ui-base">
                         <div class="arm-seg-2" id="ui-elbow">
@@ -226,16 +253,18 @@
                     <label data-i18n="labelElbow">Angolo Gomito: <span id="label-elbow" style="color:var(--primary)">45</span>°</label>
                     <input type="range" min="0" max="180" value="45" class="slider" oninput="interact('elbow', this.value)">
                 </div>
+                <!-- Slider Polso -->
                 <div class="control-item">
                     <label data-i18n="labelWrist">Inclinazione Polso: <span id="label-wrist" style="color:var(--primary)">0</span>°</label>
                     <input type="range" min="-90" max="90" value="0" class="slider" oninput="interact('wrist', this.value)">
                 </div>
+                <!-- Slider Pinza -->
                 <div class="control-item">
                     <label data-i18n="labelGripper">Apertura Pinza: <span id="label-gripper" style="color:var(--primary)">10</span>°</label>
                     <input type="range" min="0" max="40" value="10" class="slider" oninput="interact('gripper', this.value)">
                 </div>
                 <div class="code-display">
-                    <div id="code-header">// Arduino Preview</div>
+                    <div id="code-header">// Arduino Output</div>
                     <div id="code-base">baseServo.write(90);</div>
                     <div id="code-elbow">elbowServo.write(45);</div>
                     <div id="code-wrist">wristServo.write(90);</div>
@@ -244,72 +273,30 @@
             </div>
         </div>
 
-        <!-- 2. RELAZIONE TECNICA E CODICE -->
+        <!-- RELAZIONE -->
         <div class="report-grid">
             <div class="report-content">
                 <h2 style="margin-bottom: 40px;" data-i18n="repTitle">Relazione Tecnica</h2>
-                
-                <!-- SLOT PROGETTAZIONE 3D -->
                 <div class="step">
                     <span class="step-num">01</span>
-                    <h3 data-i18n="s1H">Progettazione Meccanica (CAD)</h3>
-                    <p data-i18n="s1P">In questa sezione puoi caricare i render o gli screenshot della progettazione su Fusion 360. Ho studiato la distribuzione dei pesi per massimizzare la portata.</p>
-                    <div class="img-box">
-                        <i class="fa-solid fa-cube" style="font-size:3rem"></i>
-                        <span>[Inserisci Render Braccio 3D]</span>
-                    </div>
-                    <a href="#" class="btn-download"><i class="fa-solid fa-download"></i> Scarica Modelli STL (Prossimamente)</a>
+                    <h3 data-i18n="s1H">Progettazione in 3D</h3>
+                    <p data-i18n="s1P">Realizzata con Fusion 360 studiando la distribuzione dei carichi per servi MG996R e la meccanica della pinza a falangi contrapposte.</p>
+                    <div class="img-box"><i class="fa-solid fa-cube" style="font-size:3rem"></i><span>[Render CAD]</span></div>
                 </div>
-
-                <!-- SLOT CODICE ARDUINO -->
                 <div class="step">
                     <span class="step-num">02</span>
-                    <h3 data-i18n="s2H">Codice Arduino (Firmware)</h3>
-                    <p data-i18n="s2P">Ecco lo sketch C++ completo per il controllo dei 4 servomotori. Include la gestione dei limiti angolari e lo smoothing dei movimenti.</p>
-                    <div class="full-code-block">
-<pre><code>#include &lt;Servo.h&gt;
-
-Servo baseServo, elbowServo, wristServo, gripperServo;
-
-void setup() {
-  baseServo.attach(9);
-  elbowServo.attach(10);
-  wristServo.attach(11);
-  gripperServo.attach(12);
-}
-
-void loop() {
-  // Logica di controllo qui
-}</code></pre>
-                    </div>
-                </div>
-
-                <!-- SLOT RELAZIONE SCRITTA ESTESA -->
-                <div class="step">
-                    <span class="step-num">03</span>
-                    <h3 data-i18n="s3H">Conclusioni e Testing</h3>
-                    <p data-i18n="s3P">Descrizione dei test effettuati sul braccio fisico e dei risultati ottenuti in termini di precisione e carico massimo sollevabile.</p>
+                    <h3 data-i18n="s2H">Logica Arduino (C++)</h3>
+                    <p data-i18n="s2P">Firmware con algoritmo di smoothing per movimenti fluidi e controllo fine della pinza.</p>
                 </div>
             </div>
-
-            <!-- SIDEBAR RISORSE (RELAZIONE PDF E PRESENTAZIONE) -->
             <aside>
                 <div class="sidebar-card">
-                    <h4 data-i18n="sideT">Relazioni e Presentazioni</h4>
-                    <p style="font-size:0.85rem; color:var(--text-light); margin-bottom: 25px;" data-i18n="sideP">Accedi alla documentazione completa prodotta per il progetto.</p>
-                    
-                    <a href="#" class="btn-link">
-                        <i class="fa-solid fa-file-pdf"></i> <span data-i18n="btnPdf">Relazione PDF Completa</span>
-                    </a>
-                    <a href="robotic_arm_presentation.html" target="_blank" class="btn-link" style="background:var(--accent)">
-                        <i class="fa-solid fa-display"></i> <span data-i18n="btnSli">Presentazione Slide</span>
-                    </a>
-
-                    <div style="margin-top:30px; text-align:center; padding-top:20px; border-top: 1px dotted #ddd;">
-                        <div style="width:110px; height:110px; background:#f0f0f0; margin:0 auto; display:flex; align-items:center; justify-content:center; border-radius:12px; color:#ccc;">
-                            <i class="fa-solid fa-qrcode" style="font-size: 3rem;"></i>
-                        </div>
-                        <p style="font-size:0.75rem; font-weight:700; margin-top:10px;" data-i18n="qrT">SCANSIONA PER LA DEMO LIVE</p>
+                    <h4 data-i18n="sideT">Risorse Download</h4>
+                    <a href="#" class="btn-link"><i class="fa-solid fa-file-pdf"></i> <span data-i18n="btnPdf">Relazione PDF</span></a>
+                    <a href="robotic_arm_presentation.html" target="_blank" class="btn-link" style="background:var(--accent)"><i class="fa-solid fa-display"></i> <span data-i18n="btnSli">Presentazione</span></a>
+                    <div style="margin-top:20px; text-align:center;">
+                        <div style="width:100px; height:100px; background:#f0f0f0; margin:0 auto; display:flex; align-items:center; justify-content:center; border-radius:10px; color:#ccc;">QR</div>
+                        <p style="font-size:0.7rem; font-weight:700; margin-top:10px;" data-i18n="qrT">SCANSIONA PER LA DEMO LIVE</p>
                     </div>
                 </div>
             </aside>
@@ -340,16 +327,13 @@ void loop() {
             labelWrist: "Inclinazione Polso: ",
             labelGripper: "Apertura Pinza: ",
             repTitle: "Relazione Tecnica",
-            s1H: "Progettazione Meccanica (CAD)",
-            s1P: "Analisi della struttura realizzata su Fusion 360 studiando la distribuzione dei carichi.",
-            s2H: "Codice Arduino (Firmware)",
-            s2P: "Lo sketch C++ completo per il controllo di 4 assi simultanei.",
-            s3H: "Conclusioni e Testing",
-            s3P: "Analisi finale dei test di carico e precisione del braccio fisico.",
-            sideT: "Relazioni e Presentazioni",
-            sideP: "Accedi alla documentazione completa prodotta per il progetto.",
-            btnPdf: "Relazione PDF Completa",
-            btnSli: "Presentazione Slide",
+            s1H: "Progettazione in 3D",
+            s1P: "Realizzata con Fusion 360 studiando la distribuzione dei carichi per servi MG996R e la pinza.",
+            s2H: "Logica Arduino (C++)",
+            s2P: "Firmware con algoritmo di smoothing per movimenti fluidi.",
+            sideT: "Risorse Download",
+            btnPdf: "Scarica Relazione",
+            btnSli: "Presentazione Full",
             qrT: "SCANSIONA PER LA DEMO LIVE",
             contactTitle: "Contattami",
             contactIntro: "Hai un progetto in mente? Scrivimi una mail."
@@ -375,16 +359,13 @@ void loop() {
             labelWrist: "Wrist Tilt: ",
             labelGripper: "Gripper Opening: ",
             repTitle: "Technical Report",
-            s1H: "Mechanical Design (CAD)",
-            s1P: "Analysis of the structure created in Fusion 360 studying the load distribution.",
-            s2H: "Arduino Code (Firmware)",
-            s2P: "The full C++ sketch for controlling 4 simultaneous axes.",
-            s3H: "Conclusion & Testing",
-            s3P: "Final analysis of load and precision tests on the physical arm.",
-            sideT: "Reports & Presentations",
-            sideP: "Access the full documentation produced for the project.",
-            btnPdf: "Full PDF Report",
-            btnSli: "Slides Presentation",
+            s1H: "3D Design Phase",
+            s1P: "Design crafted in Fusion 360 analyzing load distribution for servos and gripper.",
+            s2H: "Arduino Logic (C++)",
+            s2P: "Firmware featuring smoothing algorithms for fluid motion.",
+            sideT: "Download Resources",
+            btnPdf: "Download Report",
+            btnSli: "Full Presentation",
             qrT: "SCAN FOR LIVE DEMO",
             contactTitle: "Contact Me",
             contactIntro: "Have a project in mind? Email me."
@@ -397,18 +378,19 @@ void loop() {
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
             if (translations[lang] && translations[lang][key]) {
+                const labelText = translations[lang][key];
                 const span = el.querySelector('span');
                 if (span) {
-                    const originalText = translations[lang][key];
-                    el.childNodes[0].textContent = originalText;
+                    el.childNodes[0].textContent = labelText;
                 } else {
-                    el.innerText = translations[lang][key];
+                    el.innerText = labelText;
                 }
             }
         });
         document.documentElement.lang = lang;
     }
 
+    // NAVIGAZIONE
     function showProject(id) {
         document.getElementById('home-view').classList.add('hidden');
         document.getElementById('project-arm-view').classList.remove('hidden');
@@ -420,6 +402,7 @@ void loop() {
         window.scrollTo(0,0);
     }
 
+    // INTERAZIONE SIMULATORE
     function interact(part, val) {
         if(part === 'base') {
             document.getElementById('label-base').innerText = val;
