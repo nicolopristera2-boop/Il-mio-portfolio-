@@ -1,439 +1,591 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Nicolò Pristerà</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio - Nicolò Pristerà</title>
 
-    <style>
-        /* --- VARIABILI COLORI --- */
-        :root {
-            --primary: #00979D;
-            --primary-dark: #007a80;
-            --accent: #2d3436;
-            --bg-color: #f8fbfb;
-            --card-bg: #ffffff;
-            --text-main: #2d3436;
-            --text-light: #636e72;
-            --shadow: 0 10px 30px rgba(0,0,0,0.08);
-            --radius: 20px;
-        }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&family=Fira+Code:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-        /* --- RESET & BASE --- */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; overflow-x: hidden; scroll-behavior: smooth; }
-        h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; color: var(--accent); }
-        .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
-        .hidden { display: none !important; }
-        a { text-decoration: none; transition: 0.3s; }
+  <style>
+    :root {
+      --primary: #00979D;
+      --primary-dark: #007a80;
+      --accent: #2d3436;
+      --bg-color: #f8fbfb;
+      --card-bg: #ffffff;
+      --text-main: #2d3436;
+      --text-light: #636e72;
+      --shadow: 0 10px 30px rgba(0,0,0,0.08);
+      --radius: 20px;
+      --cine-accent: #f97316;
+    }
 
-        /* --- NAV & HEADER --- */
-        header { 
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark)); 
-            color: white; padding: 4rem 2rem; text-align: center; position: relative; 
-            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
-            margin-bottom: 30px;
-        }
-        header h1 { font-size: 3rem; margin-bottom: 10px; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        .lang-switch { position: absolute; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 100; }
-        .lang-btn { background: rgba(255,255,255,0.1); border: none; color: white; padding: 5px 12px; cursor: pointer; border-radius: 50px; font-weight: 600; backdrop-filter: blur(5px); transition: 0.3s; }
-        .lang-btn.active { background: white; color: var(--primary); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; overflow-x: hidden; scroll-behavior: smooth; }
+    h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; color: var(--accent); }
+    .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+    .hidden { display: none !important; }
+    a { text-decoration: none; transition: 0.3s; }
 
-        /* --- HOME: GRIGLIA PROGETTI --- */
-        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 20px; }
-        .project-card { 
-            background: var(--card-bg); border-radius: var(--radius); padding: 30px; 
-            box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.05); transition: 0.3s ease; 
-            display: flex; flex-direction: column; justify-content: space-between;
-        }
-        .project-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.12); border-color: var(--primary); }
-        .tags-container { margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 8px; }
-        .tag { background: #e0f2f1; color: var(--primary-dark); padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+    /* BARRA AMMINISTRAZIONE SEGRETA */
+    .admin-bar {
+      display: none; background: #1e1b4b; color: #c7d2fe;
+      padding: 0.5rem 1.5rem; font-size: 0.8rem; justify-content: space-between; align-items: center;
+      position: sticky; top: 0; z-index: 2000;
+    }
+    .admin-bar.active { display: flex; }
+    .btn-admin { background: var(--cine-accent); color: white; border: none; padding: 4px 12px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+    .btn-logout { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white; padding: 4px 8px; border-radius: 6px; cursor: pointer; }
 
-        /* --- BOTTONI --- */
-        .btn-action { 
-            display: inline-flex; align-items: center; justify-content: center; 
-            background-color: var(--primary); color: white; padding: 12px 20px; 
-            border-radius: 8px; font-weight: 600; cursor: pointer; border: none; gap: 8px; width: 100%;
-        }
-        .btn-action:hover { background-color: var(--primary-dark); transform: scale(1.02); }
-        .btn-cv { display: inline-block; margin-top: 25px; padding: 10px 25px; border: 2px solid white; color: white; border-radius: 50px; font-weight: 600; backdrop-filter: blur(4px); }
+    /* SCHERMATA INTRO / SELEZIONE AMBITO (SPLIT SCREEN) */
+    #portal-view {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #0f172a;
+      color: white;
+      position: relative;
+    }
+    .portal-side {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem;
+      cursor: pointer;
+      overflow: hidden;
+      transition: flex 0.5s ease, filter 0.3s;
+    }
+    .portal-side::before {
+      content: ''; position: absolute; inset: 0; opacity: 0.35;
+      background-size: cover; background-position: center; transition: transform 0.6s ease;
+    }
+    .portal-side.tech::before {
+      background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80');
+    }
+    .portal-side.video::before {
+      background-image: url('https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1200&q=80');
+    }
+    .portal-side:hover::before { transform: scale(1.05); opacity: 0.5; }
+    .portal-content { position: relative; z-index: 2; text-align: center; max-width: 420px; }
+    .portal-title { font-size: 2.8rem; font-weight: 800; color: white; margin-bottom: 0.5rem; font-family: 'Syne', sans-serif; }
+    .portal-sub { color: #cbd5e1; font-size: 1rem; margin-bottom: 1.5rem; }
+    .portal-btn {
+      display: inline-block; padding: 12px 28px; border-radius: 50px;
+      font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;
+    }
+    .portal-side.tech .portal-btn { background: var(--primary); color: white; }
+    .portal-side.video .portal-btn { background: var(--cine-accent); color: white; }
 
-        /* --- PROJECT PAGE STYLES --- */
-        .badge { 
-            background: #e0f2f1; 
-            color: var(--primary-dark); 
-            padding: 8px 20px; 
-            border-radius: 50px; 
-            font-size: 0.8rem; 
-            font-weight: 700; 
-            text-transform: uppercase; 
-            margin-bottom: 15px; 
-            display: inline-block;
-            border: 1px solid rgba(0, 151, 157, 0.2);
-        }
-        
-        .hero-project { 
-            text-align: center; 
-            padding: 20px 0 40px; 
-        }
-        
-        /* MIGLIORAMENTO TITOLO PROGETTO */
-        .hero-project h1 { 
-            font-size: 3.8rem; 
-            margin-bottom: 15px;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--primary-dark) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.05));
-            letter-spacing: -1px;
-        }
-        
-        .hero-project p {
-            font-size: 1.25rem;
-            color: var(--text-light);
-            font-weight: 500;
-            max-width: 800px;
-            margin: 0 auto;
-        }
+    /* SWITCHER RAPIDO IN TESTATA */
+    .top-nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 2rem; background: white; border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .nav-left a { font-weight: 800; color: var(--accent); font-family: 'Syne', sans-serif; }
+    .nav-center { display: flex; gap: 8px; }
+    .nav-tab {
+      padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer; border: 1px solid transparent;
+    }
+    .nav-tab.active-tech { background: #e0f2f1; color: var(--primary-dark); }
+    .nav-tab.active-video { background: #ffedd5; color: #c2410c; }
 
-        .btn-back { display: inline-flex; align-items: center; gap: 8px; color: var(--primary); font-weight: 700; margin-bottom: 30px; cursor: pointer; transition: 0.3s; }
-        .btn-back:hover { color: var(--primary-dark); transform: translateX(-5px); }
+    /* HEADER SEZIONI */
+    header.section-hero { 
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark)); 
+      color: white; padding: 3.5rem 2rem; text-align: center; position: relative; 
+      clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%); margin-bottom: 30px;
+    }
+    header.section-hero.video-theme {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      border-bottom: 3px solid var(--cine-accent);
+    }
+    header.section-hero h1 { font-size: 2.8rem; color: white; }
 
-        /* Digital Twin Widget */
-        .twin-box { background: #0f172a; border-radius: 30px; overflow: hidden; display: grid; grid-template-columns: 1.2fr 0.8fr; margin: 40px 0; box-shadow: 0 30px 60px rgba(0,0,0,0.15); border: 1px solid #334155; }
-        .visualizer { padding: 60px; display: flex; align-items: center; justify-content: center; position: relative; min-height: 450px; background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%); }
-        .controls { padding: 40px; background: #1e293b; border-left: 1px solid #334155; overflow-y: auto; }
-        
-        .robot-base { width: 100px; height: 30px; background: var(--primary); border-radius: 8px; position: relative; box-shadow: 0 10px 20px rgba(0,0,0,0.4); margin-top: 150px; }
-        .arm-seg { width: 16px; height: 100px; background: #94a3b8; position: absolute; bottom: 30px; left: 42px; transform-origin: bottom center; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border-radius: 8px; }
-        .arm-seg-2 { width: 12px; height: 80px; background: var(--primary); position: absolute; top: -75px; left: 2px; transform-origin: bottom center; transition: 0.6s ease; border-radius: 6px; }
-        
-        /* Polso e Pinza */
-        .wrist-seg { width: 10px; height: 30px; background: #cbd5e1; position: absolute; top: -25px; left: 1px; transform-origin: bottom center; transition: 0.4s; border-radius: 4px; }
-        .gripper-base { width: 28px; height: 8px; background: #64748b; position: absolute; top: -5px; left: -9px; border-radius: 2px; }
-        .phalange-l { width: 4px; height: 22px; background: #94a3b8; position: absolute; top: -20px; left: 2px; transform-origin: bottom; transition: 0.2s; border-radius: 2px; }
-        .phalange-r { width: 4px; height: 22px; background: #94a3b8; position: absolute; top: -20px; right: 2px; transform-origin: bottom; transition: 0.2s; border-radius: 2px; }
+    /* GRIGLIE PROGETTI */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin-top: 20px; }
+    .project-card { 
+      position: relative; background: var(--card-bg); border-radius: var(--radius);
+      padding: 25px; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.05);
+      display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s;
+    }
+    .project-card:hover { transform: translateY(-4px); box-shadow: 0 15px 35px rgba(0,0,0,0.12); }
+    .tags-container { margin: 12px 0; display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag { background: #e0f2f1; color: var(--primary-dark); padding: 3px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 600; }
+    .tag.video-tag { background: #ffedd5; color: #c2410c; }
 
-        .control-item { margin-bottom: 20px; }
-        .control-item label { display: block; color: #94a3b8; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; }
-        .slider { width: 100%; height: 6px; background: #334155; border-radius: 10px; outline: none; -webkit-appearance: none; cursor: pointer; }
-        .slider::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: var(--primary); border-radius: 50%; border: 3px solid #1e293b; }
+    .btn-action { 
+      display: inline-flex; align-items: center; justify-content: center; 
+      background-color: var(--primary); color: white; padding: 10px 18px; 
+      border-radius: 8px; font-weight: 600; cursor: pointer; border: none; gap: 8px; width: 100%;
+    }
+    .btn-action.video-btn { background-color: var(--cine-accent); }
 
-        .code-display { background: #000; padding: 20px; border-radius: 15px; font-family: 'Fira Code', monospace; font-size: 0.8rem; color: #4ade80; margin-top: 20px; border: 1px solid #334155; }
-        .code-line.active { color: white; background: rgba(0, 151, 157, 0.25); border-radius: 4px; padding: 0 5px; }
+    /* TASTO ELIMINA POST ADMIN */
+    .btn-delete-proj {
+      display: none; position: absolute; top: 12px; right: 12px;
+      background: #ef4444; color: white; border: none; border-radius: 6px;
+      padding: 4px 8px; font-size: 0.75rem; cursor: pointer; font-weight: 700; z-index: 10;
+    }
+    body.is-admin .btn-delete-proj { display: block; }
 
-        /* Report Grid */
-        .report-grid { display: grid; grid-template-columns: 1fr 340px; gap: 50px; margin: 60px 0; }
-        .step { margin-bottom: 70px; }
-        .step-num { font-size: 3rem; font-weight: 800; color: #e2e8f0; line-height: 1; margin-bottom: -15px; display: block; }
-        .step h3 { font-size: 1.8rem; margin-bottom: 20px; }
-        .step p { color: var(--text-light); }
-        .img-box { width: 100%; height: 300px; background: #edf2f2; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #adb5bd; margin-top: 20px; border: 2px dashed #ccd6d6; }
+    /* DETTAGLIO BRACCIO & DIGITAL TWIN */
+    .btn-back { display: inline-flex; align-items: center; gap: 8px; color: var(--primary); font-weight: 700; margin-bottom: 25px; cursor: pointer; }
+    .twin-box { background: #0f172a; border-radius: 30px; overflow: hidden; display: grid; grid-template-columns: 1.2fr 0.8fr; margin: 30px 0; border: 1px solid #334155; }
+    .visualizer { padding: 50px; display: flex; align-items: center; justify-content: center; position: relative; min-height: 420px; background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%); }
+    .controls { padding: 35px; background: #1e293b; border-left: 1px solid #334155; }
+    .robot-base { width: 100px; height: 30px; background: var(--primary); border-radius: 8px; position: relative; margin-top: 150px; }
+    .arm-seg { width: 16px; height: 100px; background: #94a3b8; position: absolute; bottom: 30px; left: 42px; transform-origin: bottom center; transition: 0.4s; border-radius: 8px; }
+    .arm-seg-2 { width: 12px; height: 80px; background: var(--primary); position: absolute; top: -75px; left: 2px; transform-origin: bottom center; transition: 0.6s; border-radius: 6px; }
+    .wrist-seg { width: 10px; height: 30px; background: #cbd5e1; position: absolute; top: -25px; left: 1px; transform-origin: bottom center; border-radius: 4px; }
+    .gripper-base { width: 28px; height: 8px; background: #64748b; position: absolute; top: -5px; left: -9px; }
+    .phalange-l { width: 4px; height: 22px; background: #94a3b8; position: absolute; top: -20px; left: 2px; transform-origin: bottom; }
+    .phalange-r { width: 4px; height: 22px; background: #94a3b8; position: absolute; top: -20px; right: 2px; transform-origin: bottom; }
+    .control-item { margin-bottom: 18px; }
+    .control-item label { display: block; color: #94a3b8; font-size: 0.7rem; font-weight: 700; margin-bottom: 6px; }
+    .slider { width: 100%; height: 6px; background: #334155; border-radius: 10px; outline: none; cursor: pointer; }
+    .code-display { background: #000; padding: 15px; border-radius: 12px; font-family: 'Fira Code', monospace; font-size: 0.75rem; color: #4ade80; margin-top: 15px; }
 
-        .sidebar-card { background: white; padding: 35px; border-radius: 25px; box-shadow: var(--shadow); position: sticky; top: 40px; }
-        .btn-link { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; padding: 16px; background: var(--primary); color: white; border-radius: 14px; font-weight: 700; margin-bottom: 15px; }
+    /* MODALE AGGIUNGI PROGETTO */
+    .modal-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+      display: none; align-items: center; justify-content: center; z-index: 3000;
+    }
+    .modal-backdrop.show { display: flex; }
+    .modal-window {
+      background: white; border-radius: 18px; padding: 2rem; width: 100%; max-width: 520px;
+      display: flex; flex-direction: column; gap: 1rem;
+    }
+    .form-input, .form-select, .form-textarea {
+      width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; font-size: 0.9rem;
+    }
+    .form-textarea { min-height: 100px; resize: vertical; }
+    .modal-footer { display: flex; justify-content: flex-end; gap: 8px; }
 
-        @media (max-width: 950px) {
-            .twin-box, .report-grid { grid-template-columns: 1fr; }
-            .hero-project h1 { font-size: 2.8rem; }
-            .sidebar-card { position: static; }
-        }
-    </style>
+    @media (max-width: 900px) {
+      #portal-view { grid-template-columns: 1fr; }
+      .twin-box { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- HOME VIEW -->
-<div id="home-view">
-    <header>
-        <div class="lang-switch">
-            <button class="lang-btn active" onclick="setLanguage('it', this)">IT</button>
-            <button class="lang-btn" onclick="setLanguage('en', this)">EN</button>
-        </div>
-        <h1>Nicolò Pristerà</h1>
-        <p data-i18n="roleSubtitle">Sviluppatore Firmware | C - Arduino Specialist | Web Development</p>
-        <a href="cv.html" target="_blank" class="btn-cv" data-i18n="btnCV">📄 Il mio CV</a>
+  <!-- ADMIN BAR SEGRETA -->
+  <aside class="admin-bar" id="adminBar">
+    <span>🔒 <strong>Gestione Portfolio Autore</strong></span>
+    <div style="display:flex; gap:8px;">
+      <button class="btn-admin" id="openAddModalBtn">+ Aggiungi Progetto</button>
+      <button class="btn-logout" id="logoutBtn">Esci</button>
+    </div>
+  </aside>
+
+  <!-- 1. BIVIO INIZIALE: SCHERMATA DI SCELTA AMBITO -->
+  <section id="portal-view">
+    <div class="portal-side tech" onclick="navigateTo('tech')">
+      <div class="portal-content">
+        <h2 class="portal-title">TECH & CODE</h2>
+        <p class="portal-sub">Firmware C/C++, Automazione, Microcontrollori e CAD 3D.</p>
+        <span class="portal-btn">Esplora Progetti Tech &rarr;</span>
+      </div>
+    </div>
+    <div class="portal-side video" onclick="navigateTo('video')">
+      <div class="portal-content">
+        <h2 class="portal-title">CINEMA & VIDEO</h2>
+        <p class="portal-sub">Regia, Riprese, Color Grading & Sound Editing.</p>
+        <span class="portal-btn">Esplora Portfolio Video &rarr;</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. VISTA CONTENUTO (TECH o VIDEO) -->
+  <section id="content-view" class="hidden">
+    
+    <!-- Top Navigation per cambiare ambito rapidamente -->
+    <nav class="top-nav">
+      <div class="nav-left">
+        <a href="#" onclick="showPortal()">← TUTTI GLI AMBITI</a>
+      </div>
+      <div class="nav-center">
+        <button class="nav-tab" id="tabTech" onclick="switchSection('tech')">🦾 Tech & Firmware</button>
+        <button class="nav-tab" id="tabVideo" onclick="switchSection('video')">🎬 Video & Filmmaking</button>
+      </div>
+      <div>
+        <a href="cv.html" target="_blank" style="font-size:0.85rem; font-weight:600; color:var(--primary)">📄 CV</a>
+      </div>
+    </nav>
+
+    <!-- Header Dinamico -->
+    <header class="section-hero" id="sectionHero">
+      <h1 id="heroTitle">I Miei Progetti</h1>
+      <p id="heroSubtitle">Esplora le mie realizzazioni e prototipi.</p>
     </header>
 
     <div class="container">
-        <section>
-            <h2 data-i18n="projectsTitle">I Miei Progetti</h2>
-            <p class="intro-text" data-i18n="projectsIntro">Qui puoi trovare il codice sorgente dei miei lavori, caricato su GitHub.</p>
-
-            <div class="projects-grid">
-                <!-- CARD BRACCIO ROBOTICO -->
-                <div class="project-card" style="border-top: 5px solid var(--primary);">
-                    <div>
-                        <h3 data-i18n="projArmTitle">🦾 Braccio Robotico Digital Twin</h3>
-                        <div class="tags-container">
-                            <span class="tag">Arduino</span>
-                            <span class="tag">C++</span>
-                            <span class="tag">Digital Twin</span> 
-                        </div>
-                        <p data-i18n="projArmDesc">Un progetto che unisce meccanica fisica e simulazione web interattiva tramite Gemello Digitale.</p>
-                    </div>
-                    <button class="btn-action" onclick="showProject('arm')" data-i18n="btnExplore">Approfondisci Progetto</button>
-                </div>
-
-                <!-- CARD VIDEOGIOCHI -->
-                <div class="project-card">
-                    <div>
-                        <h3 data-i18n="proj1Title">🎮 Sito Videogiochi</h3>
-                        <div class="tags-container"><span class="tag">JS</span><span class="tag">HTML</span></div>
-                        <p data-i18n="proj1Desc">Un contenitore per giochi autoprodotti. Design responsivo.</p>
-                    </div>
-                    <a href="https://nicolopristera2-boop.github.io/Giochini-online-/" class="btn-action" target="_blank" style="background:#24292e">GitHub</a>
-                </div>
-
-                <!-- CARD STAZIONE METEO -->
-                <div class="project-card" style="border-left: 5px solid #ffa502;">
-                    <div>
-                        <h3 data-i18n="proj2Title">🌡️ Stazione Meteo</h3>
-                        <div class="tags-container">
-                            <span class="tag">C++</span>
-                            <span class="tag">Arduino</span>
-                            <span class="tag">Sensors</span> 
-                        </div>
-                        <p data-i18n="proj2Desc">Prossimamente: Un sistema embedded di lettura temperatura e umidità con log dei dati su SD Card.</p>
-                    </div>
-                    <span style="font-size: 0.8rem; color: #aaa; font-style: italic;">Work in progress...</span>
-                </div>
-            </div>
-        </section>
-
-        <section class="contact-box" style="background:var(--primary); color:white; padding:40px; border-radius:var(--radius); text-align:center;">
-            <h2 style="color:white" data-i18n="contactTitle">Contattami</h2>
-            <p data-i18n="contactIntro">Hai un progetto in mente? Scrivimi una mail.</p>
-            <a href="mailto:nicolopristera2@gmail.com" class="btn-cv" style="background:white; color:var(--primary); border:none;">Scrivimi</a>
-        </section>
+      <main class="projects-grid" id="portfolioGrid"></main>
     </div>
-</div>
+  </section>
 
-<!-- PROJECT DETAIL VIEW: ARM -->
-<div id="project-arm-view" class="hidden">
+  <!-- 3. DETTAGLIO BRACCIO ROBOTICO (INTERATTIVO) -->
+  <section id="project-arm-view" class="hidden">
     <div class="container">
-        <div class="btn-back" onclick="showHome()">← <span data-i18n="btnBack">Torna ai Progetti</span></div>
-        
-        <header class="hero-project">
-            <span class="badge" data-i18n="badge">Progetto Arduino Uno</span>
-            <h1 data-i18n="projArmTitle">Braccio Robotico Digital Twin</h1>
-            <p data-i18n="heroP">Dalla progettazione 3D al controllo in tempo reale.</p>
-        </header>
+      <div class="btn-back" onclick="backToPortfolio()">← Torna al Portfolio</div>
+      
+      <header style="text-align:center; padding: 20px 0;">
+        <span style="background:#e0f2f1; color:var(--primary-dark); padding:6px 16px; border-radius:50px; font-weight:700; font-size:0.75rem;">ARDUINO UNO & CAD</span>
+        <h1 style="font-size:3rem; margin:10px 0;">Braccio Robotico Digital Twin</h1>
+        <p style="color:var(--text-light)">Dalla modellazione CAD al gemello virtuale in browser sincrono.</p>
+      </header>
 
-        <!-- SIMULATORE INTERATTIVO -->
-        <div class="twin-box">
-            <div class="visualizer">
-                <div style="position:absolute; top:20px; left:20px; color:#475569; font-size:0.7rem; font-weight:800;">VIRTUAL ENGINE v1.1</div>
-                <div class="robot-base">
-                    <div class="arm-seg" id="ui-base">
-                        <div class="arm-seg-2" id="ui-elbow">
-                            <div class="wrist-seg" id="ui-wrist">
-                                <div class="gripper-base">
-                                    <div class="phalange-l" id="ui-phal-l"></div>
-                                    <div class="phalange-r" id="ui-phal-r"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+      <div class="twin-box">
+        <div class="visualizer">
+          <div class="robot-base">
+            <div class="arm-seg" id="ui-base">
+              <div class="arm-seg-2" id="ui-elbow">
+                <div class="wrist-seg" id="ui-wrist">
+                  <div class="gripper-base">
+                    <div class="phalange-l" id="ui-phal-l"></div>
+                    <div class="phalange-r" id="ui-phal-r"></div>
+                  </div>
                 </div>
+              </div>
             </div>
-            <div class="controls">
-                <h4 style="color:white; margin-bottom: 25px;" data-i18n="console">Pannello di Controllo</h4>
-                <div class="control-item">
-                    <label data-i18n="labelBase">Rotazione Base: <span id="label-base" style="color:var(--primary)">90</span>°</label>
-                    <input type="range" min="0" max="180" value="90" class="slider" oninput="interact('base', this.value)">
-                </div>
-                <div class="control-item">
-                    <label data-i18n="labelElbow">Angolo Gomito: <span id="label-elbow" style="color:var(--primary)">45</span>°</label>
-                    <input type="range" min="0" max="180" value="45" class="slider" oninput="interact('elbow', this.value)">
-                </div>
-                <!-- Slider Polso -->
-                <div class="control-item">
-                    <label data-i18n="labelWrist">Inclinazione Polso: <span id="label-wrist" style="color:var(--primary)">0</span>°</label>
-                    <input type="range" min="-90" max="90" value="0" class="slider" oninput="interact('wrist', this.value)">
-                </div>
-                <!-- Slider Pinza -->
-                <div class="control-item">
-                    <label data-i18n="labelGripper">Apertura Pinza: <span id="label-gripper" style="color:var(--primary)">10</span>°</label>
-                    <input type="range" min="0" max="40" value="10" class="slider" oninput="interact('gripper', this.value)">
-                </div>
-                <div class="code-display">
-                    <div id="code-header">// Arduino Output</div>
-                    <div id="code-base">baseServo.write(90);</div>
-                    <div id="code-elbow">elbowServo.write(45);</div>
-                    <div id="code-wrist">wristServo.write(90);</div>
-                    <div id="code-gripper">gripperServo.write(10);</div>
-                </div>
-            </div>
+          </div>
         </div>
-
-        <!-- RELAZIONE -->
-        <div class="report-grid">
-            <div class="report-content">
-                <h2 style="margin-bottom: 40px;" data-i18n="repTitle">Relazione Tecnica</h2>
-                <div class="step">
-                    <span class="step-num">01</span>
-                    <h3 data-i18n="s1H">Progettazione in 3D</h3>
-                    <p data-i18n="s1P">Realizzata con Fusion 360 studiando la distribuzione dei carichi per servi MG996R e la meccanica della pinza a falangi contrapposte.</p>
-                    <div class="img-box"><i class="fa-solid fa-cube" style="font-size:3rem"></i><span>[Render CAD]</span></div>
-                </div>
-                <div class="step">
-                    <span class="step-num">02</span>
-                    <h3 data-i18n="s2H">Logica Arduino (C++)</h3>
-                    <p data-i18n="s2P">Firmware con algoritmo di smoothing per movimenti fluidi e controllo fine della pinza.</p>
-                </div>
-            </div>
-            <aside>
-                <div class="sidebar-card">
-                    <h4 data-i18n="sideT">Risorse Download</h4>
-                    <a href="#" class="btn-link"><i class="fa-solid fa-file-pdf"></i> <span data-i18n="btnPdf">Relazione PDF</span></a>
-                    <a href="robotic_arm_presentation.html" target="_blank" class="btn-link" style="background:var(--accent)"><i class="fa-solid fa-display"></i> <span data-i18n="btnSli">Presentazione</span></a>
-                    <div style="margin-top:20px; text-align:center;">
-                        <div style="width:100px; height:100px; background:#f0f0f0; margin:0 auto; display:flex; align-items:center; justify-content:center; border-radius:10px; color:#ccc;">QR</div>
-                        <p style="font-size:0.7rem; font-weight:700; margin-top:10px;" data-i18n="qrT">SCANSIONA PER LA DEMO LIVE</p>
-                    </div>
-                </div>
-            </aside>
+        <div class="controls">
+          <h4 style="color:white; margin-bottom: 20px;">Controllo Attuatori</h4>
+          <div class="control-item">
+            <label>Rotazione Base: <span id="label-base" style="color:var(--primary)">90</span>°</label>
+            <input type="range" min="0" max="180" value="90" class="slider" oninput="interact('base', this.value)">
+          </div>
+          <div class="control-item">
+            <label>Angolo Gomito: <span id="label-elbow" style="color:var(--primary)">45</span>°</label>
+            <input type="range" min="0" max="180" value="45" class="slider" oninput="interact('elbow', this.value)">
+          </div>
+          <div class="control-item">
+            <label>Inclinazione Polso: <span id="label-wrist" style="color:var(--primary)">0</span>°</label>
+            <input type="range" min="-90" max="90" value="0" class="slider" oninput="interact('wrist', this.value)">
+          </div>
+          <div class="control-item">
+            <label>Apertura Pinza: <span id="label-gripper" style="color:var(--primary)">10</span>°</label>
+            <input type="range" min="0" max="40" value="10" class="slider" oninput="interact('gripper', this.value)">
+          </div>
+          <div class="code-display">
+            <div>// Real-time Serial Output</div>
+            <div id="code-base">baseServo.write(90);</div>
+            <div id="code-elbow">elbowServo.write(45);</div>
+            <div id="code-wrist">wristServo.write(90);</div>
+            <div id="code-gripper">gripperServo.write(10);</div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </section>
 
-<script>
-    const translations = {
-        it: {
-            roleSubtitle: "Sviluppatore Firmware | C - Arduino Specialist | Web Development",
-            btnCV: "📄 Il mio CV",
-            projectsTitle: "I Miei Progetti",
-            projectsIntro: "Qui puoi trovare il codice sorgente dei miei lavori, caricato su GitHub.",
-            projArmTitle: "🦾 Braccio Robotico Digital Twin",
-            projArmDesc: "Un progetto che unisce meccanica fisica e simulazione web interattiva tramite Gemello Digitale.",
-            btnExplore: "Approfondisci Progetto",
-            proj1Title: "🎮 Sito Videogiochi",
-            proj1Desc: "Un sito che funge da contenitore per giochi autoprodotti.",
-            proj2Title: "🌡️ Stazione Meteo",
-            proj2Desc: "Prossimamente: Un sistema embedded di lettura temperatura e umidità con log dei dati su SD Card.",
-            btnBack: "Torna ai Progetti",
-            badge: "Progetto Arduino Uno",
-            heroP: "Un viaggio dalla progettazione 3D al controllo in tempo reale.",
-            console: "Pannello di Controllo",
-            labelBase: "Rotazione Base: ",
-            labelElbow: "Angolo Gomito: ",
-            labelWrist: "Inclinazione Polso: ",
-            labelGripper: "Apertura Pinza: ",
-            repTitle: "Relazione Tecnica",
-            s1H: "Progettazione in 3D",
-            s1P: "Realizzata con Fusion 360 studiando la distribuzione dei carichi per servi MG996R e la pinza.",
-            s2H: "Logica Arduino (C++)",
-            s2P: "Firmware con algoritmo di smoothing per movimenti fluidi.",
-            sideT: "Risorse Download",
-            btnPdf: "Scarica Relazione",
-            btnSli: "Presentazione Full",
-            qrT: "SCANSIONA PER LA DEMO LIVE",
-            contactTitle: "Contattami",
-            contactIntro: "Hai un progetto in mente? Scrivimi una mail."
-        },
-        en: {
-            roleSubtitle: "Firmware Developer | C - Arduino Specialist | Web Development",
-            btnCV: "📄 My Resume",
-            projectsTitle: "My Projects",
-            projectsIntro: "Here you can find the source code of my works, uploaded to GitHub.",
-            projArmTitle: "🦾 Robotic Arm Digital Twin",
-            projArmDesc: "A project merging physical mechanics with interactive web simulation via Digital Twin.",
-            btnExplore: "Explore Project",
-            proj1Title: "🎮 Video Game Website",
-            proj1Desc: "A responsive website acting as a hub for self-produced games.",
-            proj2Title: "🌡️ Weather Station",
-            proj2Desc: "Coming soon: An embedded system for temperature and humidity logging on SD Card.",
-            btnBack: "Back to Projects",
-            badge: "Arduino Uno Project",
-            heroP: "A journey from 3D design to real-time control.",
-            console: "Control Console",
-            labelBase: "Base Rotation: ",
-            labelElbow: "Elbow Angle: ",
-            labelWrist: "Wrist Tilt: ",
-            labelGripper: "Gripper Opening: ",
-            repTitle: "Technical Report",
-            s1H: "3D Design Phase",
-            s1P: "Design crafted in Fusion 360 analyzing load distribution for servos and gripper.",
-            s2H: "Arduino Logic (C++)",
-            s2P: "Firmware featuring smoothing algorithms for fluid motion.",
-            sideT: "Download Resources",
-            btnPdf: "Download Report",
-            btnSli: "Full Presentation",
-            qrT: "SCAN FOR LIVE DEMO",
-            contactTitle: "Contact Me",
-            contactIntro: "Have a project in mind? Email me."
+  <!-- MODAL AGGIUNGI PROGETTO (ADMIN) -->
+  <div class="modal-backdrop" id="projectModal">
+    <div class="modal-window">
+      <h3 style="font-family:'Syne', sans-serif;">Aggiungi Progetto al Portfolio</h3>
+      
+      <select id="projSection" class="form-select">
+        <option value="tech">Ambito: Tech & Firmware</option>
+        <option value="video">Ambito: Cinema & Video</option>
+      </select>
+
+      <input type="text" id="projTitle" class="form-input" placeholder="Titolo Progetto" required>
+      <input type="text" id="projTags" class="form-input" placeholder="Tag separati da virgola (es: C++, FreeCAD)">
+      <textarea id="projDesc" class="form-textarea" placeholder="Descrizione tecnica o dettagli di regia..."></textarea>
+      
+      <select id="projType" class="form-select">
+        <option value="link">Link Esterno (es. GitHub)</option>
+        <option value="video">Video Embed (YouTube / Vimeo)</option>
+      </select>
+
+      <input type="url" id="projUrl" class="form-input" placeholder="URL di destinazione o Video URL">
+
+      <div class="modal-footer">
+        <button class="btn-logout" style="color:#64748b;" id="closeModalBtn">Annulla</button>
+        <button class="btn-admin" id="saveProjBtn">Pubblica Progetto</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // CONFIGURAZIONE REPO GITHUB (PORTFOLIO)
+    const REPO_OWNER = "nicolopristera2-boop";
+    const REPO_NAME = "nicolopristera2-boop.github.io"; // Modifica col nome esatto del repo del tuo portfolio
+    const FILE_PATH = "portfolio_items.json";
+
+    let currentSection = 'tech';
+    let portfolioItems = [];
+
+    // --- NAVIGAZIONE AMBITI & VIEW ---
+    function navigateTo(section) {
+      document.getElementById('portal-view').classList.add('hidden');
+      document.getElementById('content-view').classList.remove('hidden');
+      switchSection(section);
+    }
+
+    function showPortal() {
+      document.getElementById('content-view').classList.add('hidden');
+      document.getElementById('project-arm-view').classList.add('hidden');
+      document.getElementById('portal-view').classList.remove('hidden');
+      window.scrollTo(0,0);
+    }
+
+    function switchSection(sec) {
+      currentSection = sec;
+      const hero = document.getElementById('sectionHero');
+      const tabTech = document.getElementById('tabTech');
+      const tabVideo = document.getElementById('tabVideo');
+
+      if(sec === 'tech') {
+        hero.className = "section-hero";
+        document.getElementById('heroTitle').innerText = "Tech & Embedded Engineering";
+        document.getElementById('heroSubtitle').innerText = "Firmware C/C++, Sistemi Digital Twin e Modellazione CAD";
+        tabTech.className = "nav-tab active-tech";
+        tabVideo.className = "nav-tab";
+      } else {
+        hero.className = "section-hero video-theme";
+        document.getElementById('heroTitle').innerText = "Filmmaking & Post-Production";
+        document.getElementById('heroSubtitle').innerText = "Direzione della fotografia, riprese e montaggio video";
+        tabTech.className = "nav-tab";
+        tabVideo.className = "nav-tab active-video";
+      }
+      renderPortfolio();
+    }
+
+    function showArmDetail() {
+      document.getElementById('content-view').classList.add('hidden');
+      document.getElementById('project-arm-view').classList.remove('hidden');
+      window.scrollTo(0,0);
+    }
+
+    function backToPortfolio() {
+      document.getElementById('project-arm-view').classList.add('hidden');
+      document.getElementById('content-view').classList.remove('hidden');
+    }
+
+    // --- CARICAMENTO DATI ---
+    async function loadPortfolioData() {
+      try {
+        const res = await fetch(`${FILE_PATH}?t=${Date.now()}`);
+        if(res.ok) {
+          portfolioItems = await res.json();
+          renderPortfolio();
         }
-    };
-
-    function setLanguage(lang, btn) {
-        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-        if(btn) btn.classList.add('active');
-        document.querySelectorAll('[data-i18n]').forEach(el => {
-            const key = el.getAttribute('data-i18n');
-            if (translations[lang] && translations[lang][key]) {
-                const labelText = translations[lang][key];
-                const span = el.querySelector('span');
-                if (span) {
-                    el.childNodes[0].textContent = labelText;
-                } else {
-                    el.innerText = labelText;
-                }
-            }
-        });
-        document.documentElement.lang = lang;
+      } catch(e) {
+        console.warn("Impossibile caricare portfolio_items.json statico");
+      }
     }
 
-    // NAVIGAZIONE
-    function showProject(id) {
-        document.getElementById('home-view').classList.add('hidden');
-        document.getElementById('project-arm-view').classList.remove('hidden');
-        window.scrollTo(0,0);
-    }
-    function showHome() {
-        document.getElementById('project-arm-view').classList.add('hidden');
-        document.getElementById('home-view').classList.remove('hidden');
-        window.scrollTo(0,0);
+    function renderPortfolio() {
+      const container = document.getElementById('portfolioGrid');
+      container.innerHTML = '';
+
+      const items = portfolioItems.filter(item => item.section === currentSection);
+
+      items.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'project-card';
+
+        // Tasto elimina per l'autore
+        const delBtn = `<button class="btn-delete-proj" onclick="deleteProject('${item.id}')">🗑️</button>`;
+
+        // Rendering Tag
+        const tagsHtml = (item.tags || []).map(t => 
+          `<span class="tag ${item.section === 'video' ? 'video-tag' : ''}">${t}</span>`
+        ).join('');
+
+        // Rendering Video o Immagine
+        let mediaHtml = '';
+        if(item.type === 'video' && item.mediaUrl) {
+          let embed = item.mediaUrl.replace('watch?v=', 'embed/').replace('youtu.be/', 'www.youtube-nocookie.com/embed/');
+          mediaHtml = `<div style="position:relative; padding-top:56.25%; margin-bottom:15px; border-radius:12px; overflow:hidden; background:#000;">
+            <iframe src="${embed}" style="position:absolute; inset:0; width:100%; height:100%; border:none;" allowfullscreen></iframe>
+          </div>`;
+        }
+
+        // Azione Bottone
+        let actionBtn = '';
+        if(item.id === 'arm-twin') {
+          actionBtn = `<button class="btn-action" onclick="showArmDetail()">${item.actionText || 'Approfondisci'}</button>`;
+        } else if(item.url) {
+          actionBtn = `<a href="${item.url}" target="_blank" class="btn-action ${item.section === 'video' ? 'video-btn' : ''}">${item.actionText || 'Esplora'}</a>`;
+        }
+
+        card.innerHTML = `
+          ${delBtn}
+          <div>
+            ${mediaHtml}
+            <h3>${item.title}</h3>
+            <div class="tags-container">${tagsHtml}</div>
+            <p style="color:var(--text-light); font-size:0.9rem; margin-bottom:20px;">${item.desc}</p>
+          </div>
+          ${actionBtn}
+        `;
+        container.appendChild(card);
+      });
     }
 
-    // INTERAZIONE SIMULATORE
+    // --- MECCANICA DEL SIMULATORE DIGITALE ---
     function interact(part, val) {
-        if(part === 'base') {
-            document.getElementById('label-base').innerText = val;
-            document.getElementById('ui-base').style.transform = `rotate(${val - 90}deg)`;
-            document.getElementById('code-base').innerText = `baseServo.write(${val});`;
-            glow('code-base');
-        } else if(part === 'elbow') {
-            document.getElementById('label-elbow').innerText = val;
-            document.getElementById('ui-elbow').style.transform = `rotate(${val - 45}deg)`;
-            document.getElementById('code-elbow').innerText = `elbowServo.write(${val});`;
-            glow('code-elbow');
-        } else if(part === 'wrist') {
-            document.getElementById('label-wrist').innerText = val;
-            document.getElementById('ui-wrist').style.transform = `rotate(${val}deg)`;
-            const arduinoVal = parseInt(val) + 90; 
-            document.getElementById('code-wrist').innerText = `wristServo.write(${arduinoVal});`;
-            glow('code-wrist');
-        } else if(part === 'gripper') {
-            document.getElementById('label-gripper').innerText = val;
-            document.getElementById('ui-phal-l').style.transform = `rotate(${-val}deg)`;
-            document.getElementById('ui-phal-r').style.transform = `rotate(${val}deg)`;
-            document.getElementById('code-gripper').innerText = `gripperServo.write(${val});`;
-            glow('code-gripper');
-        }
+      if(part === 'base') {
+        document.getElementById('label-base').innerText = val;
+        document.getElementById('ui-base').style.transform = `rotate(${val - 90}deg)`;
+        document.getElementById('code-base').innerText = `baseServo.write(${val});`;
+      } else if(part === 'elbow') {
+        document.getElementById('label-elbow').innerText = val;
+        document.getElementById('ui-elbow').style.transform = `rotate(${val - 45}deg)`;
+        document.getElementById('code-elbow').innerText = `elbowServo.write(${val});`;
+      } else if(part === 'wrist') {
+        document.getElementById('label-wrist').innerText = val;
+        document.getElementById('ui-wrist').style.transform = `rotate(${val}deg)`;
+        document.getElementById('code-wrist').innerText = `wristServo.write(${parseInt(val) + 90});`;
+      } else if(part === 'gripper') {
+        document.getElementById('label-gripper').innerText = val;
+        document.getElementById('ui-phal-l').style.transform = `rotate(${-val}deg)`;
+        document.getElementById('ui-phal-r').style.transform = `rotate(${val}deg)`;
+        document.getElementById('code-gripper').innerText = `gripperServo.write(${val});`;
+      }
     }
-    function glow(id) {
-        const el = document.getElementById(id);
-        el.classList.add('active');
-        setTimeout(() => el.classList.remove('active'), 500);
-    }
-</script>
 
+    // --- ACCESSO AUTORE SEGRETO (CTRL + ALT + A) ---
+    function checkAdmin() {
+      const token = localStorage.getItem('gh_portfolio_token');
+      if (token) {
+        document.body.classList.add('is-admin');
+        document.getElementById('adminBar').classList.add('active');
+      } else {
+        document.body.classList.remove('is-admin');
+        document.getElementById('adminBar').classList.remove('active');
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && (e.altKey || e.shiftKey) && e.code === 'KeyA') {
+        e.preventDefault();
+        e.stopPropagation();
+        const currentToken = localStorage.getItem('gh_portfolio_token');
+        if (!currentToken) {
+          const pass = prompt("Accesso Autore Portfolio. Inserisci il tuo Personal Access Token di GitHub:");
+          if (pass && pass.trim().startsWith('ghp_')) {
+            localStorage.setItem('gh_portfolio_token', pass.trim());
+            checkAdmin();
+            alert("Modalità autore attiva!");
+          }
+        } else {
+          alert("Sei già loggato come autore.");
+        }
+      }
+    }, true);
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('gh_portfolio_token');
+      checkAdmin();
+      alert("Disconnesso.");
+    });
+
+    // --- MODAL AGGIUNGI PROGETTO ---
+    const modal = document.getElementById('projectModal');
+    document.getElementById('openAddModalBtn').addEventListener('click', () => modal.classList.add('show'));
+    document.getElementById('closeModalBtn').addEventListener('click', () => modal.classList.remove('show'));
+
+    document.getElementById('saveProjBtn').addEventListener('click', async () => {
+      const token = localStorage.getItem('gh_portfolio_token');
+      if(!token) return;
+
+      const title = document.getElementById('projTitle').value.trim();
+      const section = document.getElementById('projSection').value;
+      const tags = document.getElementById('projTags').value.split(',').map(t => t.trim()).filter(Boolean);
+      const desc = document.getElementById('projDesc').value.trim();
+      const type = document.getElementById('projType').value;
+      const url = document.getElementById('projUrl').value.trim();
+
+      if(!title) return alert("Inserisci il titolo del progetto.");
+
+      try {
+        const fileRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}?ref=main`, {
+          headers: { Authorization: `token ${token}` }
+        });
+        const fileData = await fileRes.json();
+        const items = JSON.parse(decodeURIComponent(escape(atob(fileData.content))));
+
+        items.unshift({
+          id: 'proj-' + Date.now(),
+          section,
+          title,
+          tags,
+          desc,
+          type,
+          mediaUrl: type === 'video' ? url : '',
+          url: type === 'link' ? url : '',
+          actionText: type === 'video' ? 'Guarda Video' : 'Esplora'
+        });
+
+        const updateRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
+          method: 'PUT',
+          headers: { Authorization: `token ${token}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: `Aggiunto progetto: ${title}`,
+            content: btoa(unescape(encodeURIComponent(JSON.stringify(items, null, 2)))),
+            sha: fileData.sha
+          })
+        });
+
+        if(!updateRes.ok) throw new Error("Errore durante il commit su GitHub.");
+
+        portfolioItems = items;
+        renderPortfolio();
+        modal.classList.remove('show');
+        alert("Progetto pubblicato!");
+      } catch(err) {
+        alert("Errore: " + err.message);
+      }
+    });
+
+    // --- CANCELLAZIONE PROGETTO ---
+    async function deleteProject(id) {
+      const token = localStorage.getItem('gh_portfolio_token');
+      if(!token) return;
+      if(!confirm("Cancellare questo progetto dal portfolio?")) return;
+
+      try {
+        const fileRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}?ref=main`, {
+          headers: { Authorization: `token ${token}` }
+        });
+        const fileData = await fileRes.json();
+        let items = JSON.parse(decodeURIComponent(escape(atob(fileData.content))));
+
+        items = items.filter(i => String(i.id) !== String(id));
+
+        const updateRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
+          method: 'PUT',
+          headers: { Authorization: `token ${token}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: `Rimosso progetto ID: ${id}`,
+            content: btoa(unescape(encodeURIComponent(JSON.stringify(items, null, 2)))),
+            sha: fileData.sha
+          })
+        });
+
+        if(!updateRes.ok) throw new Error("Errore durante la rimozione.");
+
+        portfolioItems = items;
+        renderPortfolio();
+        alert("Progetto eliminato!");
+      } catch(err) {
+        alert("Errore: " + err.message);
+      }
+    }
+
+    // Init
+    checkAdmin();
+    loadPortfolioData();
+  </script>
 </body>
 </html>
