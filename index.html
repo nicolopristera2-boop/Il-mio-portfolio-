@@ -3,458 +3,571 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio - Nicolò Pristerà</title>
+  <title>Nicolò Pristerà — Portfolio</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&family=Fira+Code:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --primary: #00979D;
-      --primary-dark: #007a80;
-      --accent: #2d3436;
-      --bg-color: #f8fbfb;
-      --card-bg: #ffffff;
-      --text-main: #2d3436;
-      --text-light: #636e72;
-      --shadow: 0 10px 30px rgba(0,0,0,0.08);
-      --radius: 20px;
-      --cine-accent: #f97316;
+      --bg: #090d14;
+      --card-bg: rgba(17, 24, 39, 0.75);
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --tech-cyan: #06b6d4;
+      --tech-glow: rgba(6, 182, 212, 0.25);
+      --cine-amber: #f97316;
+      --cine-glow: rgba(249, 115, 22, 0.25);
+      --danger: #ef4444;
+      --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; overflow-x: hidden; scroll-behavior: smooth; }
-    h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; color: var(--accent); }
-    .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
     .hidden { display: none !important; }
-    a { text-decoration: none; transition: 0.3s; }
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 1.5rem; }
 
-    /* BARRA AMMINISTRAZIONE SEGRETA */
+    /* ADMIN BAR */
     .admin-bar {
       display: none; background: #1e1b4b; color: #c7d2fe;
-      padding: 0.5rem 1.5rem; font-size: 0.8rem; justify-content: space-between; align-items: center;
-      position: sticky; top: 0; z-index: 2000;
+      padding: 0.5rem 1.5rem; font-size: 0.8rem; justify-content: space-between;
+      align-items: center; position: sticky; top: 0; z-index: 1000;
     }
     .admin-bar.active { display: flex; }
-    .btn-admin { background: var(--cine-accent); color: white; border: none; padding: 4px 12px; border-radius: 6px; cursor: pointer; font-weight: 600; }
-    .btn-logout { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white; padding: 4px 8px; border-radius: 6px; cursor: pointer; }
+    .btn-admin { background: var(--cine-amber); color: white; border: none; padding: 4px 12px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.75rem; }
+    .btn-logout { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; }
 
-    /* SCHERMATA INTRO / SELEZIONE AMBITO (SPLIT SCREEN) */
+    /* 1. PORTAL SPLIT SCREEN */
     #portal-view {
+      display: flex;
       min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      background: #0f172a;
-      color: white;
+      width: 100vw;
+      overflow: hidden;
       position: relative;
     }
     .portal-side {
       position: relative;
+      flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 3rem;
       cursor: pointer;
-      overflow: hidden;
-      transition: flex 0.5s ease, filter 0.3s;
+      transition: var(--transition);
+      background-size: cover;
+      background-position: center;
     }
     .portal-side::before {
-      content: ''; position: absolute; inset: 0; opacity: 0.35;
-      background-size: cover; background-position: center; transition: transform 0.6s ease;
+      content: ''; position: absolute; inset: 0;
+      background: rgba(9, 13, 20, 0.82);
+      transition: background 0.4s ease;
+      z-index: 1;
     }
-    .portal-side.tech::before {
+    .portal-side.tech {
       background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80');
+      border-right: 1px solid var(--border);
     }
-    .portal-side.video::before {
+    .portal-side.video {
       background-image: url('https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1200&q=80');
     }
-    .portal-side:hover::before { transform: scale(1.05); opacity: 0.5; }
-    .portal-content { position: relative; z-index: 2; text-align: center; max-width: 420px; }
-    .portal-title { font-size: 2.8rem; font-weight: 800; color: white; margin-bottom: 0.5rem; font-family: 'Syne', sans-serif; }
-    .portal-sub { color: #cbd5e1; font-size: 1rem; margin-bottom: 1.5rem; }
-    .portal-btn {
-      display: inline-block; padding: 12px 28px; border-radius: 50px;
-      font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;
-    }
-    .portal-side.tech .portal-btn { background: var(--primary); color: white; }
-    .portal-side.video .portal-btn { background: var(--cine-accent); color: white; }
+    .portal-side:hover { flex: 1.25; }
+    .portal-side.tech:hover::before { background: rgba(9, 13, 20, 0.65); box-shadow: inset 0 0 100px var(--tech-glow); }
+    .portal-side.video:hover::before { background: rgba(9, 13, 20, 0.65); box-shadow: inset 0 0 100px var(--cine-glow); }
 
-    /* SWITCHER RAPIDO IN TESTATA */
-    .top-nav {
+    .portal-card {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 440px;
+      padding: 2.5rem;
+      border-radius: 24px;
+      backdrop-filter: blur(12px);
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    .portal-side:hover .portal-card { transform: translateY(-6px); border-color: rgba(255, 255, 255, 0.2); }
+    .portal-badge {
+      display: inline-block; font-size: 0.72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.8rem;
+    }
+    .portal-side.tech .portal-badge { color: var(--tech-cyan); }
+    .portal-side.video .portal-badge { color: var(--cine-amber); }
+    .portal-title {
+      font-family: 'Syne', sans-serif; font-size: 2.5rem;
+      font-weight: 800; margin-bottom: 0.6rem; color: #fff;
+    }
+    .portal-desc { color: var(--muted); font-size: 0.95rem; margin-bottom: 1.8rem; line-height: 1.6; }
+    .portal-action-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 0.75rem 1.8rem; border-radius: 50px; font-weight: 600;
+      font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;
+    }
+    .portal-side.tech .portal-action-btn { background: var(--tech-cyan); color: #090d14; }
+    .portal-side.video .portal-action-btn { background: var(--cine-amber); color: #090d14; }
+
+    /* 2. TOPBAR NAV */
+    .app-header {
+      position: sticky; top: 0; z-index: 500;
+      backdrop-filter: blur(16px);
+      background: rgba(9, 13, 20, 0.85);
+      border-bottom: 1px solid var(--border);
+      padding: 0.8rem 0;
+    }
+    .nav-flex {
       display: flex; justify-content: space-between; align-items: center;
-      padding: 1rem 2rem; background: white; border-bottom: 1px solid rgba(0,0,0,0.06);
     }
-    .nav-left a { font-weight: 800; color: var(--accent); font-family: 'Syne', sans-serif; }
-    .nav-center { display: flex; gap: 8px; }
-    .nav-tab {
-      padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer; border: 1px solid transparent;
+    .nav-brand {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem;
+      color: var(--text); text-decoration: none; cursor: pointer;
     }
-    .nav-tab.active-tech { background: #e0f2f1; color: var(--primary-dark); }
-    .nav-tab.active-video { background: #ffedd5; color: #c2410c; }
+    .nav-toggle-group {
+      display: flex; background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border); border-radius: 999px; padding: 3px;
+    }
+    .nav-tab-btn {
+      background: transparent; border: none; color: var(--muted);
+      padding: 0.4rem 1.2rem; border-radius: 999px; font-weight: 600;
+      font-size: 0.82rem; cursor: pointer; transition: var(--transition);
+    }
+    .nav-tab-btn.active-tech { background: var(--tech-cyan); color: #090d14; font-weight: 700; }
+    .nav-tab-btn.active-video { background: var(--cine-amber); color: #090d14; font-weight: 700; }
+    .btn-hub-link {
+      font-size: 0.85rem; font-weight: 600; color: var(--muted);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .btn-hub-link:hover { color: var(--text); }
 
-    /* HEADER SEZIONI */
-    header.section-hero { 
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark)); 
-      color: white; padding: 3.5rem 2rem; text-align: center; position: relative; 
-      clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%); margin-bottom: 30px;
+    /* HERO SEZIONI */
+    .section-banner {
+      padding: 3.5rem 0 2rem; text-align: center;
     }
-    header.section-hero.video-theme {
-      background: linear-gradient(135deg, #0f172a, #1e293b);
-      border-bottom: 3px solid var(--cine-accent);
+    .banner-title {
+      font-family: 'Syne', sans-serif; font-size: 2.5rem;
+      font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+      margin-bottom: 0.4rem;
     }
-    header.section-hero h1 { font-size: 2.8rem; color: white; }
+    .banner-sub { font-size: 0.9rem; color: var(--muted); }
 
-    /* GRIGLIE PROGETTI */
-    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin-top: 20px; }
-    .project-card { 
-      position: relative; background: var(--card-bg); border-radius: var(--radius);
-      padding: 25px; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.05);
-      display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s;
+    /* CARDS GRID */
+    .projects-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: 1.8rem; margin: 2rem 0 5rem;
     }
-    .project-card:hover { transform: translateY(-4px); box-shadow: 0 15px 35px rgba(0,0,0,0.12); }
-    .tags-container { margin: 12px 0; display: flex; flex-wrap: wrap; gap: 6px; }
-    .tag { background: #e0f2f1; color: var(--primary-dark); padding: 3px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 600; }
-    .tag.video-tag { background: #ffedd5; color: #c2410c; }
-
-    .btn-action { 
-      display: inline-flex; align-items: center; justify-content: center; 
-      background-color: var(--primary); color: white; padding: 10px 18px; 
-      border-radius: 8px; font-weight: 600; cursor: pointer; border: none; gap: 8px; width: 100%;
+    .card {
+      position: relative; background: var(--card-bg);
+      border: 1px solid var(--border); border-radius: 16px;
+      overflow: hidden; display: flex; flex-direction: column;
+      transition: var(--transition);
+      backdrop-filter: blur(8px);
     }
-    .btn-action.video-btn { background-color: var(--cine-accent); }
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    .theme-tech .card:hover { box-shadow: 0 16px 30px -10px rgba(0,0,0,0.6), 0 0 20px var(--tech-glow); }
+    .theme-video .card:hover { box-shadow: 0 16px 30px -10px rgba(0,0,0,0.6), 0 0 20px var(--cine-glow); }
 
-    /* TASTO ELIMINA POST ADMIN */
+    .card-media {
+      position: relative; width: 100%; padding-top: 56.25%;
+      background: #000; overflow: hidden;
+    }
+    .card-media iframe, .card-media img {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border: none;
+    }
+    .card-body { padding: 1.4rem; display: flex; flex-direction: column; flex-grow: 1; }
+    .card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 0.8rem; }
+    .badge-tag {
+      font-size: 0.7rem; font-weight: 600; padding: 2px 8px;
+      border-radius: 6px; background: rgba(255, 255, 255, 0.05); color: var(--muted);
+    }
+    .theme-tech .badge-tag { color: var(--tech-cyan); }
+    .theme-video .badge-tag { color: var(--cine-amber); }
+
+    .card-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; line-height: 1.35; }
+    .card-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.55; margin-bottom: 1.5rem; flex-grow: 1; }
+
+    .btn-card-action {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 6px; padding: 0.65rem 1.2rem; border-radius: 8px;
+      font-weight: 600; font-size: 0.85rem; border: none; cursor: pointer; text-decoration: none;
+    }
+    .theme-tech .btn-card-action { background: var(--tech-cyan); color: #090d14; }
+    .theme-video .btn-card-action { background: var(--cine-amber); color: #090d14; }
+
     .btn-delete-proj {
-      display: none; position: absolute; top: 12px; right: 12px;
-      background: #ef4444; color: white; border: none; border-radius: 6px;
-      padding: 4px 8px; font-size: 0.75rem; cursor: pointer; font-weight: 700; z-index: 10;
+      display: none; position: absolute; top: 10px; right: 10px;
+      background: var(--danger); color: white; border: none;
+      border-radius: 6px; padding: 4px 8px; font-size: 0.75rem; font-weight: 700; cursor: pointer; z-index: 10;
     }
     body.is-admin .btn-delete-proj { display: block; }
 
-    /* DETTAGLIO BRACCIO & DIGITAL TWIN */
-    .btn-back { display: inline-flex; align-items: center; gap: 8px; color: var(--primary); font-weight: 700; margin-bottom: 25px; cursor: pointer; }
-    .twin-box { background: #0f172a; border-radius: 30px; overflow: hidden; display: grid; grid-template-columns: 1.2fr 0.8fr; margin: 30px 0; border: 1px solid #334155; }
-    .visualizer { padding: 50px; display: flex; align-items: center; justify-content: center; position: relative; min-height: 420px; background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%); }
-    .controls { padding: 35px; background: #1e293b; border-left: 1px solid #334155; }
-    .robot-base { width: 100px; height: 30px; background: var(--primary); border-radius: 8px; position: relative; margin-top: 150px; }
-    .arm-seg { width: 16px; height: 100px; background: #94a3b8; position: absolute; bottom: 30px; left: 42px; transform-origin: bottom center; transition: 0.4s; border-radius: 8px; }
-    .arm-seg-2 { width: 12px; height: 80px; background: var(--primary); position: absolute; top: -75px; left: 2px; transform-origin: bottom center; transition: 0.6s; border-radius: 6px; }
-    .wrist-seg { width: 10px; height: 30px; background: #cbd5e1; position: absolute; top: -25px; left: 1px; transform-origin: bottom center; border-radius: 4px; }
-    .gripper-base { width: 28px; height: 8px; background: #64748b; position: absolute; top: -5px; left: -9px; }
-    .phalange-l { width: 4px; height: 22px; background: #94a3b8; position: absolute; top: -20px; left: 2px; transform-origin: bottom; }
-    .phalange-r { width: 4px; height: 22px; background: #94a3b8; position: absolute; top: -20px; right: 2px; transform-origin: bottom; }
-    .control-item { margin-bottom: 18px; }
-    .control-item label { display: block; color: #94a3b8; font-size: 0.7rem; font-weight: 700; margin-bottom: 6px; }
-    .slider { width: 100%; height: 6px; background: #334155; border-radius: 10px; outline: none; cursor: pointer; }
-    .code-display { background: #000; padding: 15px; border-radius: 12px; font-family: 'Fira Code', monospace; font-size: 0.75rem; color: #4ade80; margin-top: 15px; }
-
-    /* MODALE AGGIUNGI PROGETTO */
-    .modal-backdrop {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
-      display: none; align-items: center; justify-content: center; z-index: 3000;
+    /* 3. SIMULATORE DIGITALE ARM */
+    .twin-wrapper {
+      background: #0d121d; border-radius: 24px;
+      border: 1px solid var(--border); overflow: hidden;
+      display: grid; grid-template-columns: 1.3fr 0.9fr; margin: 2rem 0 4rem;
     }
-    .modal-backdrop.show { display: flex; }
-    .modal-window {
-      background: white; border-radius: 18px; padding: 2rem; width: 100%; max-width: 520px;
+    .twin-render {
+      background: radial-gradient(circle at center, #172033 0%, #0d121d 100%);
+      display: flex; align-items: center; justify-content: center;
+      min-height: 440px; position: relative;
+    }
+    .twin-controls {
+      background: #111726; padding: 2rem; border-left: 1px solid var(--border);
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .slider-group { margin-bottom: 1.2rem; }
+    .slider-header {
+      display: flex; justify-content: space-between;
+      font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 6px;
+    }
+    .slider-header span.val { color: var(--tech-cyan); font-family: 'JetBrains Mono', monospace; }
+    .arm-slider {
+      width: 100%; height: 6px; background: #1e293b;
+      border-radius: 6px; outline: none; -webkit-appearance: none; cursor: pointer;
+    }
+    .arm-slider::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 18px; height: 18px;
+      background: var(--tech-cyan); border-radius: 50%; cursor: pointer;
+    }
+    .serial-log {
+      background: #06090e; border: 1px solid var(--border);
+      border-radius: 10px; padding: 1rem; font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem; color: #4ade80;
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+      display: none; align-items: center; justify-content: center; z-index: 2000;
+    }
+    .modal-overlay.show { display: flex; }
+    .modal-box {
+      background: #111726; border: 1px solid var(--border);
+      border-radius: 16px; padding: 2rem; width: 100%; max-width: 520px;
       display: flex; flex-direction: column; gap: 1rem;
     }
-    .form-input, .form-select, .form-textarea {
-      width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; font-size: 0.9rem;
+    .m-input, .m-select, .m-text {
+      width: 100%; background: #090d14; border: 1px solid var(--border);
+      color: var(--text); padding: 0.7rem; border-radius: 8px; font-family: inherit; font-size: 0.9rem;
     }
-    .form-textarea { min-height: 100px; resize: vertical; }
-    .modal-footer { display: flex; justify-content: flex-end; gap: 8px; }
+    .m-text { min-height: 90px; resize: vertical; }
 
-    @media (max-width: 900px) {
-      #portal-view { grid-template-columns: 1fr; }
-      .twin-box { grid-template-columns: 1fr; }
+    @media (max-width: 850px) {
+      #portal-view { flex-direction: column; }
+      .twin-wrapper { grid-template-columns: 1fr; }
+      .twin-controls { border-left: none; border-top: 1px solid var(--border); }
     }
   </style>
 </head>
 <body>
 
-  <!-- ADMIN BAR SEGRETA -->
+  <!-- ADMIN STATUS BAR -->
   <aside class="admin-bar" id="adminBar">
     <span>🔒 <strong>Gestione Portfolio Autore</strong></span>
     <div style="display:flex; gap:8px;">
-      <button class="btn-admin" id="openAddModalBtn">+ Aggiungi Progetto</button>
+      <button class="btn-admin" id="openAddModalBtn">+ Nuovo Elemento</button>
       <button class="btn-logout" id="logoutBtn">Esci</button>
     </div>
   </aside>
 
-  <!-- 1. BIVIO INIZIALE: SCHERMATA DI SCELTA AMBITO -->
-  <section id="portal-view">
-    <div class="portal-side tech" onclick="navigateTo('tech')">
-      <div class="portal-content">
-        <h2 class="portal-title">TECH & CODE</h2>
-        <p class="portal-sub">Firmware C/C++, Automazione, Microcontrollori e CAD 3D.</p>
-        <span class="portal-btn">Esplora Progetti Tech &rarr;</span>
+  <!-- 1. LANDING DI SCELTA (BIVIO INIZIALE) -->
+  <main id="portal-view">
+    <div class="portal-side tech" onclick="enterSection('tech')">
+      <div class="portal-card">
+        <span class="portal-badge">Area Ingegneria</span>
+        <h1 class="portal-title">TECH & CODE</h1>
+        <p class="portal-desc">Firmware C/C++, Automazione, Microcontrollori, Architetture Hardware e CAD 3D.</p>
+        <span class="portal-action-btn">Esplora Progetti Tech &rarr;</span>
       </div>
     </div>
-    <div class="portal-side video" onclick="navigateTo('video')">
-      <div class="portal-content">
-        <h2 class="portal-title">CINEMA & VIDEO</h2>
-        <p class="portal-sub">Regia, Riprese, Color Grading & Sound Editing.</p>
-        <span class="portal-btn">Esplora Portfolio Video &rarr;</span>
+    <div class="portal-side video" onclick="enterSection('video')">
+      <div class="portal-card">
+        <span class="portal-badge">Area Audiovisiva</span>
+        <h1 class="portal-title">CINEMA & VIDEO</h1>
+        <p class="portal-desc">Regia cinematografica, Riprese con mirrorless, Color Grading e Sound Design.</p>
+        <span class="portal-action-btn">Esplora Progetti Video &rarr;</span>
       </div>
     </div>
-  </section>
+  </main>
 
-  <!-- 2. VISTA CONTENUTO (TECH o VIDEO) -->
-  <section id="content-view" class="hidden">
-    
-    <!-- Top Navigation per cambiare ambito rapidamente -->
-    <nav class="top-nav">
-      <div class="nav-left">
-        <a href="#" onclick="showPortal()">← TUTTI GLI AMBITI</a>
-      </div>
-      <div class="nav-center">
-        <button class="nav-tab" id="tabTech" onclick="switchSection('tech')">🦾 Tech & Firmware</button>
-        <button class="nav-tab" id="tabVideo" onclick="switchSection('video')">🎬 Video & Filmmaking</button>
-      </div>
-      <div>
-        <a href="cv.html" target="_blank" style="font-size:0.85rem; font-weight:600; color:var(--primary)">📄 CV</a>
-      </div>
-    </nav>
+  <!-- 2. VISTA DETTAGLIATA (PORTFOLIO AMBITO) -->
+  <div id="content-view" class="hidden">
+    <header class="app-header">
+      <div class="container nav-flex">
+        <span class="nav-brand" onclick="returnToPortal()">PRISTERÀ<span>.</span></span>
+        
+        <div class="nav-toggle-group">
+          <button class="nav-tab-btn" id="tabTech" onclick="enterSection('tech')">Tech & Embedded</button>
+          <button class="nav-tab-btn" id="tabVideo" onclick="enterSection('video')">Cinema & Video</button>
+        </div>
 
-    <!-- Header Dinamico -->
-    <header class="section-hero" id="sectionHero">
-      <h1 id="heroTitle">I Miei Progetti</h1>
-      <p id="heroSubtitle">Esplora le mie realizzazioni e prototipi.</p>
+        <div>
+          <a href="https://nicolopristera2-boop.github.io/Blog/" class="btn-hub-link">Hub & Logbook ↗</a>
+        </div>
+      </div>
     </header>
 
     <div class="container">
-      <main class="projects-grid" id="portfolioGrid"></main>
+      <section class="section-banner">
+        <h2 class="banner-title" id="bannerTitle">Progetti</h2>
+        <p class="banner-sub" id="bannerSub">Panoramica completa dei lavori svolti</p>
+      </section>
+
+      <div class="projects-grid" id="portfolioContainer"></div>
     </div>
-  </section>
+  </div>
 
-  <!-- 3. DETTAGLIO BRACCIO ROBOTICO (INTERATTIVO) -->
-  <section id="project-arm-view" class="hidden">
-    <div class="container">
-      <div class="btn-back" onclick="backToPortfolio()">← Torna al Portfolio</div>
+  <!-- 3. DETTAGLIO INTERATTIVO DIGITAL TWIN -->
+  <section id="arm-detail-view" class="hidden">
+    <div class="container" style="padding-top: 2rem;">
+      <button class="btn-hub-link" style="background:none; border:none; cursor:pointer;" onclick="exitArmDetail()">← Torna ai Progetti</button>
       
-      <header style="text-align:center; padding: 20px 0;">
-        <span style="background:#e0f2f1; color:var(--primary-dark); padding:6px 16px; border-radius:50px; font-weight:700; font-size:0.75rem;">ARDUINO UNO & CAD</span>
-        <h1 style="font-size:3rem; margin:10px 0;">Braccio Robotico Digital Twin</h1>
-        <p style="color:var(--text-light)">Dalla modellazione CAD al gemello virtuale in browser sincrono.</p>
-      </header>
+      <div class="section-banner">
+        <h2 class="banner-title">Digital Twin Arm</h2>
+        <p class="banner-sub">Simulazione fisica e cinematica sincrona bidirezionale</p>
+      </div>
 
-      <div class="twin-box">
-        <div class="visualizer">
-          <div class="robot-base">
-            <div class="arm-seg" id="ui-base">
-              <div class="arm-seg-2" id="ui-elbow">
-                <div class="wrist-seg" id="ui-wrist">
-                  <div class="gripper-base">
-                    <div class="phalange-l" id="ui-phal-l"></div>
-                    <div class="phalange-r" id="ui-phal-r"></div>
-                  </div>
-                </div>
-              </div>
+      <div class="twin-wrapper">
+        <div class="twin-render">
+          <!-- Motore Vettoriale SVG per rendering fluido e pulito -->
+          <svg id="armSvg" width="360" height="360" viewBox="0 0 360 360">
+            <!-- Base -->
+            <rect x="130" y="310" width="100" height="24" rx="6" fill="#06b6d4" />
+            <!-- Segmento 1 -->
+            <g id="svgBase" transform="translate(180, 310) rotate(-45)">
+              <rect x="-8" y="-110" width="16" height="110" rx="8" fill="#94a3b8" />
+              <circle cx="0" cy="0" r="10" fill="#090d14" stroke="#06b6d4" stroke-width="3" />
+              <!-- Segmento 2 -->
+              <g id="svgElbow" transform="translate(0, -110) rotate(45)">
+                <rect x="-6" y="-95" width="12" height="95" rx="6" fill="#06b6d4" />
+                <circle cx="0" cy="0" r="8" fill="#090d14" stroke="#94a3b8" stroke-width="2" />
+                <!-- Polso & Pinza -->
+                <g id="svgWrist" transform="translate(0, -95) rotate(0)">
+                  <rect x="-5" y="-30" width="10" height="30" rx="4" fill="#cbd5e1" />
+                  <rect x="-14" y="-34" width="28" height="6" rx="2" fill="#64748b" />
+                  <!-- Falangi -->
+                  <rect id="svgPhalL" x="-14" y="-54" width="4" height="20" rx="2" fill="#94a3b8" transform="rotate(-10, -12, -34)" />
+                  <rect id="svgPhalR" x="10" y="-54" width="4" height="20" rx="2" fill="#94a3b8" transform="rotate(10, 12, -34)" />
+                </g>
+              </g>
+            </g>
+          </svg>
+        </div>
+
+        <div class="twin-controls">
+          <div>
+            <div class="slider-group">
+              <div class="slider-header"><span>Rotazione Base</span><span class="val" id="lblBase">90°</span></div>
+              <input type="range" min="0" max="180" value="90" class="arm-slider" oninput="updateArm('base', this.value)">
+            </div>
+            <div class="slider-group">
+              <div class="slider-header"><span>Angolo Gomito</span><span class="val" id="lblElbow">45°</span></div>
+              <input type="range" min="0" max="180" value="45" class="arm-slider" oninput="updateArm('elbow', this.value)">
+            </div>
+            <div class="slider-group">
+              <div class="slider-header"><span>Pitch Polso</span><span class="val" id="lblWrist">0°</span></div>
+              <input type="range" min="-90" max="90" value="0" class="arm-slider" oninput="updateArm('wrist', this.value)">
+            </div>
+            <div class="slider-group">
+              <div class="slider-header"><span>Pinza Grip</span><span class="val" id="lblGrip">10°</span></div>
+              <input type="range" min="0" max="35" value="10" class="arm-slider" oninput="updateArm('grip', this.value)">
             </div>
           </div>
-        </div>
-        <div class="controls">
-          <h4 style="color:white; margin-bottom: 20px;">Controllo Attuatori</h4>
-          <div class="control-item">
-            <label>Rotazione Base: <span id="label-base" style="color:var(--primary)">90</span>°</label>
-            <input type="range" min="0" max="180" value="90" class="slider" oninput="interact('base', this.value)">
-          </div>
-          <div class="control-item">
-            <label>Angolo Gomito: <span id="label-elbow" style="color:var(--primary)">45</span>°</label>
-            <input type="range" min="0" max="180" value="45" class="slider" oninput="interact('elbow', this.value)">
-          </div>
-          <div class="control-item">
-            <label>Inclinazione Polso: <span id="label-wrist" style="color:var(--primary)">0</span>°</label>
-            <input type="range" min="-90" max="90" value="0" class="slider" oninput="interact('wrist', this.value)">
-          </div>
-          <div class="control-item">
-            <label>Apertura Pinza: <span id="label-gripper" style="color:var(--primary)">10</span>°</label>
-            <input type="range" min="0" max="40" value="10" class="slider" oninput="interact('gripper', this.value)">
-          </div>
-          <div class="code-display">
-            <div>// Real-time Serial Output</div>
-            <div id="code-base">baseServo.write(90);</div>
-            <div id="code-elbow">elbowServo.write(45);</div>
-            <div id="code-wrist">wristServo.write(90);</div>
-            <div id="code-gripper">gripperServo.write(10);</div>
+
+          <div class="serial-log">
+            <div>&gt; Serial Baud: 115200</div>
+            <div id="cmdOutput">base.write(90); elbow.write(45);</div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- MODAL AGGIUNGI PROGETTO (ADMIN) -->
-  <div class="modal-backdrop" id="projectModal">
-    <div class="modal-window">
-      <h3 style="font-family:'Syne', sans-serif;">Aggiungi Progetto al Portfolio</h3>
-      
-      <select id="projSection" class="form-select">
-        <option value="tech">Ambito: Tech & Firmware</option>
+  <!-- MODAL NUOVO PROGETTO -->
+  <div class="modal-overlay" id="projModal">
+    <div class="modal-box">
+      <h3 style="font-family:'Syne', sans-serif;">Aggiungi Nuovo Progetto</h3>
+      <select id="mSec" class="m-select">
+        <option value="tech">Ambito: Tech & Embedded</option>
         <option value="video">Ambito: Cinema & Video</option>
       </select>
-
-      <input type="text" id="projTitle" class="form-input" placeholder="Titolo Progetto" required>
-      <input type="text" id="projTags" class="form-input" placeholder="Tag separati da virgola (es: C++, FreeCAD)">
-      <textarea id="projDesc" class="form-textarea" placeholder="Descrizione tecnica o dettagli di regia..."></textarea>
-      
-      <select id="projType" class="form-select">
-        <option value="link">Link Esterno (es. GitHub)</option>
+      <input type="text" id="mTitle" class="m-input" placeholder="Titolo del Progetto" required>
+      <input type="text" id="mTags" class="m-input" placeholder="Tag separati da virgola (es. C++, DaVinci, FreeCAD)">
+      <textarea id="mDesc" class="m-text" placeholder="Descrizione tecnica o dettagli sulla produzione..."></textarea>
+      <select id="mType" class="m-select">
+        <option value="link">Link a Repository/Documento</option>
         <option value="video">Video Embed (YouTube / Vimeo)</option>
       </select>
-
-      <input type="url" id="projUrl" class="form-input" placeholder="URL di destinazione o Video URL">
-
-      <div class="modal-footer">
-        <button class="btn-logout" style="color:#64748b;" id="closeModalBtn">Annulla</button>
-        <button class="btn-admin" id="saveProjBtn">Pubblica Progetto</button>
+      <input type="url" id="mUrl" class="m-input" placeholder="URL di destinazione">
+      <div style="display:flex; justify-content:flex-end; gap:8px;">
+        <button class="btn-logout" id="mCancel">Annulla</button>
+        <button class="btn-admin" id="mSave">Salva Progetto</button>
       </div>
     </div>
   </div>
 
   <script>
-    // CONFIGURAZIONE REPO GITHUB (PORTFOLIO)
+    // CONFIGURAZIONE REPO
     const REPO_OWNER = "nicolopristera2-boop";
-    const REPO_NAME = "nicolopristera2-boop.github.io"; // Modifica col nome esatto del repo del tuo portfolio
+    const REPO_NAME = "nicolopristera2-boop.github.io"; // Modifica se il nome del repo differisce
     const FILE_PATH = "portfolio_items.json";
 
-    let currentSection = 'tech';
-    let portfolioItems = [];
+    let activeSection = 'tech';
+    let portfolioData = [];
 
-    // --- NAVIGAZIONE AMBITI & VIEW ---
-    function navigateTo(section) {
-      document.getElementById('portal-view').classList.add('hidden');
-      document.getElementById('content-view').classList.remove('hidden');
-      switchSection(section);
+    // Helper Embed Video
+    function extractEmbed(url) {
+      if (!url) return '';
+      if (url.includes('youtu.be/')) {
+        const id = url.split('youtu.be/')[1].split('?')[0];
+        return `https://www.youtube-nocookie.com/embed/${id}`;
+      }
+      if (url.includes('youtube.com/watch?v=')) {
+        const id = url.split('v=')[1].split('&')[0];
+        return `https://www.youtube-nocookie.com/embed/${id}`;
+      }
+      return url;
     }
 
-    function showPortal() {
+    // Navigazione
+    function enterSection(sec) {
+      activeSection = sec;
+      document.getElementById('portal-view').classList.add('hidden');
+      document.getElementById('arm-detail-view').classList.add('hidden');
+      document.getElementById('content-view').classList.remove('hidden');
+
+      const body = document.getElementById('content-view');
+      const tabTech = document.getElementById('tabTech');
+      const tabVideo = document.getElementById('tabVideo');
+
+      if (sec === 'tech') {
+        body.className = "theme-tech";
+        tabTech.className = "nav-tab-btn active-tech";
+        tabVideo.className = "nav-tab-btn";
+        document.getElementById('bannerTitle').innerText = "Tech & Embedded";
+        document.getElementById('bannerSub').innerText = "Firmware, Prototipazione, Microcontrollori e Dispositivi IoT";
+      } else {
+        body.className = "theme-video";
+        tabVideo.className = "nav-tab-btn active-video";
+        tabTech.className = "nav-tab-btn";
+        document.getElementById('bannerTitle').innerText = "Cinema & Filmmaking";
+        document.getElementById('bannerSub').innerText = "Regia, Direzione della Fotografia e Color Grading";
+      }
+      renderCards();
+      window.scrollTo(0,0);
+    }
+
+    function returnToPortal() {
       document.getElementById('content-view').classList.add('hidden');
-      document.getElementById('project-arm-view').classList.add('hidden');
+      document.getElementById('arm-detail-view').classList.add('hidden');
       document.getElementById('portal-view').classList.remove('hidden');
       window.scrollTo(0,0);
     }
 
-    function switchSection(sec) {
-      currentSection = sec;
-      const hero = document.getElementById('sectionHero');
-      const tabTech = document.getElementById('tabTech');
-      const tabVideo = document.getElementById('tabVideo');
-
-      if(sec === 'tech') {
-        hero.className = "section-hero";
-        document.getElementById('heroTitle').innerText = "Tech & Embedded Engineering";
-        document.getElementById('heroSubtitle').innerText = "Firmware C/C++, Sistemi Digital Twin e Modellazione CAD";
-        tabTech.className = "nav-tab active-tech";
-        tabVideo.className = "nav-tab";
-      } else {
-        hero.className = "section-hero video-theme";
-        document.getElementById('heroTitle').innerText = "Filmmaking & Post-Production";
-        document.getElementById('heroSubtitle').innerText = "Direzione della fotografia, riprese e montaggio video";
-        tabTech.className = "nav-tab";
-        tabVideo.className = "nav-tab active-video";
-      }
-      renderPortfolio();
-    }
-
-    function showArmDetail() {
+    function openArmDetail() {
       document.getElementById('content-view').classList.add('hidden');
-      document.getElementById('project-arm-view').classList.remove('hidden');
+      document.getElementById('arm-detail-view').classList.remove('hidden');
       window.scrollTo(0,0);
     }
 
-    function backToPortfolio() {
-      document.getElementById('project-arm-view').classList.add('hidden');
+    function exitArmDetail() {
+      document.getElementById('arm-detail-view').classList.add('hidden');
       document.getElementById('content-view').classList.remove('hidden');
     }
 
-    // --- CARICAMENTO DATI ---
-    async function loadPortfolioData() {
+    // Caricamento Dati
+    async function loadData() {
       try {
         const res = await fetch(`${FILE_PATH}?t=${Date.now()}`);
-        if(res.ok) {
-          portfolioItems = await res.json();
-          renderPortfolio();
+        if (res.ok) {
+          portfolioData = await res.json();
+          renderCards();
         }
-      } catch(e) {
-        console.warn("Impossibile caricare portfolio_items.json statico");
+      } catch (e) {
+        console.warn("Nessun database locale trovato.");
       }
     }
 
-    function renderPortfolio() {
-      const container = document.getElementById('portfolioGrid');
+    function renderCards() {
+      const container = document.getElementById('portfolioContainer');
       container.innerHTML = '';
 
-      const items = portfolioItems.filter(item => item.section === currentSection);
+      const items = portfolioData.filter(item => item.section === activeSection);
 
       items.forEach(item => {
         const card = document.createElement('div');
-        card.className = 'project-card';
+        card.className = 'card';
 
-        // Tasto elimina per l'autore
-        const delBtn = `<button class="btn-delete-proj" onclick="deleteProject('${item.id}')">🗑️</button>`;
+        const delBtn = `<button class="btn-delete-proj" onclick="deleteItem('${item.id}')">🗑️</button>`;
 
-        // Rendering Tag
-        const tagsHtml = (item.tags || []).map(t => 
-          `<span class="tag ${item.section === 'video' ? 'video-tag' : ''}">${t}</span>`
-        ).join('');
-
-        // Rendering Video o Immagine
         let mediaHtml = '';
-        if(item.type === 'video' && item.mediaUrl) {
-          let embed = item.mediaUrl.replace('watch?v=', 'embed/').replace('youtu.be/', 'www.youtube-nocookie.com/embed/');
-          mediaHtml = `<div style="position:relative; padding-top:56.25%; margin-bottom:15px; border-radius:12px; overflow:hidden; background:#000;">
-            <iframe src="${embed}" style="position:absolute; inset:0; width:100%; height:100%; border:none;" allowfullscreen></iframe>
-          </div>`;
+        if (item.type === 'video' && item.mediaUrl) {
+          mediaHtml = `
+            <div class="card-media">
+              <iframe src="${extractEmbed(item.mediaUrl)}" allowfullscreen loading="lazy"></iframe>
+            </div>`;
         }
 
-        // Azione Bottone
+        const tagsHtml = (item.tags || []).map(t => `<span class="badge-tag">${t}</span>`).join('');
+
         let actionBtn = '';
-        if(item.id === 'arm-twin') {
-          actionBtn = `<button class="btn-action" onclick="showArmDetail()">${item.actionText || 'Approfondisci'}</button>`;
-        } else if(item.url) {
-          actionBtn = `<a href="${item.url}" target="_blank" class="btn-action ${item.section === 'video' ? 'video-btn' : ''}">${item.actionText || 'Esplora'}</a>`;
+        if (item.id === 'arm-twin') {
+          actionBtn = `<button class="btn-card-action" onclick="openArmDetail()">${item.actionText || 'Apri Simulatore ↗'}</button>`;
+        } else if (item.url) {
+          actionBtn = `<a href="${item.url}" target="_blank" class="btn-card-action">${item.actionText || 'Esplora ↗'}</a>`;
         }
 
         card.innerHTML = `
           ${delBtn}
-          <div>
-            ${mediaHtml}
-            <h3>${item.title}</h3>
-            <div class="tags-container">${tagsHtml}</div>
-            <p style="color:var(--text-light); font-size:0.9rem; margin-bottom:20px;">${item.desc}</p>
+          ${mediaHtml}
+          <div class="card-body">
+            <div class="card-tags">${tagsHtml}</div>
+            <h3 class="card-title">${item.title}</h3>
+            <p class="card-desc">${item.desc}</p>
+            ${actionBtn}
           </div>
-          ${actionBtn}
         `;
         container.appendChild(card);
       });
     }
 
-    // --- MECCANICA DEL SIMULATORE DIGITALE ---
-    function interact(part, val) {
-      if(part === 'base') {
-        document.getElementById('label-base').innerText = val;
-        document.getElementById('ui-base').style.transform = `rotate(${val - 90}deg)`;
-        document.getElementById('code-base').innerText = `baseServo.write(${val});`;
-      } else if(part === 'elbow') {
-        document.getElementById('label-elbow').innerText = val;
-        document.getElementById('ui-elbow').style.transform = `rotate(${val - 45}deg)`;
-        document.getElementById('code-elbow').innerText = `elbowServo.write(${val});`;
-      } else if(part === 'wrist') {
-        document.getElementById('label-wrist').innerText = val;
-        document.getElementById('ui-wrist').style.transform = `rotate(${val}deg)`;
-        document.getElementById('code-wrist').innerText = `wristServo.write(${parseInt(val) + 90});`;
-      } else if(part === 'gripper') {
-        document.getElementById('label-gripper').innerText = val;
-        document.getElementById('ui-phal-l').style.transform = `rotate(${-val}deg)`;
-        document.getElementById('ui-phal-r').style.transform = `rotate(${val}deg)`;
-        document.getElementById('code-gripper').innerText = `gripperServo.write(${val});`;
-      }
+    // LOGICA SIMULATORE DIGITALE VETTORIALE (SVG)
+    let curBase = 90, curElbow = 45, curWrist = 0, curGrip = 10;
+    function updateArm(part, val) {
+      val = parseInt(val);
+      if (part === 'base') curBase = val;
+      if (part === 'elbow') curElbow = val;
+      if (part === 'wrist') curWrist = val;
+      if (part === 'grip') curGrip = val;
+
+      document.getElementById('lblBase').innerText = curBase + '°';
+      document.getElementById('lblElbow').innerText = curElbow + '°';
+      document.getElementById('lblWrist').innerText = curWrist + '°';
+      document.getElementById('lblGrip').innerText = curGrip + '°';
+
+      // Aggiornamento geometrie vettoriali
+      document.getElementById('svgBase').setAttribute('transform', `translate(180, 310) rotate(${curBase - 135})`);
+      document.getElementById('svgElbow').setAttribute('transform', `translate(0, -110) rotate(${curElbow})`);
+      document.getElementById('svgWrist').setAttribute('transform', `translate(0, -95) rotate(${curWrist})`);
+      document.getElementById('svgPhalL').setAttribute('transform', `rotate(${-curGrip}, -12, -34)`);
+      document.getElementById('svgPhalR').setAttribute('transform', `rotate(${curGrip}, 12, -34)`);
+
+      document.getElementById('cmdOutput').innerText = `base.write(${curBase}); elbow.write(${curElbow}); wrist.write(${curWrist + 90}); grip.write(${curGrip});`;
     }
 
-    // --- ACCESSO AUTORE SEGRETO (CTRL + ALT + A) ---
+    // ACCESSO SEGRETO: CTRL + ALT + A
     function checkAdmin() {
       const token = localStorage.getItem('gh_portfolio_token');
       if (token) {
@@ -472,14 +585,12 @@
         e.stopPropagation();
         const currentToken = localStorage.getItem('gh_portfolio_token');
         if (!currentToken) {
-          const pass = prompt("Accesso Autore Portfolio. Inserisci il tuo Personal Access Token di GitHub:");
+          const pass = prompt("Area Riservata Autore. Inserisci il tuo GitHub Token:");
           if (pass && pass.trim().startsWith('ghp_')) {
             localStorage.setItem('gh_portfolio_token', pass.trim());
             checkAdmin();
             alert("Modalità autore attiva!");
           }
-        } else {
-          alert("Sei già loggato come autore.");
         }
       }
     }, true);
@@ -490,23 +601,23 @@
       alert("Disconnesso.");
     });
 
-    // --- MODAL AGGIUNGI PROGETTO ---
-    const modal = document.getElementById('projectModal');
+    // AGGIUNTA PROGETTO
+    const modal = document.getElementById('projModal');
     document.getElementById('openAddModalBtn').addEventListener('click', () => modal.classList.add('show'));
-    document.getElementById('closeModalBtn').addEventListener('click', () => modal.classList.remove('show'));
+    document.getElementById('mCancel').addEventListener('click', () => modal.classList.remove('show'));
 
-    document.getElementById('saveProjBtn').addEventListener('click', async () => {
+    document.getElementById('mSave').addEventListener('click', async () => {
       const token = localStorage.getItem('gh_portfolio_token');
-      if(!token) return;
+      if (!token) return;
 
-      const title = document.getElementById('projTitle').value.trim();
-      const section = document.getElementById('projSection').value;
-      const tags = document.getElementById('projTags').value.split(',').map(t => t.trim()).filter(Boolean);
-      const desc = document.getElementById('projDesc').value.trim();
-      const type = document.getElementById('projType').value;
-      const url = document.getElementById('projUrl').value.trim();
+      const title = document.getElementById('mTitle').value.trim();
+      const section = document.getElementById('mSec').value;
+      const tags = document.getElementById('mTags').value.split(',').map(t => t.trim()).filter(Boolean);
+      const desc = document.getElementById('mDesc').value.trim();
+      const type = document.getElementById('mType').value;
+      const url = document.getElementById('mUrl').value.trim();
 
-      if(!title) return alert("Inserisci il titolo del progetto.");
+      if (!title) return alert("Inserisci il titolo.");
 
       try {
         const fileRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}?ref=main`, {
@@ -524,35 +635,34 @@
           type,
           mediaUrl: type === 'video' ? url : '',
           url: type === 'link' ? url : '',
-          actionText: type === 'video' ? 'Guarda Video' : 'Esplora'
+          actionText: type === 'video' ? 'Guarda Video ↗' : 'Esplora Repository ↗'
         });
 
         const updateRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
           method: 'PUT',
           headers: { Authorization: `token ${token}`, 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            message: `Aggiunto progetto: ${title}`,
+            message: `Aggiunto: ${title}`,
             content: btoa(unescape(encodeURIComponent(JSON.stringify(items, null, 2)))),
             sha: fileData.sha
           })
         });
 
-        if(!updateRes.ok) throw new Error("Errore durante il commit su GitHub.");
+        if (!updateRes.ok) throw new Error("Errore nel salvataggio su GitHub");
 
-        portfolioItems = items;
-        renderPortfolio();
+        portfolioData = items;
+        renderCards();
         modal.classList.remove('show');
         alert("Progetto pubblicato!");
-      } catch(err) {
+      } catch (err) {
         alert("Errore: " + err.message);
       }
     });
 
-    // --- CANCELLAZIONE PROGETTO ---
-    async function deleteProject(id) {
+    // CANCELLAZIONE PROGETTO
+    async function deleteItem(id) {
       const token = localStorage.getItem('gh_portfolio_token');
-      if(!token) return;
-      if(!confirm("Cancellare questo progetto dal portfolio?")) return;
+      if (!token || !confirm("Eliminare definitivamente questo elemento?")) return;
 
       try {
         const fileRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}?ref=main`, {
@@ -567,25 +677,25 @@
           method: 'PUT',
           headers: { Authorization: `token ${token}`, 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            message: `Rimosso progetto ID: ${id}`,
+            message: `Eliminato ID: ${id}`,
             content: btoa(unescape(encodeURIComponent(JSON.stringify(items, null, 2)))),
             sha: fileData.sha
           })
         });
 
-        if(!updateRes.ok) throw new Error("Errore durante la rimozione.");
+        if (!updateRes.ok) throw new Error("Errore nella rimozione");
 
-        portfolioItems = items;
-        renderPortfolio();
-        alert("Progetto eliminato!");
-      } catch(err) {
+        portfolioData = items;
+        renderCards();
+        alert("Rimosso con successo!");
+      } catch (err) {
         alert("Errore: " + err.message);
       }
     }
 
-    // Init
+    // Inizializzazione
     checkAdmin();
-    loadPortfolioData();
+    loadData();
   </script>
 </body>
 </html>
