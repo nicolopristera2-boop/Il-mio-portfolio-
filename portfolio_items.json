@@ -1,0 +1,31 @@
+[
+  {
+    "id": "arm-twin",
+    "section": "tech",
+    "title": "Braccio Robotico Digital Twin",
+    "tags": ["Arduino", "C++", "Digital Twin"],
+    "desc": "Unione di cinematica fisica e simulazione web interattiva bidirezionale.",
+    "type": "custom",
+    "actionText": "Approfondisci Progetto"
+  },
+  {
+    "id": "videogames-hub",
+    "section": "tech",
+    "title": "Sito Videogiochi",
+    "tags": ["JS", "HTML5"],
+    "desc": "Hub interattivo per videogiochi autoprodotti ed esperimenti grafici.",
+    "type": "link",
+    "url": "https://nicolopristera2-boop.github.io/Giochini-online-/",
+    "actionText": "Vedi su GitHub"
+  },
+  {
+    "id": "short-film-grading",
+    "section": "video",
+    "title": "Color Grading & Lighting Reel",
+    "tags": ["DaVinci Resolve", "Panasonic Lumix", "Short Film"],
+    "desc": "Studio sulla gestione del contrasto, profili logaritmici e color design in post-produzione.",
+    "type": "video",
+    "mediaUrl": "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ",
+    "actionText": "Guarda Video"
+  }
+]
